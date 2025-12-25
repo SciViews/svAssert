@@ -4,6 +4,7 @@
 \alias{stop_}
 \alias{warning_}
 \alias{stop_top_call}
+\alias{error_class}
 \alias{object_info}
 \title{Enhanced stop() and warning()}
 \usage{
@@ -27,6 +28,8 @@ warning_(
 
 stop_top_call(nframe = 2L)
 
+error_class(call = sys.call(-1), id = NULL)
+
 object_info(x)
 }
 \arguments{
@@ -41,8 +44,11 @@ used for \code{stop_()}.}
 
 \item{class}{The subclass of the error condition message}
 
-\item{call}{The execution environment of a currently running function where
-the error should be reported from.}
+\item{call}{The call where the error was generated. Alternatively, a
+\strong{character} vector of up to two elements that are concatenated like
+\code{elem1_elem2} to form the error class name. You could use \code{sys.call()} in
+order to use the name of the function as \code{elem1} and its first argument as
+\code{elme2}.}
 
 \item{envir}{The environment where to evaluate the glue expressions.}
 
@@ -58,6 +64,10 @@ output as a single line when \code{options(warn = 1)}.}
 
 \item{nframe}{The number of frames to go up the call stack to find the top
 call for stop condition messages.}
+
+\item{id}{An optional identifier to append to the error class (like
+\code{elem1_elem2_id} in case you need to differentiate two different errors of
+the same class.}
 
 \item{x}{An R object to describe.}
 }

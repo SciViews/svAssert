@@ -76,10 +76,13 @@
 #' rm(stop, warning)
 stop_ <- function(..., call. = FALSE, domain = NULL, class = NULL,
   call = stop_top_call(2L), envir = parent.frame(), last_call = sys.call(-1L)) {
+  # ... as a flat list, preserving names
+  msgs <- unlist(list(...))
+  args <- c(as.list(msgs), list(domain = domain, trim = TRUE))
   # Note that call. is not use here!
-  message <- gettext(..., domain = domain, trim = TRUE)
-  # Sometimes, gettext() looses names -> reapply them
-  names(message) <- ...names()
+  message <- do.call(gettext, args)
+  # Sometimes, gettext() drops names
+  names(message) <- names(msgs)
   # If the data-dot mechanism was activated, or if the first argument of the
   # first argument was '(.)', we provide extra information.
   if (missing(last_call))
@@ -134,6 +137,22 @@ stop_top_call <- function(nframe = 2L) {
     }
   }
   call
+}
+
+#' @rdname stop_
+#' @param call The call where the error was generated. Alternatively, a
+#' **character** vector of up to two elements that are concatenated like
+#' `elem1_elem2` to form the error class name. You could use `sys.call()` in
+#' order to use the name of the function as `elem1` and its first argument as
+#' `elme2`.
+#' @param id An optional identifier to append to the error class (like
+#' `elem1_elem2_id` in case you need to differentiate two different errors of
+#' the same class.
+#' @export
+error_class <- function(call = sys.call(-1), id = NULL) {
+  class_name <- as.character(call)
+  class_name <- class_name[1:min(2, length(class_name))]
+  paste(c(class_name, id), collapse = '_')
 }
 
 #' @rdname stop_

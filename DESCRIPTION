@@ -13,6 +13,7 @@ Maintainer: Philippe Grosjean <phgrosjean@sciviews.org>
 Depends:
     R (>= 4.4.0)
 Imports:
+  checkmate (>= 2.3.2),
   cli (>= 3.6.4),
   rlang (>= 1.1.1)
 Suggests:
@@ -32,3 +33,8 @@ Language: en-US
 ByteCompile: yes
 Config/testthat/edition: 3
 Config/testthat/parallel: true
+Collate:
+    'stop_.R'
+    'svAssert-internal.R'
+    'svAssert-package.R'
+    'is_numeric.R'

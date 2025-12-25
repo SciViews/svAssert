@@ -13,6 +13,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @importFrom checkmate qtest
 #' @importFrom cli cli_abort
 #' @importFrom rlang abort
 ## usethis namespace: end
