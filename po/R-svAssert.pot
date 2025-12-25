@@ -1,0 +1,287 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: svAssert 0.1.0\n"
+"POT-Creation-Date: 2025-12-25 23:46\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "{.arg {arg}} is not suitable."
+msgstr ""
+
+msgid "Variable '%s': %s"
+msgstr ""
+
+msgid "Unknown type '%s' to specify check for names. Supported are 'unnamed', 'named', 'unique' and 'strict'."
+msgstr ""
+
+msgid "Unknown class identifier '%c'"
+msgstr ""
+
+msgid "Timezones of 'x' and 'upper' must match"
+msgstr ""
+
+msgid "Timezones of 'x' and 'lower' must match"
+msgstr ""
+
+msgid "Rule may not be NA"
+msgstr ""
+
+msgid "Must store numerics"
+msgstr ""
+
+msgid "Must store logicals"
+msgstr ""
+
+msgid "Must store integers"
+msgstr ""
+
+msgid "Must store integerish values"
+msgstr ""
+
+msgid "Must store doubles"
+msgstr ""
+
+msgid "Must store complexs"
+msgstr ""
+
+msgid "Must store characters"
+msgstr ""
+
+msgid "Must store a list"
+msgstr ""
+
+msgid "Must have unique %s, but element %i is duplicated"
+msgstr ""
+
+msgid "Must have length 1"
+msgstr ""
+
+msgid "Must have length >= %g, but has length %g"
+msgstr ""
+
+msgid "Must have length <= %g, but has length %g"
+msgstr ""
+
+msgid "Must have length %g, but has length %g"
+msgstr ""
+
+msgid "Must have exactly %i rows, but has %i rows"
+msgstr ""
+
+msgid "Must have exactly %i cols, but has %i cols"
+msgstr ""
+
+msgid "Must have at most %i rows, but has %i rows"
+msgstr ""
+
+msgid "Must have at most %i cols, but has %i cols"
+msgstr ""
+
+msgid "Must have at least %i rows, but has %i rows"
+msgstr ""
+
+msgid "Must have at least %i cols, but has %i cols"
+msgstr ""
+
+msgid "Must have >=%i dimensions, but has dimension %i"
+msgstr ""
+
+msgid "Must have <=%i dimensions, but has dimension %i"
+msgstr ""
+
+msgid "Must have %s, but is NA at position %i"
+msgstr ""
+
+msgid "Must have %s, but element %i is empty"
+msgstr ""
+
+msgid "Must have %s according to R's variable naming conventions, but element %i does not comply"
+msgstr ""
+
+msgid "Must have %s"
+msgstr ""
+
+msgid "Must be sorted"
+msgstr ""
+
+msgid "Must be of type 'integerish'%s, not '%s'"
+msgstr ""
+
+msgid "Must be of type 'integerish', not 'NULL'"
+msgstr ""
+
+msgid "Must be of type 'integerish', but element %g is not in integer range"
+msgstr ""
+
+msgid "Must be of type 'integerish', but element %g is not close to an integer"
+msgstr ""
+
+msgid "Must be of type 'integerish', but element %g has an imaginary part"
+msgstr ""
+
+msgid "Must be of type '%s'%s, not '%s'"
+msgstr ""
+
+msgid "Must be of type '%s', not 'NULL'"
+msgstr ""
+
+msgid "Must be of type '%s', not '%s'"
+msgstr ""
+
+msgid "Must be of length %s %i, but has length %g"
+msgstr ""
+
+msgid "Must be of class '%s', not '%s'"
+msgstr ""
+
+msgid "Must be finite"
+msgstr ""
+
+msgid "Must be atomic"
+msgstr ""
+
+msgid "Must be a character vector"
+msgstr ""
+
+msgid "Must be a %i-d array, but has dimension %i"
+msgstr ""
+
+msgid "Must be >= %i"
+msgstr ""
+
+msgid "May not have %s"
+msgstr ""
+
+msgid "May not contain missing values, first at position %i"
+msgstr ""
+
+msgid "May not contain missing values, first at column %i, element %i"
+msgstr ""
+
+msgid "May not contain missing values, first at column '%s', element %i"
+msgstr ""
+
+msgid "May not be NA"
+msgstr ""
+
+msgid "Invalid length definition: %s"
+msgstr ""
+
+msgid "Invalid bound definition, missing opening '(' or '[': %s"
+msgstr ""
+
+msgid "Invalid bound definition, error parsing upper bound or missing closing ')' or ']': %s"
+msgstr ""
+
+msgid "Invalid bound definition, error parsing lower bound, missing separator ',' or missing closing ')' or ']': %s"
+msgstr ""
+
+msgid "Invalid argument 'mode'. Must be one of 'logical', 'integer', 'integerish', 'double', 'numeric', 'complex', 'character', 'list' or 'atomic'"
+msgstr ""
+
+msgid "Empty rule"
+msgstr ""
+
+msgid "Element %i is not >= %s"
+msgstr ""
+
+msgid "Element %i is not >= %g"
+msgstr ""
+
+msgid "Element %i is not <= %s"
+msgstr ""
+
+msgid "Element %i is not <= %g"
+msgstr ""
+
+msgid "Contains only missing values"
+msgstr ""
+
+msgid "Contains missing values (row %i, col %i)"
+msgstr ""
+
+msgid "Contains missing values (element %i)"
+msgstr ""
+
+msgid "Contains missing values (column '%s', row %i)"
+msgstr ""
+
+msgid "Contains missing values"
+msgstr ""
+
+msgid "Contains duplicated values, position %i"
+msgstr ""
+
+msgid "Cannot handle length >= %i"
+msgstr ""
+
+msgid "Cannot check for negative length"
+msgstr ""
+
+msgid "Bound checks only possible for numeric variables, strings and factors, not %s"
+msgstr ""
+
+msgid "Argument 'x' must be a list or data.frame"
+msgstr ""
+
+msgid "Argument 'upper' must be provided as single POSIXct time"
+msgstr ""
+
+msgid "Argument 'rules' must be a string"
+msgstr ""
+
+msgid "Argument 'lower' must be provided as single POSIXct time"
+msgstr ""
+
+msgid "All elements must have exactly %i characters, but element %i has %i chararacters"
+msgstr ""
+
+msgid "All elements must have at most %i characters, but element %i has %i characters"
+msgstr ""
+
+msgid "All elements must have at least %i characters, but element %i has %i characters"
+msgstr ""
+
+msgid "All elements must have %s %g chars"
+msgstr ""
+
+msgid "All elements must be %s Inf"
+msgstr ""
+
+msgid "All elements must be %s %g"
+msgstr ""
+
+msgid "All elements must be %s -Inf"
+msgstr ""
+
+msgid "Additional chars found in rule!"
+msgstr ""
+
+msgid "{.emph The data-dot mechanism was likely activated}"
+msgstr ""
+
+msgid "(see {.help svBase::data_dot_mechanism})."
+msgstr ""
+
+msgid "{.emph {.code .} is {object_info(.)}}"
+msgstr ""
+
+msgid "a data frame with %d rows and %d columns: %s"
+msgstr ""
+
+msgid "a list with %d elements"
+msgstr ""
+
+msgid "a vector of type '%s' and %d elements"
+msgstr ""
+
+msgid "an object of class '%s'"
+msgstr ""
+
+msgid "The provided check_function does not seem to be a checkmate check_ function."
+msgstr ""

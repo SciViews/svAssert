@@ -1,0 +1,339 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: svAssert 0.1.0\n"
+"POT-Creation-Date: 2025-12-25 23:46\n"
+"PO-Revision-Date: 2025-12-26 00:31+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+msgid "{.arg {arg}} is not suitable."
+msgstr "{.arg {arg}} ne convient pas."
+
+msgid "Variable '%s': %s"
+msgstr "Variable '%s' : %s"
+
+msgid ""
+"Unknown type '%s' to specify check for names. Supported are 'unnamed', "
+"'named', 'unique' and 'strict'."
+msgstr ""
+"Type inconnu '%s' pour spécifier la vérification des noms. Les types pris en "
+"charge sont 'unnamed', 'named', 'unique' et 'strict'."
+
+msgid "Unknown class identifier '%c'"
+msgstr "Identifiant de classe inconnu ‘%c'"
+
+msgid "Timezones of 'x' and 'upper' must match"
+msgstr "Les fuseaux horaires de 'x' et 'upper' doivent correspondre."
+
+msgid "Timezones of 'x' and 'lower' must match"
+msgstr "Les fuseaux horaires de 'x' et 'lower' doivent correspondre."
+
+msgid "Rule may not be NA"
+msgstr "La règle peut ne pas être NA"
+
+msgid "Must store numerics"
+msgstr "Doit stocker des nombres"
+
+msgid "Must store logicals"
+msgstr "Doit stocker des valeurs logiques"
+
+msgid "Must store integers"
+msgstr "Doit stocker des entiers"
+
+msgid "Must store integerish values"
+msgstr "Doit stocker des nombres convertibles en entiers"
+
+msgid "Must store doubles"
+msgstr "Doit stocker des nombres doubles"
+
+msgid "Must store complexs"
+msgstr "Doit stocker des nombres complexes"
+
+msgid "Must store characters"
+msgstr "Doit stocker des chaînes de caractères"
+
+msgid "Must store a list"
+msgstr "Doit stocker une liste"
+
+msgid "Must have unique %s, but element %i is duplicated"
+msgstr "Doit avoir un %s unique, mais l'élément %i est dupliqué."
+
+msgid "Must have length 1"
+msgstr "Longueur 1 requise"
+
+msgid "Must have length >= %g, but has length %g"
+msgstr "La longueur doit être >= %g, mais elle est %g."
+
+msgid "Must have length <= %g, but has length %g"
+msgstr "La longueur doit être <= %g, mais elle est %g."
+
+msgid "Must have length %g, but has length %g"
+msgstr "Doit avoir une longueur %g, mais a une longueur %g"
+
+msgid "Must have exactly %i rows, but has %i rows"
+msgstr "Doit comporter exactement %i lignes, mais en comporte %i."
+
+msgid "Must have exactly %i cols, but has %i cols"
+msgstr "Doit avoir exactement %i colonnes, mais en a %i."
+
+msgid "Must have at most %i rows, but has %i rows"
+msgstr "Doit avoir au maximum %i lignes, mais en a %i."
+
+msgid "Must have at most %i cols, but has %i cols"
+msgstr "Doit avoir au maximum %i colonnes, mais en a %i."
+
+msgid "Must have at least %i rows, but has %i rows"
+msgstr "Doit comporter au moins %i lignes, mais en comporte %i."
+
+msgid "Must have at least %i cols, but has %i cols"
+msgstr "Doit avoir au moins %i colonnes, mais en a %i."
+
+msgid "Must have >=%i dimensions, but has dimension %i"
+msgstr "Doit avoir >=%i dimensions, mais a une dimension %i"
+
+msgid "Must have <=%i dimensions, but has dimension %i"
+msgstr "Doit avoir <=%i dimensions, mais a la dimension %i"
+
+msgid "Must have %s, but is NA at position %i"
+msgstr "Doit avoir %s, mais est NA à la position %i"
+
+msgid "Must have %s, but element %i is empty"
+msgstr "Doit contenir %s, mais l'élément %i est vide."
+
+msgid ""
+"Must have %s according to R's variable naming conventions, but element %i "
+"does not comply"
+msgstr ""
+"Doit avoir %s selon les conventions de nommage des variables de R, mais "
+"l'élément %i n'est pas conforme."
+
+msgid "Must have %s"
+msgstr "Doit avoir %s"
+
+msgid "Must be sorted"
+msgstr "Doit être trié"
+
+msgid "Must be of type 'integerish'%s, not '%s'"
+msgstr "Doit être de type 'integerish'%s, et non '%s'."
+
+msgid "Must be of type 'integerish', not 'NULL'"
+msgstr "Doit être de type 'integerish', et non 'NULL'."
+
+msgid "Must be of type 'integerish', but element %g is not in integer range"
+msgstr ""
+"Doit être de type integerish', mais l'élément %g n'est pas dans la plage des "
+"entiers."
+
+msgid "Must be of type 'integerish', but element %g is not close to an integer"
+msgstr ""
+"Doit être de type integerish', mais l'élément %g n'est pas proche d'un "
+"entier."
+
+msgid "Must be of type 'integerish', but element %g has an imaginary part"
+msgstr ""
+"Doit être de type integerish', mais l'élément %g comporte une partie "
+"imaginaire."
+
+msgid "Must be of type '%s'%s, not '%s'"
+msgstr "Doit être de type '%s'%s, et non '%s'."
+
+msgid "Must be of type '%s', not 'NULL'"
+msgstr "Doit être de type '%s', et non 'NULL'."
+
+msgid "Must be of type '%s', not '%s'"
+msgstr "Doit être de type '%s', et non '%s'."
+
+msgid "Must be of length %s %i, but has length %g"
+msgstr "Doit avoir une longueur %s %i, mais a une longueur de %g."
+
+msgid "Must be of class '%s', not '%s'"
+msgstr "Doit être de classe '%s', et non '%s'."
+
+msgid "Must be finite"
+msgstr "Doit être fini"
+
+msgid "Must be atomic"
+msgstr "Doit être atomique"
+
+msgid "Must be a character vector"
+msgstr "Doit être un vecteur de chaînes de caractères"
+
+msgid "Must be a %i-d array, but has dimension %i"
+msgstr "Doit être un tableau (array) de %i dimensions, mais a une dimension %i"
+
+msgid "Must be >= %i"
+msgstr "Doit être >= %i"
+
+msgid "May not have %s"
+msgstr "Ne peut pas avoir %s"
+
+msgid "May not contain missing values, first at position %i"
+msgstr "Ne peut contenir de valeurs manquantes, la première à la position %i"
+
+msgid "May not contain missing values, first at column %i, element %i"
+msgstr ""
+"Ne peut pas contenir de valeurs manquantes, la première est dans la colonne "
+"%i, élément %i"
+
+msgid "May not contain missing values, first at column '%s', element %i"
+msgstr ""
+"Ne peut pas contenir de valeurs manquantes, la première est dans la colonne "
+"'%s', élément %i"
+
+msgid "May not be NA"
+msgstr "Peut ne pas être NA"
+
+msgid "Invalid length definition: %s"
+msgstr "Définition de longueur non valide : %s"
+
+msgid "Invalid bound definition, missing opening '(' or '[': %s"
+msgstr "Définition de limite non valide, '(' ou '[' manquant au début : %s"
+
+msgid ""
+"Invalid bound definition, error parsing upper bound or missing closing ')' "
+"or ']': %s"
+msgstr ""
+"Définition de limite invalide, erreur d’interprétation de la limite "
+"supérieure ou bien ')' ou ']' manquant à la fin : %s"
+
+msgid ""
+"Invalid bound definition, error parsing lower bound, missing separator ',' "
+"or missing closing ')' or ']': %s"
+msgstr ""
+"Définition de limite non valide, erreur d’interprétation de la limite "
+"inférieure, séparateur ',' manquant ou caractère de fin ')' ou ']' "
+"manquant : %s"
+
+msgid ""
+"Invalid argument 'mode'. Must be one of 'logical', 'integer', 'integerish', "
+"'double', 'numeric', 'complex', 'character', 'list' or 'atomic'"
+msgstr ""
+"Argument mode incorrect. Doit être l'un des options suivantes : 'logical’, "
+"'integer', 'integerish', 'double', 'numeric', 'complex', 'character', 'list' "
+"ou 'atomic'"
+
+msgid "Empty rule"
+msgstr "Règle vide"
+
+msgid "Element %i is not >= %s"
+msgstr "L'élément %i n'est pas >= %s"
+
+msgid "Element %i is not >= %g"
+msgstr "L'élément %i n'est pas >= %g"
+
+msgid "Element %i is not <= %s"
+msgstr "L'élément %i n'est pas <= %s"
+
+msgid "Element %i is not <= %g"
+msgstr "L'élément %i n'est pas <= %g"
+
+msgid "Contains only missing values"
+msgstr "Contient seulement des valeurs manquantes"
+
+msgid "Contains missing values (row %i, col %i)"
+msgstr "Contient des valeurs manquantes (ligne %i, colonne %i)"
+
+msgid "Contains missing values (element %i)"
+msgstr "Contient des valeurs manquantes (élément %i)"
+
+msgid "Contains missing values (column '%s', row %i)"
+msgstr "Contient des valeurs manquantes (colonne '%s', ligne %i)"
+
+msgid "Contains missing values"
+msgstr "Contient des valeurs manquantes"
+
+msgid "Contains duplicated values, position %i"
+msgstr "Contient des valeurs en double à la position %i"
+
+msgid "Cannot handle length >= %i"
+msgstr "Impossible de traiter une longueur >= %i"
+
+msgid "Cannot check for negative length"
+msgstr "Impossible de vérifier une longueur négative"
+
+msgid ""
+"Bound checks only possible for numeric variables, strings and factors, not %s"
+msgstr ""
+"Les vérifications de limites ne sont possibles que pour les variables "
+"numériques, les chaînes de caractères et les variables 'factor', pas pour %s."
+
+msgid "Argument 'x' must be a list or data.frame"
+msgstr "L'argument 'x' doit être une liste ou un data.frame."
+
+msgid "Argument 'upper' must be provided as single POSIXct time"
+msgstr ""
+"L'argument 'upper' doit être fourni sous la forme d'un seul temps 'POSIXct'."
+
+msgid "Argument 'rules' must be a string"
+msgstr "L’argument rules' doivent être une chaîne de caractères"
+
+msgid "Argument 'lower' must be provided as single POSIXct time"
+msgstr ""
+"L'argument 'lower' doit être fourni sous la forme d'un seul temps 'POSIXct'."
+
+msgid ""
+"All elements must have exactly %i characters, but element %i has %i "
+"chararacters"
+msgstr ""
+"Tous les éléments doivent comporter exactement %i caractères, mais l'élément "
+"%i en comporte %i."
+
+msgid ""
+"All elements must have at most %i characters, but element %i has %i "
+"characters"
+msgstr ""
+"Tous les éléments doivent comporter au maximum %i caractères, mais l'élément "
+"%i en comporte %i."
+
+msgid ""
+"All elements must have at least %i characters, but element %i has %i "
+"characters"
+msgstr ""
+"Tous les éléments doivent comporter au moins %i caractères, mais l'élément "
+"%i en comporte %i."
+
+msgid "All elements must have %s %g chars"
+msgstr "Tous les éléments doivent comporter %s %g caractères."
+
+msgid "All elements must be %s Inf"
+msgstr "Tous les éléments doivent être %s Inf"
+
+msgid "All elements must be %s %g"
+msgstr "Tous les éléments doivent être %s %g"
+
+msgid "All elements must be %s -Inf"
+msgstr "Tous les éléments doivent être %s -Inf"
+
+msgid "Additional chars found in rule!"
+msgstr "Caractères supplémentaires trouvés dans la règle !"
+
+msgid "{.emph The data-dot mechanism was likely activated}"
+msgstr "{.emph Le mécanisme «  data-dot » a été probablement activé}"
+
+msgid "(see {.help svBase::data_dot_mechanism})."
+msgstr "(voir {.help svBase::data_dot_mechanism})."
+
+msgid "{.emph {.code .} is {object_info(.)}}"
+msgstr "{.emph {.code .} est {object_info(.)}}"
+
+msgid "a data frame with %d rows and %d columns: %s"
+msgstr "un data frame avec %d lignes et %d colonnes : %s"
+
+msgid "a list with %d elements"
+msgstr "une liste avec %d éléments"
+
+msgid "a vector of type '%s' and %d elements"
+msgstr "un vecteur de type '%s' et %d éléments"
+
+msgid "an object of class '%s'"
+msgstr "un objet de classe '%s'"
+
+msgid ""
+"The provided check_function does not seem to be a checkmate check_ function."
+msgstr ""
+"La fonction 'check_xxx()' fournie ne semble pas être une fonction checkmate."

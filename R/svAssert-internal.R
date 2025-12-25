@@ -32,7 +32,10 @@ warning <- warning_
 
 # Get a message that was set by ours is_xxx() functions in checkmate
 .checkmate_message <- function() {
-  getNamespace('checkmate')$checkmate$svAssert_msg
+  msg <- getNamespace('checkmate')$checkmate$svAssert_msg
+  if (!is.null(msg))
+    msg <- translate(get('checkmate_msgs'), msg)
+  msg
 }
 
 # This is rlang::check_required(), but modified for translatable errors

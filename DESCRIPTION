@@ -38,3 +38,6 @@ Collate:
     'svAssert-internal.R'
     'svAssert-package.R'
     'is_numeric.R'
+    'translate.R'
+    'messages-checkmate.R'
+LazyData: true
