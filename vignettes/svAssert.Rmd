@@ -1,0 +1,21 @@
+---
+title: "'SciViews-R' - Assertions and Meaningful Error Messages"
+author: "Philippe Grosjean"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    fig_caption: yes
+vignette: >
+  %\VignetteIndexEntry{'SciViews-R' - Assertions and Meaningful Error Messages}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(svAssert)
+```
+
+The {svAssert} package provides tools for defensive programming in R, with fast, but versatile assertions partly based on {checkmate}, and meaningful and rich-formatted error messages using `rlang::abort()` and `cli::cli_abort()`, rebadged as `stop()` and using the base R mechanism for message translation in various natural languages.
