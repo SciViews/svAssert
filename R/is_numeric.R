@@ -90,7 +90,7 @@ stop_numeric <- function(x, msg = NULL, arg = substitute(x), id = NULL,
   chk_msg <- .checkmate_message() %||% ""
   arg <- .op$arg %||% arg
   msg <- .op$message %||% msg %||% c(
-    gettext("{.arg {arg}} is not suitable."), x = "{chk_msg}")
+    gettext("{.arg {arg}} is not suitable."), i = "{chk_msg}")
   .op$arg <- NULL
   .op$message <- NULL
   stop(msg, class = error_class(id = id), call = call %||% stop_top_call(2L))

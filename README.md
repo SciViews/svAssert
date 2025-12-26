@@ -14,14 +14,16 @@ status](https://sciviews.r-universe.dev/badges/svAssert)](https://sciviews.r-uni
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+stable](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 The {svAssert} package provides tools for defensive programming in R,
-with fast, but versatile assertions partly based on {checkmate}, and
-meaningful and rich-formatted error messages using `rlang::abort()` and
-`cli::cli_abort()`, rebadged as `stop()` and using the base R mechanism
-for message translation in various natural languages.
+with fast, but versatile assertions partly based on {checkmate}. When an
+assertion fails, it works hard to issue meaningful and rich-formatted
+error messages (thanks to `rlang::abort()` and `cli::cli_abort()`).
+These message can be easily translated in other natural languages.
+{svAssert} can even translate messages in other packages after they are
+thrown.
 
 ## Installation
 

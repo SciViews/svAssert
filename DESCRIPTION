@@ -2,10 +2,10 @@ Package: svAssert
 Type: Package
 Version: 0.1.0
 Title: 'SciViews::R' - Assertions and Meaningful Error Messages
-Description: Assertions using `is_xxx()` and `stop_xxx()` functions. Enhanced
-  error messages for 'SciViews::R' based on `cli::cli_abort()` and
-  `rlang::abort()` but also allowing message translation, including for messages
-  in other package, or after the error is thrown.
+Description: Assertions combining `is_xxx()` and `stop_xxx()` functions for
+  maximum flexibility. Enhanced error messages for 'SciViews::R' based on
+  `cli::cli_abort()` and `rlang::abort()` but also allowing message translation,
+  including for messages in other package, or after the error is thrown.
 Authors@R: c(person("Philippe", "Grosjean", role = c("aut", "cre"),
   email = "phgrosjean@sciviews.org",
   comment = c(ORCID = "0000-0002-2694-9471")))
@@ -17,13 +17,15 @@ Imports:
   cli (>= 3.6.4),
   rlang (>= 1.1.1)
 Suggests:
+    bench (>= 1.1.4),
     covr (>= 3.5.0),
-    knitr,
-    rmarkdown,
+    knitr (>= 1.42),
+    rmarkdown (>= 2.21),
     spelling (>= 2.2.1),
     testthat (>= 3.0.0)
 License: MIT + file LICENSE
-URL: https://github.com/SciViews/svAssert, https://www.sciviews.org/svAssert/, https://sciviews.r-universe.dev/svAssert
+URL: https://github.com/SciViews/svAssert, https://www.sciviews.org/svAssert/,
+  https://sciviews.r-universe.dev/svAssert
 BugReports: https://github.com/SciViews/svAssert/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

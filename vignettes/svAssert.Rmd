@@ -15,7 +15,216 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+Sys.setLanguage("en")
 library(svAssert)
 ```
 
-The {svAssert} package provides tools for defensive programming in R, with fast, but versatile assertions partly based on {checkmate}, and meaningful and rich-formatted error messages using `rlang::abort()` and `cli::cli_abort()`, rebadged as `stop()` and using the base R mechanism for message translation in various natural languages.
+The {svAssert} package provides tools for defensive programming in R. It implements fast, but versatile assertions partly based on {checkmate}. They issue meaningful and rich-formatted error messages using `rlang::abort()` and `cli::cli_abort()` in case an assertion fails. `cli::cli_abort()` is transformed into an enhanced `stop_()` function that is using the base R mechanism for message translation in various natural languages. Furthermore, {svAssert} also allows to post-translate messages from other packages that do not implement translation, even after the message is thrown.
+
+## Quick but versatile assertions
+
+Let's pretend you would like to pass, among other arguments, a numeric vector `x` to a function that has to calculate somewhere a logarithm. Here is the only relevant part of your function:
+
+```{r}
+my_calc <- function(x, other_args, ...) {
+  
+  # Some code ...
+  
+  y <- x # suppose some calculation on x here
+  
+  # Some more code
+  
+  (ylog <- log(y))
+  
+  # Even more code ...
+
+}
+```
+
+Now, you test it.
+
+```{r}
+my_calc(1:10)
+```
+
+OK, it works... but what about wrong inputs?
+
+```{r, error=TRUE}
+my_calc("text")
+my_calc(NULL)
+```
+
+This one is most probably incorrect:
+
+```{r}
+my_calc(FALSE)
+```
+
+... and here, you got the calculation, but with a warning and several `NaN` values (let's say this is **not** acceptable for your application and leads to a crash later on):
+
+```{r}
+my_calc(-5:5)
+```
+
+Note that the errors and warnings are referring to `log()`, not `my_calc()`. They also refer to an `y` argument that does not exist in the call to `my_calc()`. To decrypt the error message, you *must* dwelve into the code of `my_calc()`... not nice! Moreover, your function does not catch patent errors, like giving a **logical**, or a negative number.
+
+**Defensive programming** aims to safeguard this by catching problematic cases and issuing meaningful error message for the end-user, considering it should not be necessary to understand the internal workings of `my_calc()` to understand what the problem is.
+
+### Base R solution with `if() stop()`
+
+You can use an `if (...) stop(...)` construct to check conditions and stop execution if a condition is not met with a better error message, as in `my_calc2()` (comments about some more code eliminated, and note that we also test for no missing data).
+
+```{r}
+my_calc2 <- function(x, other_args, ...) {
+  # Assertions on 'x'
+  if (!is.numeric(x) || anyNA(x) || any(x < 0)) {
+    stop("Argument 'x' must be a non negative numeric vector.")
+  }
+  
+  y <- x
+  (ylog <- log(y))
+}
+```
+
+```{r, error=TRUE}
+my_calc2("text")
+my_calc2(FALSE)
+my_calc2(-5:5)
+my_calc2(c(1, NA, 3))
+```
+
+### Base R with `stopifnot()`
+
+This is much better, but we got only a generic error message. Some more details on why the assertion failed would be welcome. `stopifnot()` both simplifies the code and provides some more details on the failure:
+
+```{r}
+my_calc3 <- function(x, other_args, ...) {
+  stopifnot(is.numeric(x), !anyNA(x), all(x >= 0))
+  
+  y <- x
+  (ylog <- log(y))
+}
+```
+
+```{r, error=TRUE}
+my_calc3("text")
+my_calc3(FALSE)
+my_calc3(-5:5)
+my_calc3(c(1, NA, 3))
+```
+
+This is even better. However, it is a pity that `stopifnot()` does not allow for custom error messages. Also, a little bit more info would be welcome. For instance, it could be useful to indicate the class of `x` in case it fails `is.numeric(x)`, or perhaps, to point on the first element that is `NA` in the vector. This is where {svAssert} comes into play.
+
+### {svAssert} assertions
+
+Here is how you could do the job with {svAssert}[^1].
+
+[^1]: The `(test) || stop(...)` pattern is usually considered as bad code in R, as it is less explicit than `if (test) stop(...)`. Here we consider it as a distinctive mark of a couple "test \|\| error_msg" that forms the assertion. Of course, you are free to use `if` instead if you are not convinced.
+
+```{r}
+my_calc4 <- function(x, other_args, ...) {
+  is_numeric(x, lower = 0, any.missing = FALSE) || stop_numeric(x)
+  
+  y <- x
+  (ylog <- log(y))
+}
+```
+
+```{r, error=TRUE}
+my_calc4("text")
+my_calc4(FALSE)
+my_calc4(-5:5)
+my_calc4(c(1, NA, 3))
+```
+
+Now we got a little bit more information in the error messages. {svAssert} assertions are composed of two parts: an `is_xxx()` that does the tests as fast as possible, and a `stop_xxx()` that computes and throws the error message. It has two advantages over `stopifnot()`, or other full assertion, like the `assert_xxxx()` functions of {checkmate}:
+
+1.  It decouples the test from the error message generation, for maximum flexibility. The `is_xxx()` functions return solely `TRUE` or `FALSE`, and are also usable in any `if (...) ... else ...` construct. You can also use whatever code you like to throw the error, if the provided one with \`stop_xxx() does not fit your needs. Note, however, that the `stop_xxx()` functions have a `msg=` argument that allows quite extensive adaptations of the error message.
+
+2.  With two paired functions specialized in their respective tasks, the test can be done as quickly as possible, while the error message construction can be more flexible.
+
+### Assertions with {checkmate}
+
+All in one solutions, like `assert_xxx()` functions of {checkmate} allow to write shorter code, but are less flexible. You have little freedom to customize the error message[^2]. Checkmate's `assert_numeric()` does the job, and is based on the same C code as `is_numeric()` for the tests.
+
+[^2]: {checkmate} also provides `check_xxx()` and `test_xxx()` functions. You can use `test_xxx()` in place of `is_xxx()` but then, you loose the contextual information. The `check_xxx()` functions return either `TRUE` in case of success, or a string with the contextual error message in case of failure, but you have to use more complex construct to manage it, something like: `if (msg <- check_numeric(...)) stop(msg)`.
+
+```{r}
+assert_numeric <- checkmate::assert_numeric
+my_calc5 <- function(x, other_args, ...) {
+  assert_numeric(x, lower = 0, any.missing = FALSE)
+  y <- x
+  (ylog <- log(y))
+}
+```
+
+```{r, error=TRUE}
+my_calc5("text")
+my_calc5(FALSE)
+my_calc5(-5:5)
+my_calc5(c(1, NA, 3))
+```
+
+### Impact on performances
+
+It is important that the assertions do not impact too much on the performances (speed and memory consumption) of the function when the inputs are correct. Let's compare our different versions of `my_calc()` when assertions pass.
+
+Now, the comparison:
+
+```{r}
+x <- runif(10, min = 1, max = 100)
+bench::mark(
+  reference = my_calc(x),
+  if_stop   = my_calc2(x),
+  stopifnot = my_calc3(x),
+  svAssert  = my_calc4(x),
+  checkmate = my_calc5(x)
+)[, c("expression", "min", "median", "itr/sec", "mem_alloc", "gc/sec")]
+```
+
+Minimum impact is here with `if (...) stop(...)`, providing you only use quick primitive functions like `is.numeric()` / `anyNA()`, or simple comparisons like `x < 0` for **testing small objects**. The second best is {svAssert}, but checkmate's `assert_numeric()` and `stopifnot()` are not far away, and honestly, quite good[^3]. With such a small `x`, there is no memory impact.
+
+[^3]: There are many other implementations of assertions on CRAN that we do not review here. Some of them have *huge* impact on the performances! Always balance performance with functionalities while you decide the way you make your assertions. You probably do not want to end up with a function that is significantly slower, uses more memory, or both, than the one with just the code that perform the actual computation.
+
+Here is the same tests with a much larger vector:
+
+```{r}
+x <- runif(1e5, min = 1, max = 100)
+bench::mark(iterations = 100,
+  reference = my_calc(x),
+  if_stop   = my_calc2(x),
+  stopifnot = my_calc3(x),
+  svAssert  = my_calc4(x),
+  checkmate = my_calc5(x)
+)[, c("expression", "min", "median", "itr/sec", "mem_alloc", "gc/sec")]
+```
+
+The results are quite different. Now, both {svAssert} and {checkmate} are clearly better, both in term of speed and in memory use (still negligible). `if (...) stop(...)` and `stopifnot()` take significantly more time and have to allocate memory, it is for the `x < 0`/`x >= 0` tests. The trend is increasing with even larger `x`.
+
+*All in all, {svAssert} offers both quick and efficient options for assertions*. Only for functions that have to be *extremely* fast on very small objects, the `if (...) stop (...)` could be considered as a preferred alternative.
+
+TODO: implement a simpler `is_num()` function that could be competitive with `if (...) stop( ...)`.
+
+## Error message translation
+
+The {svAssert} package provides a mechanism to translate error message after they are thrown for functions and packages that do not implement natively these translations. {checkmate} seems to be one example where their authors are reluctant to translation, see [issue #234](<https://github.com/mllg/checkmate/issues/234>). Let's switch to French in R.
+
+```{r}
+Sys.setLanguage("fr")
+```
+
+Here an a few error messages we got with {checkmate} `assert_numeric()`, still in English unfortunately:
+
+```{r, error=TRUE}
+my_calc5(FALSE)
+my_calc5(-5:5)
+```
+
+Despite {svAssert} `is_numeric()` is internally based on {checkmate} code, and thus, receives the same untranslated messages, `error_numeric()` manages to do the translation in French, including for such messages that contain contextual parts (but the {rlang} part of the message -Error in- is not translated yet for now):
+
+```{r, error=TRUE}
+my_calc4(FALSE)
+my_calc4(-5:5)
+```
+
+Also note that the translated message adopt the better `rlang::abort()` layout with bullet lists.
