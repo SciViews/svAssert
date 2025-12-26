@@ -22,7 +22,7 @@
 <!--<link rel="stylesheet" href="style.css?nocache=123">--><!-- bootstrat v4.1.1, required CSS from more recent version --><link rel="stylesheet" href="bootstrap.more.css?nocache=123">
 <link href="style.css?nocache=123" rel="stylesheet">
 <!-- end of addition for svPkgdown --><meta property="og:title" content="SciViews::R - Assertions and Meaningful Error Messages">
-<meta property="og:description" content="Assertions using `is_xxx()` and `stop_xxx()` functions. Enhanced error messages for SciViews::R based on `cli::cli_abort()` and `rlang::abort()` but also allowing message translation, including for messages in other package, or after the error is thrown.">
+<meta property="og:description" content="Assertions combining `is_xxx()` and `stop_xxx()` functions for maximum flexibility. Enhanced error messages for SciViews::R based on `cli::cli_abort()` and `rlang::abort()` but also allowing message translation, including for messages in other package, or after the error is thrown.">
 <meta property="og:image" content="https://www.sciviews.org/svAssert/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- Mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js" async integrity="sha256-nlrDrBTHxJJlDDX22AS33xYI1OJHnGMDhiYMSe2U0e0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/config/TeX-AMS-MML_HTMLorMML.js" async integrity="sha256-4zys9A4hMQmtq2EUL+JRoXc0NZi8jVJMzb8onewOaSQ=" crossorigin="anonymous"></script><!-- Global site tag (gtag.js) - Google Analytics --><!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-462421-8"></script>
@@ -108,7 +108,7 @@
 
 <!-- badges: start -->
 
-<p>The {svAssert} package provides tools for defensive programming in R, with fast, but versatile assertions partly based on {checkmate}, and meaningful and rich-formatted error messages using <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> and <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code>, rebadged as <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> and using the base R mechanism for message translation in various natural languages.</p>
+<p>The {svAssert} package provides tools for defensive programming in R, with fast, but versatile assertions partly based on {checkmate}. When an assertion fails, it works hard to issue meaningful and rich-formatted error messages (thanks to <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> and <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code>). These message can be easily translated in other natural languages. {svAssert} can even translate messages in other packages after they are thrown.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
