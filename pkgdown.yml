@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   svAssert: svAssert.html
-last_built: 2025-12-26T12:24Z
+last_built: 2025-12-26T12:38Z
 urls:
   reference: https://www.sciviews.org/svAssert/reference
   article: https://www.sciviews.org/svAssert/articles

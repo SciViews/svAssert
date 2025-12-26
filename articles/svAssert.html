@@ -348,11 +348,11 @@ inputs are correct. Let’s compare our different versions of
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference  511.06ns    539ns  1<span style="text-decoration: underline;">564</span>541.        0B      0  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop      1.08µs   1.24µs   <span style="text-decoration: underline;">738</span>416.        0B      0  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot    3.57µs   4.13µs   <span style="text-decoration: underline;">230</span>925.        0B     46.2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert     2.62µs   2.91µs   <span style="text-decoration: underline;">317</span>498.        0B     31.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate    3.76µs   4.26µs   <span style="text-decoration: underline;">223</span>721.        0B     22.4</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference  601.05ns 642.03ns  1<span style="text-decoration: underline;">373</span>141.        0B    137. </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       1.2µs   1.35µs   <span style="text-decoration: underline;">674</span>824.        0B     67.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot    3.86µs   4.47µs   <span style="text-decoration: underline;">214</span>543.        0B     21.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert     2.85µs   3.19µs   <span style="text-decoration: underline;">299</span>381.        0B     29.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate    3.99µs   4.53µs   <span style="text-decoration: underline;">212</span>549.        0B     21.3</span></span></code></pre></div>
 <p>Minimum impact is here with <code>if (...) stop(...)</code>,
 providing you only use quick primitive functions like
 <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric()</a></code> / <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA()</a></code>, or simple comparisons
@@ -374,11 +374,11 @@ no memory impact.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference     496µs 745.97µs     <span style="text-decoration: underline;">1</span>395.   781.3KB     28.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       782µs   1.16ms      923.    1.15MB     18.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot     796µs   1.17ms      892.    1.15MB     18.2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert      624µs 867.58µs     <span style="text-decoration: underline;">1</span>213.   781.3KB     24.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate     629µs 873.59µs     <span style="text-decoration: underline;">1</span>205.   781.3KB     24.6</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference     515µs 820.95µs     <span style="text-decoration: underline;">1</span>273.   781.3KB     26.0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       767µs   1.22ms      883.    1.15MB     18.0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot     764µs   1.22ms      864.    1.15MB     17.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert      614µs 921.21µs     <span style="text-decoration: underline;">1</span>156.   781.3KB     23.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate     618µs 921.47µs     <span style="text-decoration: underline;">1</span>151.   781.3KB     23.5</span></span></code></pre></div>
 <p>The results are quite different. Now, both {svAssert} and {checkmate}
 are clearly better, both in term of speed and in memory use (still
 negligible). <code>if (...) stop(...)</code> and
@@ -420,17 +420,19 @@ Let’s switch to French in R.</p>
 including for such messages that contain contextual parts (but the
 {rlang} part of the message -Error in- is not translated yet for
 now):</p>
+<!-- GitHub CI that renders the {pkgdown} version is not able to translate messages, so, we fake its results here... but it should work in your R session. -->
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">my_calc4</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` is not suitable.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Must be of type 'numeric', not 'logical'</span></span>
-<span><span class="fu">my_calc4</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` is not suitable.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Element 1 is not &gt;= 0</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">my_calc4</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` ne convient pas.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Doit être de type 'numeric', et non 'logical'.</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">my_calc4</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` ne convient pas.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> L'élément 1 n'est pas &gt;= 0</span></span></code></pre>
 <p>Also note that the translated message adopt the better
-<code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> layout with bullet lists.</p>
+<code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> layout (list with two bullets here).</p>
 </div>
 <div class="footnotes footnotes-end-of-document">
 <hr>
