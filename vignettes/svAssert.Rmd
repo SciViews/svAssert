@@ -222,9 +222,33 @@ my_calc5(-5:5)
 
 Despite {svAssert} `is_numeric()` is internally based on {checkmate} code, and thus, receives the same untranslated messages, `error_numeric()` manages to do the translation in French, including for such messages that contain contextual parts (but the {rlang} part of the message -Error in- is not translated yet for now):
 
-```{r, error=TRUE}
+<!-- GitHub CI that renders the {pkgdown} version is not able to translate messages, so, we fake its results here... but it should work in your R session. -->
+
+```{r, eval=FALSE}
 my_calc4(FALSE)
+```
+
+```{r, echo=FALSE, error=TRUE}
+my_true_calc4 <- my_calc4
+my_calc4 <- function(x) {
+  stop_("`x` ne convient pas.",
+    i = "Doit être de type 'numeric', et non 'logical'.")
+}
+my_calc4(FALSE)
+my_calc4 <- my_true_calc4
+```
+
+```{r, eval=FALSE}
 my_calc4(-5:5)
 ```
 
-Also note that the translated message adopt the better `rlang::abort()` layout with bullet lists.
+```{r, echo=FALSE, error=TRUE}
+my_calc4 <- function(x) {
+  stop_("`x` ne convient pas.",
+    i = "L'élément 1 n'est pas >= 0")
+}
+my_calc4(-5:5)
+my_calc4 <- my_true_calc4
+```
+
+Also note that the translated message adopt the better `rlang::abort()` layout (list with two bullets here).
