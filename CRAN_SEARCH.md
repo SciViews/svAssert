@@ -8,12 +8,12 @@ Search for assert, check, test (partial, only package name starting with 'test')
 -   assertable: assertions for tables inside pipelines
 -   assertions: use glue, quite slow
 -   assertr: assertions inside pipelines
--   assertthat: Hadley Wickam, lots of inverse dependencies, but complex and slow, 4.5µs for `is.character()` assertion
+-   **assertthat**: Hadley Wickam, lots of inverse dependencies, but complex and slow, 4.5µs for `is.character()` assertion
 -   bigassertr: redefines `stop2()`/`warning2()`/`message2()` like `stop(sprintf(...))`, but problem with extracting strings to be translated. Then simple `assert_xxx()` functions with `if (...) stop2(...)`
 -   checkarg: lot of argument checking functions, but use a long and complex `checkarg()` function -\> too slow for simple checks.
 -   **checkmate**: fast (C code) but versatile and feature-rich. `check_xxx()`/`test_xxx()`/`assert_xxx()`/`expect_xxx()` for each test. `qtest()` and `qassert()` with a DSL for quick and versatile test. Lots of inverse dependencies. Little dependencies (backports + utils.)
 -   **checkthat**: `check_that()` function to check in a pipeline. Checking helpers written in a simple way -\> possibly useful stuff there.
--   chk: functions `chk_xxx()`/`vld_xxx()`/`check_xxx()` follows tidyverse style guide for errors. The `vld_xxx()` functions return `TRUE` or `FALSE`. Many `vld_xxx()` functions add un unecessary function call. Exemple: `vld_character <- function(x) is.character(x)`.
+-   chk: functions `chk_xxx()`/`vld_xxx()`/`check_xxx()` follows tidyverse style guide for errors. The `vld_xxx()` functions return `TRUE` or `FALSE`. Many `vld_xxx()` functions add unecessary function call. Exemple: `vld_character <- function(x) is.character(x)`.
 -   dataMaid: writing reports of data analyses. Not for assertions.
 -   editrules: superseeded by validate and errorlocate.
 -   erify: imports glue. `check_xxx()` functions but not optimized for speed and a little bit unnecessary complex to construct the error message.

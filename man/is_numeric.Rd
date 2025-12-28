@@ -2,7 +2,7 @@
 % Please edit documentation in R/is_numeric.R
 \name{is_numeric}
 \alias{is_numeric}
-\alias{stop_numeric}
+\alias{stop_is_numeric}
 \title{Assert that an argument is a vector of type numeric}
 \usage{
 is_numeric(
@@ -22,7 +22,15 @@ is_numeric(
   null.ok = FALSE
 )
 
-stop_numeric(x, msg = NULL, arg = substitute(x), id = NULL, call = NULL)
+stop_is_numeric(
+  x,
+  ...,
+  msg = NULL,
+  arg = substitute(x),
+  mod = NULL,
+  id = NULL,
+  call = NULL
+)
 }
 \arguments{
 \item{x}{The R object that was tested, typically with \code{is_numeric()}.}
@@ -36,8 +44,8 @@ equal to.}
 \item{finite}{Logical, indicating whether all elements of \code{x} must be finite,
 default is \code{FALSE}.}
 
-\item{any.missing}{Logical, indicating whether \code{x} may contain missing values,
-default is \code{TRUE}.}
+\item{any.missing}{Logical, indicating whether \code{x} may contain missing
+values, default is \code{TRUE}.}
 
 \item{all.missing}{Logical, indicating whether \code{x} may be entirely missing
 values, default is \code{TRUE}. An empty vector has no missing values.}
@@ -59,11 +67,15 @@ ascending order, default is \code{FALSE}.}
 names), \code{"strict"} (same as unique, but names must be also valid R variable
 names), or \code{"ids"} (same as strict but not enforce uniqueness).}
 
-\item{typed.missing}{If \code{FALSE} (default), all types of missing values (\code{NA}, \code{NA_integer_}, \code{NA_real_}, or \code{NA_character_}) and empty vectors are allowed while type-checking atomic input. If \code{TRUE}, leads to strict type checking.}
+\item{typed.missing}{If \code{FALSE} (default), all types of missing values (\code{NA},
+\code{NA_integer_}, \code{NA_real_}, or \code{NA_character_}) and empty vectors are allowed
+while type-checking atomic input. If \code{TRUE}, leads to strict type checking.}
 
 \item{null.ok}{If set to \code{TRUE}, x may also be \code{NULL}. In this case only a
 type check of \code{x} is performed, all additional checks are disabled. Default
 is \code{FALSE}.}
+
+\item{...}{Any additional arguments (not checked, and not used).}
 
 \item{msg}{An optional custom error message. If \code{NULL} (default), a
 standard message is created indicating that \code{x} is not numeric.}
@@ -71,8 +83,10 @@ standard message is created indicating that \code{x} is not numeric.}
 \item{arg}{The argument name, as a \strong{string}, default is the expression
 provided to \code{x}.}
 
-\item{id}{An optional identifier to append to the error class (like
-\code{fun_arg_id} in case you need to differentiate two similar errors.}
+\item{mod}{An optional modifier string, or \code{NULL} for none (default). Only
+\code{"!"} is considered here, indicating negation of the condition.}
+
+\item{id}{An optional identifier to append to the error class.}
 
 \item{call}{The call where the error was generated. The default computes the
 top-level call of the function(s) that called \code{error_numeric()} using
@@ -85,7 +99,9 @@ what failed, can be reused by \code{error_numeric()} that always create an error
 message.
 }
 \description{
-Vectors of storage type \strong{integer} and \strong{double} count as \strong{numeric}, c.f. \code{\link[=is.numeric]{is.numeric()}}. To explicitly assert for integer or double vectors, see \code{\link[=is_integer]{is_integer()}}, \code{\link[=is_integerish]{is_integerish()}} or \code{\link[=is_double]{is_double()}}.
+Vectors of storage type \strong{integer} and \strong{double} count as \strong{numeric}, c.f.
+\code{\link[=is.numeric]{is.numeric()}}. To explicitly assert for integer or double vectors, see
+\code{\link[=is_integer]{is_integer()}}, \code{\link[=is_integerish]{is_integerish()}} or \code{\link[=is_double]{is_double()}}.
 }
 \examples{
 is_numeric(1.2) # Better using is_num() in this simple case
@@ -93,15 +109,11 @@ is_numeric("a")
 svAssert:::.checkmate_message() # Get the message set by is_numeric()
 
 my_log <- function(x) {# x must be numeric >= 0
-  is_numeric(x, min.len = 1, lower = 0) || stop_numeric(x)
+  is_numeric(x, min.len = 1, lower = 0) || stop_is_numeric(x)
   log(x)
 }
 my_log(1)
 try(my_log(-1))
-
-# One can also do:
-#is_ <- is.logical # For more compact syntax
-#is_(check_numeric(x, min.len = 1, lower = 0) -> m) || error_numeric(x, m)
 }
 \seealso{
 \code{\link[checkmate:checkNumeric]{checkmate::check_numeric()}}

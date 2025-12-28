@@ -75,14 +75,17 @@
 #'
 #' rm(stop, warning)
 stop_ <- function(..., call. = FALSE, domain = NULL, class = NULL,
-  call = stop_top_call(2L), envir = parent.frame(), last_call = sys.call(-1L)) {
+    call = stop_top_call(2L), envir = parent.frame(),
+    last_call = sys.call(-1L)) {
+
   # ... as a flat list, preserving names
   msgs <- unlist(list(...))
   args <- c(as.list(msgs), list(domain = domain, trim = TRUE))
-  # Note that call. is not use here!
+  # Note that call. is not used here!
   message <- do.call(gettext, args)
   # Sometimes, gettext() drops names
   names(message) <- names(msgs)
+
   # If the data-dot mechanism was activated, or if the first argument of the
   # first argument was '(.)', we provide extra information.
   if (missing(last_call))
@@ -90,7 +93,7 @@ stop_ <- function(..., call. = FALSE, domain = NULL, class = NULL,
   if (length(last_call) < 2L) {
     first_arg <- ""
   } else {
-    first_arg <- deparse(last_call[[2]])
+    first_arg <- deparse1(last_call[[2]])
     if (is.null(first_arg) || is.na(first_arg))
       first_arg <- ""
   }
@@ -105,6 +108,7 @@ stop_ <- function(..., call. = FALSE, domain = NULL, class = NULL,
   if (data_dot || first_arg == '.')
     message <- c(message, `*` = gettext(
       "{.emph {.code .} is {object_info(.)}}"))
+
   cli_abort(message, class = class, call = call, .envir = envir)
 }
 

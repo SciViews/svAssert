@@ -35,11 +35,4 @@ Language: en-US
 ByteCompile: yes
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Collate:
-    'stop_.R'
-    'svAssert-internal.R'
-    'svAssert-package.R'
-    'is_numeric.R'
-    'translate.R'
-    'messages-checkmate.R'
 LazyData: true

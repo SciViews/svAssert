@@ -19,7 +19,7 @@ Sys.setLanguage("en")
 library(svAssert)
 ```
 
-The {svAssert} package provides tools for defensive programming in R. It implements fast, but versatile assertions partly based on {checkmate}. They issue meaningful and rich-formatted error messages using `rlang::abort()` and `cli::cli_abort()` in case an assertion fails. `cli::cli_abort()` is transformed into an enhanced `stop_()` function that is using the base R mechanism for message translation in various natural languages. Furthermore, {svAssert} also allows to post-translate messages from other packages that do not implement translation, even after the message is thrown.
+The {svAssert} package provides tools for defensive programming in R. It implements fast, but versatile assertions partly based on {checkmate}. They issue meaningful and rich-formatted error messages using `rlang::abort()` and `cli::cli_abort()` in case an assertion fails. `cli::cli_abort()` is called by an enhanced `stop_()` function that is using the base R mechanism for message translation in various natural languages. Furthermore, {svAssert} also allows to translate messages from other packages that do not implement translation.
 
 ## Quick but versatile assertions
 
@@ -66,13 +66,13 @@ my_calc(FALSE)
 my_calc(-5:5)
 ```
 
-Note that the errors and warnings are referring to `log()`, not `my_calc()`. They also refer to an `y` argument that does not exist in the call to `my_calc()`. To decrypt the error message, you *must* dwelve into the code of `my_calc()`... not nice! Moreover, your function does not catch patent errors, like giving a **logical**, or a negative number.
+Note that the errors and warnings are referring to `log()`, not `my_calc()`. They also refer to an `y` argument that does not appears in the call to `my_calc()`. To decrypt the error message, you *must* delve into the code of `my_calc()`... not nice! Moreover, your function does not catch patent errors, like giving a **logical**, or a negative number.
 
-**Defensive programming** aims to safeguard this by catching problematic cases and issuing meaningful error message for the end-user, considering it should not be necessary to understand the internal workings of `my_calc()` to understand what the problem is.
+**Defensive programming** aims to safeguard this by catching problematic cases and issuing meaningful error message for the end-user, considering it should not be necessary to understand the internal workings of `my_calc()` to understand what the problem is. In other terms, you should catch the error as soon as possible (at the very beginning of your `my_calc()` function), and issue an understandable error for the user.
 
-### Base R solution with `if() stop()`
+### Base R solution with `if (cond) stop()`
 
-You can use an `if (...) stop(...)` construct to check conditions and stop execution if a condition is not met with a better error message, as in `my_calc2()` (comments about some more code eliminated, and note that we also test for no missing data).
+You can use an `if (cond) stop(...)` construct to check conditions and stop execution if a condition is not met with a better error message, as in `my_calc2()` (comments about some more code eliminated, and note that we also test for no missing data).
 
 ```{r}
 my_calc2 <- function(x, other_args, ...) {
@@ -95,7 +95,7 @@ my_calc2(c(1, NA, 3))
 
 ### Base R with `stopifnot()`
 
-This is much better, but we got only a generic error message. Some more details on why the assertion failed would be welcome. `stopifnot()` both simplifies the code and provides some more details on the failure:
+This is much better, but we got only a generic error message. Some more details on why the assertion failed would be welcome. `stopifnot()` both simplifies the code and provides some more details on the reason of the failure:
 
 ```{r}
 my_calc3 <- function(x, other_args, ...) {
@@ -113,17 +113,17 @@ my_calc3(-5:5)
 my_calc3(c(1, NA, 3))
 ```
 
-This is even better. However, it is a pity that `stopifnot()` does not allow for custom error messages. Also, a little bit more info would be welcome. For instance, it could be useful to indicate the class of `x` in case it fails `is.numeric(x)`, or perhaps, to point on the first element that is `NA` in the vector. This is where {svAssert} comes into play.
+This is even better. However, it is a pity that `stopifnot()` does not allow for custom error messages. Also, a little bit more info would be welcome. For instance, it could be useful to indicate the class of `x` in case it fails `is.numeric(x)`, or perhaps, to point to the first element that is `NA` in the vector. This is where {svAssert} comes into play.
 
 ### {svAssert} assertions
 
 Here is how you could do the job with {svAssert}[^1].
 
-[^1]: The `(test) || stop(...)` pattern is usually considered as bad code in R, as it is less explicit than `if (test) stop(...)`. Here we consider it as a distinctive mark of a couple "test \|\| error_msg" that forms the assertion. Of course, you are free to use `if` instead if you are not convinced.
+[^1]: The `cond || stop(...)` pattern is usually considered as bad code in R, as it is less explicit than `if (cond) stop(...)`. **Here we consider it as a distinctive mark of a couple "test \|\| stop_test" that forms an assertion.** Of course, you are free to use `if` instead if you are not convinced.
 
 ```{r}
 my_calc4 <- function(x, other_args, ...) {
-  is_numeric(x, lower = 0, any.missing = FALSE) || stop_numeric(x)
+  is_numeric(x, lower = 0, any.missing = FALSE) || stop_is_numeric(x)
   
   y <- x
   (ylog <- log(y))
@@ -137,15 +137,15 @@ my_calc4(-5:5)
 my_calc4(c(1, NA, 3))
 ```
 
-Now we got a little bit more information in the error messages. {svAssert} assertions are composed of two parts: an `is_xxx()` that does the tests as fast as possible, and a `stop_xxx()` that computes and throws the error message. It has two advantages over `stopifnot()`, or other full assertion, like the `assert_xxxx()` functions of {checkmate}:
+Now we got a little bit more information in the error messages. {svAssert} assertions are composed of two parts: an `is_xxx()` that does the tests as fast as possible, and a `stop_is_xxx()` that computes and throws the error message. It has two advantages over `stopifnot()`, or fully-fledged assertion, like `assert_xxxx()` in {checkmate}:
 
-1.  It decouples the test from the error message generation, for maximum flexibility. The `is_xxx()` functions return solely `TRUE` or `FALSE`, and are also usable in any `if (...) ... else ...` construct. You can also use whatever code you like to throw the error, if the provided one with \`stop_xxx() does not fit your needs. Note, however, that the `stop_xxx()` functions have a `msg=` argument that allows quite extensive adaptations of the error message.
+1.  It decouples the test from the error message, for maximum flexibility. The `is_xxx()` functions return solely `TRUE` or `FALSE`, and are also usable in any `if (cond) ... else ...` construct in a different context (control flow). You can also use whatever code you like to throw the error, if the provided one with `stop_is_xxx()` does not fit your needs. Note, however, that the `stop_is_xxx()` functions have additional arguments, like `msg=`, that allows quite extensive adaptations of the error message.
 
-2.  With two paired functions specialized in their respective tasks, the test can be done as quickly as possible, while the error message construction can be more flexible.
+2.  With two paired functions specialized in their respective tasks, many basic tests can be done as quickly as possible. To assert only if `x` is numeric for instance, nothing beats `is.numeric(x) || stop(...)` in term of speed of execution when the assertion is successful. This is because `is_numeric()` is a primitive in R and runs significantly faster than any regular function call and `||` (also a primitive) never runs `stop(...)` when `x` *is* numeric. 
 
 ### Assertions with {checkmate}
 
-All in one solutions, like `assert_xxx()` functions of {checkmate} allow to write shorter code, but are less flexible. You have little freedom to customize the error message[^2]. Checkmate's `assert_numeric()` does the job, and is based on the same C code as `is_numeric()` for the tests.
+All-in-one assertions, like `assert_xxx()` in {checkmate} allow to write shorter code, but are less flexible. You have little freedom to customize the error message[^2]. Checkmate's `assert_numeric()` does the job, and is based on the same C code as `is_numeric()` for the tests.
 
 [^2]: {checkmate} also provides `check_xxx()` and `test_xxx()` functions. You can use `test_xxx()` in place of `is_xxx()` but then, you loose the contextual information. The `check_xxx()` functions return either `TRUE` in case of success, or a string with the contextual error message in case of failure, but you have to use more complex construct to manage it, something like: `if (msg <- check_numeric(...)) stop(msg)`.
 
@@ -153,6 +153,7 @@ All in one solutions, like `assert_xxx()` functions of {checkmate} allow to writ
 assert_numeric <- checkmate::assert_numeric
 my_calc5 <- function(x, other_args, ...) {
   assert_numeric(x, lower = 0, any.missing = FALSE)
+  
   y <- x
   (ylog <- log(y))
 }
@@ -164,6 +165,28 @@ my_calc5(FALSE)
 my_calc5(-5:5)
 my_calc5(c(1, NA, 3))
 ```
+
+### Enhanced `stopifnot_()`
+
+{svAssert} also provides `stopifnot_()`, a drop-in replacement of base `stopifnot()` that can use the `stop_is_xxx()` functions for more meaningful error messages. Here is how you could use it in `my_calc6()`:
+
+```{r}
+assert_numeric <- checkmate::assert_numeric
+my_calc5 <- function(x, other_args, ...) {
+  assert_numeric(x, lower = 0, any.missing = FALSE)
+  
+  y <- x
+  (ylog <- log(y))
+}
+```
+
+```{r, error=TRUE}
+my_calc5("text")
+my_calc5(FALSE)
+my_calc5(-5:5)
+my_calc5(c(1, NA, 3))
+```
+
 
 ### Impact on performances
 
@@ -184,7 +207,7 @@ bench::mark(
 
 Minimum impact is here with `if (...) stop(...)`, providing you only use quick primitive functions like `is.numeric()` / `anyNA()`, or simple comparisons like `x < 0` for **testing small objects**. The second best is {svAssert}, but checkmate's `assert_numeric()` and `stopifnot()` are not far away, and honestly, quite good[^3]. With such a small `x`, there is no memory impact.
 
-[^3]: There are many other implementations of assertions on CRAN that we do not review here. Some of them have *huge* impact on the performances! Always balance performance with functionalities while you decide the way you make your assertions. You probably do not want to end up with a function that is significantly slower, uses more memory, or both, than the one with just the code that perform the actual computation.
+[^3]: There are many other implementations of assertions on CRAN that we do not review here. Some of them have *huge* impact on the performances! Always balance performance with features while you decide the way you make your assertions. You probably do not want to end up with a function that is significantly slower, uses more memory, or both, than the one with just the code that perform the actual computation.
 
 Here is the same tests with a much larger vector:
 

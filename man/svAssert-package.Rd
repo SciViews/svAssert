@@ -7,14 +7,16 @@
 \title{Assertions and Meaningful Error Messages for 'SciViews::R'}
 \description{
 The \{svAssert\} package provides fast and versatile assertion functions
-using couple of functions \code{is_xxx()} and \code{stop_xxx()} to check function
-arguments or other conditions (defensive programming). It also provides an
-enhanced \code{stop()} function to generate meaningful error messages.
+using a couple \code{is_xxx()} and \code{stop_is_xxx()} to check function arguments or
+other conditions (defensive programming). It also provides an enhanced
+\code{stop()} to generate meaningful error messages.
 }
 \section{Important functions}{
 
 \itemize{
-\item \code{\link[=stop_]{stop_()}} enhanced stop function execution.
+\item \code{\link[=stop_]{stop_()}}, \code{\link[=warning_]{warning_()}} and other functions described on the same help
+page: enhanced stops and warnings.
+\item \code{\link[=is_numeric]{is_numeric()}}/\code{\link[=stop_is_numeric]{stop_is_numeric()}}: assertion on numeric vectors.
 }
 }
 
