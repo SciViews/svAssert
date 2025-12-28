@@ -107,7 +107,7 @@ Messages</h1>
                         <h4 data-toc-skip class="author">Philippe
 Grosjean</h4>
             
-            <h4 data-toc-skip class="date">2025-12-26</h4>
+            <h4 data-toc-skip class="date">2025-12-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SciViews/svAssert/blob/main/vignettes/svAssert.Rmd" class="external-link"><code>vignettes/svAssert.Rmd</code></a></small>
       <div class="hidden name"><code>svAssert.Rmd</code></div>
@@ -120,12 +120,11 @@ Grosjean</h4>
 It implements fast, but versatile assertions partly based on
 {checkmate}. They issue meaningful and rich-formatted error messages
 using <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> and <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code> in
-case an assertion fails. <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code> is transformed
-into an enhanced <code><a href="../reference/stop_.html">stop_()</a></code> function that is using the base R
+case an assertion fails. <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code> is called by an
+enhanced <code><a href="../reference/stop_.html">stop_()</a></code> function that is using the base R
 mechanism for message translation in various natural languages.
-Furthermore, {svAssert} also allows to post-translate messages from
-other packages that do not implement translation, even after the message
-is thrown.</p>
+Furthermore, {svAssert} also allows to translate messages from other
+packages that do not implement translation.</p>
 <div class="section level2">
 <h2 id="quick-but-versatile-assertions">Quick but versatile assertions<a class="anchor" aria-label="anchor" href="#quick-but-versatile-assertions"></a>
 </h2>
@@ -174,20 +173,22 @@ acceptable for your application and leads to a crash later on):</p>
 <span><span class="co">#&gt;  [8] 0.6931472 1.0986123 1.3862944 1.6094379</span></span></code></pre></div>
 <p>Note that the errors and warnings are referring to
 <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>, not <code>my_calc()</code>. They also refer to an
-<code>y</code> argument that does not exist in the call to
+<code>y</code> argument that does not appears in the call to
 <code>my_calc()</code>. To decrypt the error message, you <em>must</em>
-dwelve into the code of <code>my_calc()</code>… not nice! Moreover, your
+delve into the code of <code>my_calc()</code>… not nice! Moreover, your
 function does not catch patent errors, like giving a
 <strong>logical</strong>, or a negative number.</p>
 <p><strong>Defensive programming</strong> aims to safeguard this by
 catching problematic cases and issuing meaningful error message for the
 end-user, considering it should not be necessary to understand the
 internal workings of <code>my_calc()</code> to understand what the
-problem is.</p>
+problem is. In other terms, you should catch the error as soon as
+possible (at the very beginning of your <code>my_calc()</code>
+function), and issue an understandable error for the user.</p>
 <div class="section level3">
-<h3 id="base-r-solution-with-if-stop">Base R solution with <code>if() stop()</code><a class="anchor" aria-label="anchor" href="#base-r-solution-with-if-stop"></a>
+<h3 id="base-r-solution-with-if-cond-stop">Base R solution with <code>if (cond) stop()</code><a class="anchor" aria-label="anchor" href="#base-r-solution-with-if-cond-stop"></a>
 </h3>
-<p>You can use an <code>if (...) stop(...)</code> construct to check
+<p>You can use an <code>if (cond) stop(...)</code> construct to check
 conditions and stop execution if a condition is not met with a better
 error message, as in <code>my_calc2()</code> (comments about some more
 code eliminated, and note that we also test for no missing data).</p>
@@ -221,7 +222,7 @@ code eliminated, and note that we also test for no missing data).</p>
 <p>This is much better, but we got only a generic error message. Some
 more details on why the assertion failed would be welcome.
 <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> both simplifies the code and provides some more
-details on the failure:</p>
+details on the reason of the failure:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_calc3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">other_args</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
@@ -246,7 +247,7 @@ details on the failure:</p>
 <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> does not allow for custom error messages. Also,
 a little bit more info would be welcome. For instance, it could be
 useful to indicate the class of <code>x</code> in case it fails
-<code>is.numeric(x)</code>, or perhaps, to point on the first element
+<code>is.numeric(x)</code>, or perhaps, to point to the first element
 that is <code>NA</code> in the vector. This is where {svAssert} comes
 into play.</p>
 </div>
@@ -256,7 +257,7 @@ into play.</p>
 <p>Here is how you could do the job with {svAssert}<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_calc4</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">other_args</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="../reference/is_numeric.html">is_numeric</a></span><span class="op">(</span><span class="va">x</span>, lower <span class="op">=</span> <span class="fl">0</span>, any.missing <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="../reference/is_numeric.html">stop_numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/is_numeric.html">is_numeric</a></span><span class="op">(</span><span class="va">x</span>, lower <span class="op">=</span> <span class="fl">0</span>, any.missing <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="../reference/is_numeric.html">stop_is_numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span></span>
 <span>  <span class="op">(</span><span class="va">ylog</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
@@ -264,57 +265,94 @@ into play.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">my_calc4</span><span class="op">(</span><span class="st">"text"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` is not suitable.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use argument `x` (`text`).</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Must be of type 'numeric', not 'character'</span></span>
 <span><span class="fu">my_calc4</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` is not suitable.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use argument `x` (`FALSE`).</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Must be of type 'numeric', not 'logical'</span></span>
 <span><span class="fu">my_calc4</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` is not suitable.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use argument `x` (`-5`, `-4`, `-3`, `-2`, `-1`, `0`, `1`, `2`,</span></span>
+<span><span class="co">#&gt;   `3`, `4`, and `5`).</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Element 1 is not &gt;= 0</span></span>
 <span><span class="fu">my_calc4</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` is not suitable.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use argument `x` (`1`, `NA`, and `3`).</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Contains missing values (element 2)</span></span></code></pre></div>
 <p>Now we got a little bit more information in the error messages.
 {svAssert} assertions are composed of two parts: an
 <code>is_xxx()</code> that does the tests as fast as possible, and a
-<code>stop_xxx()</code> that computes and throws the error message. It
-has two advantages over <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code>, or other full
-assertion, like the <code>assert_xxxx()</code> functions of
-{checkmate}:</p>
+<code>stop_is_xxx()</code> that computes and throws the error message.
+It has two advantages over <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code>, or fully-fledged
+assertion, like <code>assert_xxxx()</code> in {checkmate}:</p>
 <ol style="list-style-type: decimal">
-<li><p>It decouples the test from the error message generation, for
-maximum flexibility. The <code>is_xxx()</code> functions return solely
+<li><p>It decouples the test from the error message, for maximum
+flexibility. The <code>is_xxx()</code> functions return solely
 <code>TRUE</code> or <code>FALSE</code>, and are also usable in any
-<code>if (...) ... else ...</code> construct. You can also use whatever
-code you like to throw the error, if the provided one with `stop_xxx()
-does not fit your needs. Note, however, that the <code>stop_xxx()</code>
-functions have a <code>msg=</code> argument that allows quite extensive
-adaptations of the error message.</p></li>
+<code>if (cond) ... else ...</code> construct in a different context
+(control flow). You can also use whatever code you like to throw the
+error, if the provided one with <code>stop_is_xxx()</code> does not fit
+your needs. Note, however, that the <code>stop_is_xxx()</code> functions
+have additional arguments, like <code>msg=</code>, that allows quite
+extensive adaptations of the error message.</p></li>
 <li><p>With two paired functions specialized in their respective tasks,
-the test can be done as quickly as possible, while the error message
-construction can be more flexible.</p></li>
+many basic tests can be done as quickly as possible. To assert only if
+<code>x</code> is numeric for instance, nothing beats
+<code>is.numeric(x) || stop(...)</code> in term of speed of execution
+when the assertion is successful. This is because
+<code><a href="../reference/is_numeric.html">is_numeric()</a></code> is a primitive in R and runs significantly
+faster than any regular function call and <code>||</code> (also a
+primitive) never runs <code>stop(...)</code> when <code>x</code>
+<em>is</em> numeric.</p></li>
 </ol>
 </div>
 <div class="section level3">
 <h3 id="assertions-with-checkmate">Assertions with {checkmate}<a class="anchor" aria-label="anchor" href="#assertions-with-checkmate"></a>
 </h3>
-<p>All in one solutions, like <code>assert_xxx()</code> functions of
-{checkmate} allow to write shorter code, but are less flexible. You have
-little freedom to customize the error message<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Checkmate’s
+<p>All-in-one assertions, like <code>assert_xxx()</code> in {checkmate}
+allow to write shorter code, but are less flexible. You have little
+freedom to customize the error message<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Checkmate’s
 <code>assert_numeric()</code> does the job, and is based on the same C
 code as <code><a href="../reference/is_numeric.html">is_numeric()</a></code> for the tests.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">assert_numeric</span> <span class="op">&lt;-</span> <span class="fu">checkmate</span><span class="fu">::</span><span class="va"><a href="https://mllg.github.io/checkmate/reference/checkNumeric.html" class="external-link">assert_numeric</a></span></span>
 <span><span class="va">my_calc5</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">other_args</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">assert_numeric</span><span class="op">(</span><span class="va">x</span>, lower <span class="op">=</span> <span class="fl">0</span>, any.missing <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  </span>
 <span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span></span>
 <span>  <span class="op">(</span><span class="va">ylog</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">my_calc5</span><span class="op">(</span><span class="st">"text"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc5()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Assertion on 'x' failed: Must be of type 'numeric', not 'character'.</span></span>
+<span><span class="fu">my_calc5</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc5()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Assertion on 'x' failed: Must be of type 'numeric', not 'logical'.</span></span>
+<span><span class="fu">my_calc5</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc5()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Assertion on 'x' failed: Element 1 is not &gt;= 0.</span></span>
+<span><span class="fu">my_calc5</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc5()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Assertion on 'x' failed: Contains missing values (element 2).</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="enhanced-stopifnot_">Enhanced <code>stopifnot_()</code><a class="anchor" aria-label="anchor" href="#enhanced-stopifnot_"></a>
+</h3>
+<p>{svAssert} also provides <code><a href="../reference/stopifnot_.html">stopifnot_()</a></code>, a drop-in
+replacement of base <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> that can use the
+<code>stop_is_xxx()</code> functions for more meaningful error messages.
+Here is how you could use it in <code>my_calc6()</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">assert_numeric</span> <span class="op">&lt;-</span> <span class="fu">checkmate</span><span class="fu">::</span><span class="va"><a href="https://mllg.github.io/checkmate/reference/checkNumeric.html" class="external-link">assert_numeric</a></span></span>
+<span><span class="va">my_calc5</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">other_args</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">assert_numeric</span><span class="op">(</span><span class="va">x</span>, lower <span class="op">=</span> <span class="fl">0</span>, any.missing <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span></span>
+<span>  <span class="op">(</span><span class="va">ylog</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">my_calc5</span><span class="op">(</span><span class="st">"text"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc5()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Assertion on 'x' failed: Must be of type 'numeric', not 'character'.</span></span>
@@ -336,7 +374,7 @@ performances (speed and memory consumption) of the function when the
 inputs are correct. Let’s compare our different versions of
 <code>my_calc()</code> when assertions pass.</p>
 <p>Now, the comparison:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, min <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="https://bench.r-lib.org/reference/mark.html" class="external-link">mark</a></span><span class="op">(</span></span>
 <span>  reference <span class="op">=</span> <span class="fu">my_calc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
@@ -348,11 +386,11 @@ inputs are correct. Let’s compare our different versions of
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference  601.05ns 642.03ns  1<span style="text-decoration: underline;">373</span>141.        0B    137. </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       1.2µs   1.35µs   <span style="text-decoration: underline;">674</span>824.        0B     67.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot    3.86µs   4.47µs   <span style="text-decoration: underline;">214</span>543.        0B     21.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert     2.85µs   3.19µs   <span style="text-decoration: underline;">299</span>381.        0B     29.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate    3.99µs   4.53µs   <span style="text-decoration: underline;">212</span>549.        0B     21.3</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference  591.04ns 632.02ns  1<span style="text-decoration: underline;">414</span>017.        0B    141. </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop      1.16µs    1.3µs   <span style="text-decoration: underline;">706</span>613.        0B     70.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot    3.86µs   4.38µs   <span style="text-decoration: underline;">219</span>220.        0B     21.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert     2.83µs   3.15µs   <span style="text-decoration: underline;">306</span>303.        0B     30.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate    3.98µs   4.48µs   <span style="text-decoration: underline;">213</span>432.        0B     21.3</span></span></code></pre></div>
 <p>Minimum impact is here with <code>if (...) stop(...)</code>,
 providing you only use quick primitive functions like
 <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric()</a></code> / <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA()</a></code>, or simple comparisons
@@ -362,7 +400,7 @@ The second best is {svAssert}, but checkmate’s
 away, and honestly, quite good<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. With such a small <code>x</code>, there is
 no memory impact.</p>
 <p>Here is the same tests with a much larger vector:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1e5</span>, min <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="https://bench.r-lib.org/reference/mark.html" class="external-link">mark</a></span><span class="op">(</span>iterations <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  reference <span class="op">=</span> <span class="fu">my_calc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
@@ -374,11 +412,11 @@ no memory impact.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference     515µs 820.95µs     <span style="text-decoration: underline;">1</span>273.   781.3KB     26.0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       767µs   1.22ms      883.    1.15MB     18.0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot     764µs   1.22ms      864.    1.15MB     17.6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert      614µs 921.21µs     <span style="text-decoration: underline;">1</span>156.   781.3KB     23.6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate     618µs 921.47µs     <span style="text-decoration: underline;">1</span>151.   781.3KB     23.5</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference     515µs 818.18µs     <span style="text-decoration: underline;">1</span>279.   781.3KB     26.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       776µs   1.29ms      847.    1.15MB     17.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot     762µs   1.29ms      829.    1.15MB     16.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert      613µs 921.86µs     <span style="text-decoration: underline;">1</span>128.   781.3KB     23.0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate     615µs 923.35µs     <span style="text-decoration: underline;">1</span>156.   781.3KB     23.6</span></span></code></pre></div>
 <p>The results are quite different. Now, both {svAssert} and {checkmate}
 are clearly better, both in term of speed and in memory use (still
 negligible). <code>if (...) stop(...)</code> and
@@ -403,11 +441,11 @@ message after they are thrown for functions and packages that do not
 implement natively these translations. {checkmate} seems to be one
 example where their authors are reluctant to translation, see <a href="https://github.com/mllg/checkmate/issues/234" class="external-link">issue #234</a>.
 Let’s switch to French in R.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/gettext.html" class="external-link">Sys.setLanguage</a></span><span class="op">(</span><span class="st">"fr"</span><span class="op">)</span></span></code></pre></div>
 <p>Here an a few error messages we got with {checkmate}
 <code>assert_numeric()</code>, still in English unfortunately:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">my_calc5</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc5()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Assertion on 'x' failed: Must be of type 'numeric', not 'logical'.</span></span>
@@ -421,12 +459,12 @@ including for such messages that contain contextual parts (but the
 {rlang} part of the message -Error in- is not translated yet for
 now):</p>
 <!-- GitHub CI that renders the {pkgdown} version is not able to translate messages, so, we fake its results here... but it should work in your R session. -->
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">my_calc4</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` ne convient pas.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Doit être de type 'numeric', et non 'logical'.</span></span></code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">my_calc4</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` ne convient pas.</span></span>
@@ -437,12 +475,12 @@ now):</p>
 <div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p>The <code>(test) || stop(...)</code> pattern is usually
+<li id="fn1"><p>The <code>cond || stop(...)</code> pattern is usually
 considered as bad code in R, as it is less explicit than
-<code>if (test) stop(...)</code>. Here we consider it as a distinctive
-mark of a couple “test || error_msg” that forms the assertion. Of
-course, you are free to use <code>if</code> instead if you are not
-convinced.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<code>if (cond) stop(...)</code>. <strong>Here we consider it as a
+distinctive mark of a couple “test || stop_test” that forms an
+assertion.</strong> Of course, you are free to use <code>if</code>
+instead if you are not convinced.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>{checkmate} also provides <code>check_xxx()</code> and
 <code>test_xxx()</code> functions. You can use <code>test_xxx()</code>
 in place of <code>is_xxx()</code> but then, you loose the contextual
@@ -453,10 +491,10 @@ construct to manage it, something like:
 <code>if (msg &lt;- check_numeric(...)) stop(msg)</code>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p>There are many other implementations of assertions on
 CRAN that we do not review here. Some of them have <em>huge</em> impact
-on the performances! Always balance performance with functionalities
-while you decide the way you make your assertions. You probably do not
-want to end up with a function that is significantly slower, uses more
-memory, or both, than the one with just the code that perform the actual
+on the performances! Always balance performance with features while you
+decide the way you make your assertions. You probably do not want to end
+up with a function that is significantly slower, uses more memory, or
+both, than the one with just the code that perform the actual
 computation.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

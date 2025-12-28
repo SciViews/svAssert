@@ -83,7 +83,8 @@
 <li>assertable: assertions for tables inside pipelines</li>
 <li>assertions: use glue, quite slow</li>
 <li>assertr: assertions inside pipelines</li>
-<li>assertthat: Hadley Wickam, lots of inverse dependencies, but complex and slow, 4.5µs for <code><a href="https://rdrr.io/r/base/character.html" class="external-link">is.character()</a></code> assertion</li>
+<li>
+<strong>assertthat</strong>: Hadley Wickam, lots of inverse dependencies, but complex and slow, 4.5µs for <code><a href="https://rdrr.io/r/base/character.html" class="external-link">is.character()</a></code> assertion</li>
 <li>bigassertr: redefines <code>stop2()</code>/<code>warning2()</code>/<code>message2()</code> like <code>stop(sprintf(...))</code>, but problem with extracting strings to be translated. Then simple <code>assert_xxx()</code> functions with <code>if (...) stop2(...)</code>
 </li>
 <li>checkarg: lot of argument checking functions, but use a long and complex <code>checkarg()</code> function -&gt; too slow for simple checks.</li>
@@ -91,7 +92,7 @@
 <strong>checkmate</strong>: fast (C code) but versatile and feature-rich. <code>check_xxx()</code>/<code>test_xxx()</code>/<code>assert_xxx()</code>/<code>expect_xxx()</code> for each test. <code>qtest()</code> and <code>qassert()</code> with a DSL for quick and versatile test. Lots of inverse dependencies. Little dependencies (backports + utils.)</li>
 <li>
 <strong>checkthat</strong>: <code>check_that()</code> function to check in a pipeline. Checking helpers written in a simple way -&gt; possibly useful stuff there.</li>
-<li>chk: functions <code>chk_xxx()</code>/<code>vld_xxx()</code>/<code>check_xxx()</code> follows tidyverse style guide for errors. The <code>vld_xxx()</code> functions return <code>TRUE</code> or <code>FALSE</code>. Many <code>vld_xxx()</code> functions add un unecessary function call. Exemple: <code>vld_character &lt;- function(x) is.character(x)</code>.</li>
+<li>chk: functions <code>chk_xxx()</code>/<code>vld_xxx()</code>/<code>check_xxx()</code> follows tidyverse style guide for errors. The <code>vld_xxx()</code> functions return <code>TRUE</code> or <code>FALSE</code>. Many <code>vld_xxx()</code> functions add unecessary function call. Exemple: <code>vld_character &lt;- function(x) is.character(x)</code>.</li>
 <li>dataMaid: writing reports of data analyses. Not for assertions.</li>
 <li>editrules: superseeded by validate and errorlocate.</li>
 <li>erify: imports glue. <code>check_xxx()</code> functions but not optimized for speed and a little bit unnecessary complex to construct the error message.</li>
