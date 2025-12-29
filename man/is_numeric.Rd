@@ -28,7 +28,7 @@ stop_is_numeric(
   msg = NULL,
   arg = substitute(x),
   mod = NULL,
-  id = NULL,
+  class_id = NULL,
   call = NULL
 )
 }
@@ -86,7 +86,7 @@ provided to \code{x}.}
 \item{mod}{An optional modifier string, or \code{NULL} for none (default). Only
 \code{"!"} is considered here, indicating negation of the condition.}
 
-\item{id}{An optional identifier to append to the error class.}
+\item{class_id}{An optional identifier to append to the error subclass.}
 
 \item{call}{The call where the error was generated. The default computes the
 top-level call of the function(s) that called \code{error_numeric()} using

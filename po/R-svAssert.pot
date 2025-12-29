@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2025-12-25 23:46\n"
+"POT-Creation-Date: 2025-12-29 16:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9,8 +9,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-msgid "{.arg {arg}} is not suitable."
+msgid "The contrary of \"{chk_msg}\""
+msgstr ""
+
+msgid "Can't use argument {.arg {arg}} ({.code {x}})."
 msgstr ""
 
 msgid "Variable '%s': %s"
@@ -262,6 +266,15 @@ msgstr ""
 msgid "Additional chars found in rule!"
 msgstr ""
 
+msgid "Formatting of the error message failed, using unformatted messages."
+msgstr ""
+
+msgid "This is an internal error, please report it to the package authors."
+msgstr ""
+
+msgid "Run `{.run rlang::last_trace()}` to see where the error occurred."
+msgstr ""
+
 msgid "{.emph The data-dot mechanism was likely activated}"
 msgstr ""
 
@@ -283,5 +296,28 @@ msgstr ""
 msgid "an object of class '%s'"
 msgstr ""
 
-msgid "The provided check_function does not seem to be a checkmate check_ function."
+msgid "{.code {arg}} must be different from {.code {arg2}}."
 msgstr ""
+
+msgid "Both {.code %s} and {.code %s} are {.val {%s}}."
+msgstr ""
+
+msgid "{.code {arg}} must be equal to {.code {arg2}}."
+msgstr ""
+
+msgid "{.code %s} is {.val {%s}}."
+msgstr ""
+
+msgid "%s and %s are not equal:\n  %s"
+msgstr ""
+
+msgid "`par.` should be a list, ignoring it."
+msgstr ""
+
+msgid "{.code {arg_or_code(expr = expr)}} is not TRUE"
+msgstr ""
+
+msgid        "%s is not TRUE"
+msgid_plural "%s are not all TRUE"
+msgstr[0]    ""
+msgstr[1]    ""

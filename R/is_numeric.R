@@ -67,13 +67,13 @@ is_numeric <- .check_to_is_function(checkmate::check_numeric)
 #' provided to `x`.
 #' @param mod An optional modifier string, or `NULL` for none (default). Only
 #' `"!"` is considered here, indicating negation of the condition.
-#' @param id An optional identifier to append to the error class.
+#' @param class_id An optional identifier to append to the error subclass.
 #' @param call The call where the error was generated. The default computes the
 #' top-level call of the function(s) that called `error_numeric()` using
 #' [stop_top_call()].
 #' @export
 stop_is_numeric <- function(x, ..., msg = NULL, arg = substitute(x), mod = NULL,
-    id = NULL, call = NULL) {
+    class_id = NULL, call = NULL) {
 
   arg <- .op$arg %||% arg
   .op$arg <- NULL # Just to be sure...
@@ -81,12 +81,14 @@ stop_is_numeric <- function(x, ..., msg = NULL, arg = substitute(x), mod = NULL,
   chk_msg <- .checkmate_message() %||% ""
 
   # mod "any" or "all" have no effect on functions returning a single logical
-  is_not <- startsWith(mod %||% "", "!")
   # is_not == TRUE is a problem because is_numeric() is not really negatable!
-  info <- if (is_not) gettext("The contrary of \"{chk_msg}\"") else "{chk_msg}"
+  info <- if (mod_not(mod))
+    gettext("The contrary of \"{chk_msg}\"") else "{chk_msg}"
 
   msg <- .op$message %||% msg %||% c(
     gettext("Can't use argument {.arg {arg}} ({.code {x}})."), i = info)
 
-  stop_(msg, class = error_class(id = id), call = call %||% stop_top_call(2L))
+  stop(msg, call = call, class_id = class_id)
+  #stop_(msg, class = error_class(call = call, class_id = class_id),
+  #  call = call %||% stop_top_call(2L))
 }

@@ -1,6 +1,31 @@
 .onLoad <- function(lib, pkg) {# nocov start
-  # ...
+  # This is necessary to reset rlang_backtrace_on_error option
+  cur_error_handler <- getOption("error")
+  if (is.null(cur_error_handler)) {
+    options(error = quote((function() {
+      options(rlang_backtrace_on_error =
+          getOption("svAssert_backtrace_on_error"))
+    })()))
+  } else if (is.call(cur_error_handler)) {
+    error_fun <- function() {
+      options(rlang_backtrace_on_error =
+          getOption("svAssert_backtrace_on_error"))
+      identity(1)
+    }
+    body(error_fun)[[3]] <- cur_error_handler
+    options(error = error_fun)
+    rm(error_fun)
+  }
+  rm(cur_error_handler)
 }
+
+# This does not work here, or in .onLoad() because in a call stack
+#globalCallingHandlers(error = function(e) {
+#  if (all(class(e) != "svAssert_error"))
+#    options(rlang_backtrace_on_error =
+#        getOption("svAssert_backtrace_on_error"))
+#  e
+#})
 
 # Internal options
 # TODo: change this!

@@ -6,16 +6,22 @@
 \alias{stop_top_call}
 \alias{error_class}
 \alias{object_info}
-\title{Enhanced stop() and warning()}
+\title{Enhanced stop and warning}
 \usage{
 stop_(
   ...,
-  call. = FALSE,
   domain = NULL,
-  class = NULL,
-  call = stop_top_call(2L),
-  envir = parent.frame(),
-  last_call = sys.call(-1L)
+  class = error_class(call, class_id = class_id),
+  class_id = .op$class_id,
+  call = NULL,
+  parent = NULL,
+  .inherit = TRUE,
+  .internal = FALSE,
+  .file = NULL,
+  .envir = parent.frame(),
+  .frame = .envir,
+  .trace_bottom = NULL,
+  .last_call = sys.call(-1L)
 )
 
 warning_(
@@ -28,61 +34,128 @@ warning_(
 
 stop_top_call(nframe = 2L)
 
-error_class(call = sys.call(-1), id = NULL)
+error_class(call = parent.frame(), class_id = NULL)
 
 object_info(x)
 }
 \arguments{
 \item{...}{One or more character strings with the error or warning
-message(s). Name them '*' =, 'i' =, 'v' =, 'x' = or '!' = to format message
-items. First message item is considered to be '!' by default.}
+messages to be translated. For \code{stop_()} only, name them \verb{'*' =}, \verb{'i' =},
+\verb{'v' =}, \verb{'x' =} or \verb{'!' =} to format a bullet-list with the message items.
+First message item is considered to use the \code{'!'} bullet by default. The
+messages also support glue interpolation and inline markups,
+see \href{https://rlang.r-lib.org/reference/topic-condition-formatting.html}{Formatting messages with cli}
+and \code{\link[cli:format_inline]{cli::format_inline()}}. \code{warning_()} messages are just concatenated
+without extra character (space) in between and without glue interpolation.}
 
-\item{call.}{Logical, whether to include the call in the warning message. Not
-used for \code{stop_()}.}
+\item{domain}{The translation. domain, see \code{\link[=gettext]{gettext()}}. If \code{NA} or \code{""},
+messages are not translated (use this with messages that are already
+translated).}
 
-\item{domain}{see \code{\link[=gettext]{gettext()}}. If NA, messages will not be translated.}
+\item{class}{The subclass of the error condition message. By default, it is
+computed by \code{error_class()}, using the name of the function in \code{call} and
+the name of the first argument concerned by the error message, if available
+(plus, optionally, the \code{class_id}).}
 
-\item{class}{The subclass of the error condition message}
+\item{class_id}{An optional identifier to append to the error subclass.}
 
-\item{call}{The call where the error was generated. Alternatively, a
-\strong{character} vector of up to two elements that are concatenated like
-\code{elem1_elem2} to form the error class name. You could use \code{sys.call()} in
-order to use the name of the function as \code{elem1} and its first argument as
-\code{elme2}.}
+\item{call}{The execution environment of a currently running function where
+the error should be reported from ( called the relevant function).}
 
-\item{envir}{The environment where to evaluate the glue expressions.}
+\item{parent}{Give a condition object when an error is rethrown from a
+condition handler, such as \code{\link[=withCallingHandlers]{withCallingHandlers()}} or \code{\link[rlang:try_fetch]{rlang::try_fetch()}}
+to chain errors (see
+\href{https://rlang.r-lib.org/reference/topic-error-chaining.html}{Including contextual information with error chains}.
+Indicate \code{NA} for an unchained rethrow, in case you want to rethrow with a
+custom error message (do not abuse this, and never hide errors).}
 
-\item{last_call}{The last call issued by the user, used to check if a dot
-(\code{.}) object was invoked.}
+\item{.inherit}{Logical, whether to inherit parent conditions when chaining
+errors. Default is \code{TRUE}.}
+
+\item{.internal}{Logical, whether the error is internal to the package. If
+\code{TRUE}, a footer bullet is added to indicate it to invite the user to
+report the error to the package authors. Default is \code{FALSE}.}
+
+\item{.file}{A connection or a string where to print the message. The default
+is context-dependent, see the \code{stdout} vs \code{stderr} section in
+[rlang::abort().}
+
+\item{.envir}{The environment where to evaluate the glue expressions.}
+
+\item{.frame}{The environment to use for the backtrace (usually the same as
+\code{.envir}).}
+
+\item{.trace_bottom}{An optional environment to truncate the backtrace in
+order to display only the most relevant part of it. Default is \code{NULL} and
+it uses \code{call}if it is an environment, or \code{.frame} otherwise.}
+
+\item{.last_call}{The last call issued by the user. Different from \code{call}
+when a first argument with dot \code{(.)} (e.g., \code{data = (.)}) was automatically
+injected in the call (so-called "data-dot mechanism). In this case, extra
+information is added to the error message, except if \code{.last_call} is \code{NULL}
+(use it to suppress these extra messages).}
+
+\item{call.}{Logical, whether to include the call in the warning message.}
 
 \item{immediate.}{Logical, whether to issue the warning immediately even if
 \code{getOption("warn") <= 0}. Note that this is not respected for condition
 objects.}
 
-\item{noBreaks.}{logical, indicating as far as possible the message should be
-output as a single line when \code{options(warn = 1)}.}
+\item{noBreaks.}{logical, indicating as far as possible that the message
+should be output as a single line when \code{options(warn = 1)}.}
 
-\item{nframe}{The number of frames to go up the call stack to find the top
-call for stop condition messages.}
-
-\item{id}{An optional identifier to append to the error class (like
-\code{elem1_elem2_id} in case you need to differentiate two different errors of
-the same class.}
+\item{nframe}{The number of frames to go up the call stack to start finding
+the top call (as soon as \code{.__to_call__.} is found in the environment,
+look in its parent frame).}
 
 \item{x}{An R object to describe.}
 }
 \value{
 \code{stop_()} and \code{warning_()} are invoked for their side-effects, but
-\code{stop_()} actually stops execution of the current code. \code{stop_top_call()}
-return the top call to be used for stop condition messages.
+\code{stop_()} actually stops execution of the current code.
+
+\code{stop_top_call()} returns the top call to be used for stop condition messages
+(to be used as \code{call} argument of \code{stop_()}).
+call for stop condition messages.
+
+\code{error_class()} returns a character string with the error class name computed
+for \code{stop_()}, that is, \code{c("fun_arg1_id", "svAssert_error")}.
+
+\code{object_info()} returns a character string describing the R object provided.
 }
 \description{
-\code{stop_()} is a wrapper around \code{\link[cli:cli_abort]{cli::cli_abort()}} that provides more control
-on the stop message and also provides nice formatting and glue interpolation.
-This version uses \code{\link[=gettext]{gettext()}} to translate the message, on the contrary to
-\code{\link[cli:cli_abort]{cli::cli_abort()}}. \code{warning_()} is similar to \code{\link[=warning]{warning()}} but uses
-\code{call. = FALSE} by default. Finally, \code{stop_top_call()} allows to tag from
-where an error should be reported (see examples).
+\code{stop_()} is an enhanced version of \code{\link[=stop]{stop()}} to generate meaningful error
+with error-recoverable glue interpolation and translation.
+\code{warning_()} is similar to \code{\link[=warning]{warning()}} but uses \code{call. = FALSE} by default.
+\code{error_class()}, \code{stop_top_call()} and \code{object_info()} are support functions
+that help building contextual and explicit error messages.
+}
+\details{
+\code{stop_()} is a wrapper around \code{\link[rlang:abort]{rlang::abort()}} that provides more control
+on the stop message thanks to \code{\link[cli:cli_abort]{cli::cli_abort()}} glue interpolation and
+\code{\link[=gettext]{gettext()}} translation. It can recover from errors in the formatting and
+translation processes. In this case, it throws the raw error message with a
+warning. It also adds a class to the error message, with a default one
+automatically computed by \code{error_class()}. It uses \code{stop_top_call()} to
+provide a simple mechanism to point to the execution environment of the
+running function that is relevant in the context. Add a variable
+\code{.__top_call__. <- TRUE} in the relevant function, or
+\code{.__top_call__. <- FALSE} in an helper function, to be sure to point to the
+function of interest (most of the time, the function called by the user, see
+examples).
+A reminder message inviting to access the backtrace of the error is displayed
+depending on the \code{svAssert_backtrace_on_error} option. Set it to \code{"none"}
+(disable it), \code{"reminder"} (default in interactive sessions, show the
+reminder message), \code{"branch"} (display a simplified backtrace) or \code{"full"}
+(default in non-interactive sessions, display the full tree). You rarely need
+to change the default. It synchronizes with \code{rlang_backtrace_on_error} option
+used in \code{\link[rlang:abort]{rlang::abort()}} when needed.
+You can use \code{\link[rlang:global_entrace]{rlang::global_entrace()}} to format classical base R \code{\link[=stop]{stop()}}
+messages in a similar way as \code{stop_()} and \code{\link[rlang:abort]{rlang::abort()}} do. You can also
+use \code{\link[rlang:last_error]{rlang::last_error()}} to revisit the last error message, or
+\code{\link[rlang:last_error]{rlang::last_trace()}} to inspect the backtrace of the message.
+Finally, the display of the error message is customisable. See
+\href{https://rlang.r-lib.org/reference/topic-condition-customisation.html}{Customising condition messages}.
 }
 \examples{
 # If you want to include the error messages in the translation strings in
@@ -133,5 +206,5 @@ test2(1:3)
 rm(stop, warning)
 }
 \seealso{
-\code{\link[=stop]{stop()}}, \code{\link[=warning]{warning()}}, \code{\link[cli:cli_abort]{cli::cli_abort()}}, \code{\link[=gettext]{gettext()}}
+\code{\link[rlang:abort]{rlang::abort()}}, \code{\link[cli:cli_abort]{cli::cli_abort()}}, \code{\link[=gettext]{gettext()}} \code{\link[=stop]{stop()}}, \code{\link[=warning]{warning()}}
 }

@@ -16,7 +16,7 @@
 
 ## usethis namespace: start
 #' @importFrom checkmate qtest
-#' @importFrom cli cli_abort cli_text
+#' @importFrom cli format_inline
 #' @importFrom rlang abort
 ## usethis namespace: end
 NULL

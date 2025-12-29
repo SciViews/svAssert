@@ -38,9 +38,10 @@ stop_equals <- `stop_==` <- function(lhs, rhs, ..., par. = list()) {
   msg3 <- msg_content(rhs)
 
   if (mod_not(par.$mod)) {
-    msg1 <- gettext("!" = "{.code {arg}} must be different from {.code {arg2}}.")
+    msg1 <- gettext(
+      "!" = "{.code {arg}} must be different from {.code {arg2}}.")
     # Special case: if mod is "!" and one of the two sides is a constant,
-    # we don't need further precisions
+    # we don't need further details
     if (is.null(msg2)) {
       msg3 <- NULL
     } else if (is.null(msg3)) {
@@ -57,7 +58,8 @@ stop_equals <- `stop_==` <- function(lhs, rhs, ..., par. = list()) {
   }
 
   stop(par.$msg, msg1, msg2, msg3, par.$footer,
-    class = error_class(id = par.$id), call = par.$call %||% stop_top_call(2L))
+    class = error_class(call = call, class_id = par.$id),
+    call = par.$call %||% stop_top_call(2L))
 }
 
 msg_content <- function(expr) {

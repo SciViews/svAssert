@@ -1,18 +1,22 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2025-12-25 23:46\n"
-"PO-Revision-Date: 2025-12-26 00:31+0100\n"
+"POT-Creation-Date: 2025-12-29 16:16\n"
+"PO-Revision-Date: 2025-12-29 16:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.8\n"
 
-msgid "{.arg {arg}} is not suitable."
-msgstr "{.arg {arg}} ne convient pas."
+msgid "The contrary of \"{chk_msg}\""
+msgstr "Le contraire de « {chk_msg} »"
+
+msgid "Can't use argument {.arg {arg}} ({.code {x}})."
+msgstr "Impossible d'utiliser l'argument {.arg {arg}} ({.code {x}})."
 
 msgid "Variable '%s': %s"
 msgstr "Variable '%s' : %s"
@@ -28,10 +32,10 @@ msgid "Unknown class identifier '%c'"
 msgstr "Identifiant de classe inconnu ‘%c'"
 
 msgid "Timezones of 'x' and 'upper' must match"
-msgstr "Les fuseaux horaires de 'x' et 'upper' doivent correspondre."
+msgstr "Les fuseaux horaires de 'x' et 'upper' doivent correspondre"
 
 msgid "Timezones of 'x' and 'lower' must match"
-msgstr "Les fuseaux horaires de 'x' et 'lower' doivent correspondre."
+msgstr "Les fuseaux horaires de 'x' et 'lower' doivent correspondre"
 
 msgid "Rule may not be NA"
 msgstr "La règle peut ne pas être NA"
@@ -61,37 +65,37 @@ msgid "Must store a list"
 msgstr "Doit stocker une liste"
 
 msgid "Must have unique %s, but element %i is duplicated"
-msgstr "Doit avoir un %s unique, mais l'élément %i est dupliqué."
+msgstr "Doit avoir un %s unique, mais l'élément %i est dupliqué"
 
 msgid "Must have length 1"
 msgstr "Longueur 1 requise"
 
 msgid "Must have length >= %g, but has length %g"
-msgstr "La longueur doit être >= %g, mais elle est %g."
+msgstr "La longueur doit être >= %g, mais elle est %g"
 
 msgid "Must have length <= %g, but has length %g"
-msgstr "La longueur doit être <= %g, mais elle est %g."
+msgstr "La longueur doit être <= %g, mais elle est %g"
 
 msgid "Must have length %g, but has length %g"
 msgstr "Doit avoir une longueur %g, mais a une longueur %g"
 
 msgid "Must have exactly %i rows, but has %i rows"
-msgstr "Doit comporter exactement %i lignes, mais en comporte %i."
+msgstr "Doit comporter exactement %i lignes, mais en comporte %i"
 
 msgid "Must have exactly %i cols, but has %i cols"
-msgstr "Doit avoir exactement %i colonnes, mais en a %i."
+msgstr "Doit avoir exactement %i colonnes, mais en a %i"
 
 msgid "Must have at most %i rows, but has %i rows"
-msgstr "Doit avoir au maximum %i lignes, mais en a %i."
+msgstr "Doit avoir au maximum %i lignes, mais en a %i"
 
 msgid "Must have at most %i cols, but has %i cols"
-msgstr "Doit avoir au maximum %i colonnes, mais en a %i."
+msgstr "Doit avoir au maximum %i colonnes, mais en a %i"
 
 msgid "Must have at least %i rows, but has %i rows"
-msgstr "Doit comporter au moins %i lignes, mais en comporte %i."
+msgstr "Doit comporter au moins %i lignes, mais en comporte %i"
 
 msgid "Must have at least %i cols, but has %i cols"
-msgstr "Doit avoir au moins %i colonnes, mais en a %i."
+msgstr "Doit avoir au moins %i colonnes, mais en a %i"
 
 msgid "Must have >=%i dimensions, but has dimension %i"
 msgstr "Doit avoir >=%i dimensions, mais a une dimension %i"
@@ -103,14 +107,14 @@ msgid "Must have %s, but is NA at position %i"
 msgstr "Doit avoir %s, mais est NA à la position %i"
 
 msgid "Must have %s, but element %i is empty"
-msgstr "Doit contenir %s, mais l'élément %i est vide."
+msgstr "Doit contenir %s, mais l'élément %i est vide"
 
 msgid ""
 "Must have %s according to R's variable naming conventions, but element %i "
 "does not comply"
 msgstr ""
 "Doit avoir %s selon les conventions de nommage des variables de R, mais "
-"l'élément %i n'est pas conforme."
+"l'élément %i n'est pas conforme"
 
 msgid "Must have %s"
 msgstr "Doit avoir %s"
@@ -127,17 +131,16 @@ msgstr "Doit être de type 'integerish', et non 'NULL'."
 msgid "Must be of type 'integerish', but element %g is not in integer range"
 msgstr ""
 "Doit être de type integerish', mais l'élément %g n'est pas dans la plage des "
-"entiers."
+"entiers"
 
 msgid "Must be of type 'integerish', but element %g is not close to an integer"
 msgstr ""
-"Doit être de type integerish', mais l'élément %g n'est pas proche d'un "
-"entier."
+"Doit être de type integerish', mais l'élément %g n'est pas proche d'un entier"
 
 msgid "Must be of type 'integerish', but element %g has an imaginary part"
 msgstr ""
 "Doit être de type integerish', mais l'élément %g comporte une partie "
-"imaginaire."
+"imaginaire"
 
 msgid "Must be of type '%s'%s, not '%s'"
 msgstr "Doit être de type '%s'%s, et non '%s'."
@@ -149,7 +152,7 @@ msgid "Must be of type '%s', not '%s'"
 msgstr "Doit être de type '%s', et non '%s'."
 
 msgid "Must be of length %s %i, but has length %g"
-msgstr "Doit avoir une longueur %s %i, mais a une longueur de %g."
+msgstr "Doit avoir une longueur %s %i, mais a une longueur de %g"
 
 msgid "Must be of class '%s', not '%s'"
 msgstr "Doit être de classe '%s', et non '%s'."
@@ -260,45 +263,45 @@ msgid ""
 "Bound checks only possible for numeric variables, strings and factors, not %s"
 msgstr ""
 "Les vérifications de limites ne sont possibles que pour les variables "
-"numériques, les chaînes de caractères et les variables 'factor', pas pour %s."
+"numériques, les chaînes de caractères et les variables 'factor', pas pour %s"
 
 msgid "Argument 'x' must be a list or data.frame"
-msgstr "L'argument 'x' doit être une liste ou un data.frame."
+msgstr "L'argument 'x' doit être une liste ou un data.frame"
 
 msgid "Argument 'upper' must be provided as single POSIXct time"
 msgstr ""
-"L'argument 'upper' doit être fourni sous la forme d'un seul temps 'POSIXct'."
+"L'argument 'upper' doit être fourni sous la forme d'un seul temps 'POSIXct'"
 
 msgid "Argument 'rules' must be a string"
 msgstr "L’argument rules' doivent être une chaîne de caractères"
 
 msgid "Argument 'lower' must be provided as single POSIXct time"
 msgstr ""
-"L'argument 'lower' doit être fourni sous la forme d'un seul temps 'POSIXct'."
+"L'argument 'lower' doit être fourni sous la forme d'un seul temps 'POSIXct'"
 
 msgid ""
 "All elements must have exactly %i characters, but element %i has %i "
 "chararacters"
 msgstr ""
 "Tous les éléments doivent comporter exactement %i caractères, mais l'élément "
-"%i en comporte %i."
+"%i en comporte %i"
 
 msgid ""
 "All elements must have at most %i characters, but element %i has %i "
 "characters"
 msgstr ""
 "Tous les éléments doivent comporter au maximum %i caractères, mais l'élément "
-"%i en comporte %i."
+"%i en comporte %i"
 
 msgid ""
 "All elements must have at least %i characters, but element %i has %i "
 "characters"
 msgstr ""
 "Tous les éléments doivent comporter au moins %i caractères, mais l'élément "
-"%i en comporte %i."
+"%i en comporte %i"
 
 msgid "All elements must have %s %g chars"
-msgstr "Tous les éléments doivent comporter %s %g caractères."
+msgstr "Tous les éléments doivent comporter %s %g caractères"
 
 msgid "All elements must be %s Inf"
 msgstr "Tous les éléments doivent être %s Inf"
@@ -311,6 +314,19 @@ msgstr "Tous les éléments doivent être %s -Inf"
 
 msgid "Additional chars found in rule!"
 msgstr "Caractères supplémentaires trouvés dans la règle !"
+
+msgid "Formatting of the error message failed, using unformatted messages."
+msgstr ""
+"Le formatage du message d'erreur a échoué, utilisation de messages non "
+"formatés."
+
+msgid "This is an internal error, please report it to the package authors."
+msgstr ""
+"Il s'agit d'une erreur interne, veuillez la signaler aux auteurs du package."
+
+msgid "Run `{.run rlang::last_trace()}` to see where the error occurred."
+msgstr ""
+"Exécutez `{.run rlang::last_trace()}` pour voir où l'erreur s'est produite."
 
 msgid "{.emph The data-dot mechanism was likely activated}"
 msgstr "{.emph Le mécanisme «  data-dot » a été probablement activé}"
@@ -333,7 +349,52 @@ msgstr "un vecteur de type '%s' et %d éléments"
 msgid "an object of class '%s'"
 msgstr "un objet de classe '%s'"
 
+msgid "{.code {arg}} must be different from {.code {arg2}}."
+msgstr "{.code {arg}} doit être différent de {.code {arg2}}."
+
+msgid "Both {.code %s} and {.code %s} are {.val {%s}}."
+msgstr "{.code %s} et {.code %s} sont tous deux {.val {%s}}."
+
+msgid "{.code {arg}} must be equal to {.code {arg2}}."
+msgstr "{.code {arg}} doit être égal à {.code {arg2}}."
+
+msgid "{.code %s} is {.val {%s}}."
+msgstr "{.code %s} est {.val {%s}}."
+
 msgid ""
-"The provided check_function does not seem to be a checkmate check_ function."
+"%s and %s are not equal:\n"
+"  %s"
 msgstr ""
-"La fonction 'check_xxx()' fournie ne semble pas être une fonction checkmate."
+"%s et %s ne sont pas égaux :\n"
+"  %s"
+
+msgid "`par.` should be a list, ignoring it."
+msgstr "« par. » doit être une liste, elle est ignorée."
+
+msgid "{.code {arg_or_code(expr = expr)}} is not TRUE"
+msgstr "{.code {arg_or_code(expr = expr)}} n'est pas VRAI"
+
+msgid "%s is not TRUE"
+msgid_plural "%s are not all TRUE"
+msgstr[0] "%s n'est pas VRAI"
+msgstr[1] "%s ne sont pas VRAI"
+
+#~ msgid "Translation of the error message failed, using original messages."
+#~ msgstr ""
+#~ "La traduction du message d'erreur a échoué, utilisation des messages "
+#~ "originaux."
+
+#~ msgid "Computation of data-dot error message failed, ignoring it."
+#~ msgstr ""
+#~ "Le calcul du message d'erreur pour le mécanisme « data-dot » a échoué, il "
+#~ "est ignoré."
+
+#~ msgid "{.arg {arg}} is not suitable."
+#~ msgstr "{.arg {arg}} ne convient pas."
+
+#~ msgid ""
+#~ "The provided check_function does not seem to be a checkmate check_ "
+#~ "function."
+#~ msgstr ""
+#~ "La fonction 'check_xxx()' fournie ne semble pas être une fonction "
+#~ "checkmate."

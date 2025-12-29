@@ -38,8 +38,8 @@
   # Verification it is like {.Call(...)}
   if (length(body_check) != 2 || as.character(body_check[[1]]) != "{" ||
       as.character(body_check[[2]][[1]]) != ".Call")
-    stop_(gettext(
-      "`check_function` is not an appropriate checkmate `check_...` function."))
+    stop_(
+      "`check_function` is not an appropriate checkmate `check_...` function.")
 
   # This is the new body template where we will inject the .Call() statement
   body_template <- body(function(x) {
