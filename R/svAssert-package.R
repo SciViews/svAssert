@@ -7,9 +7,8 @@
 #'
 #' @section Important functions:
 #'
-#' - [stop_()], [warning_()] and other functions described on the same help
-#'   page: enhanced stops and warnings.
-#' - [is_numeric()]/[stop_is_numeric()]: assertion on numeric vectors.
+#' - [stop_()] enhanced stop
+#' - [is_numeric()]/[stop_is_numeric()]: assertion on numeric vectors
 
 #' @keywords internal
 "_PACKAGE"

@@ -14,9 +14,8 @@ other conditions (defensive programming). It also provides an enhanced
 \section{Important functions}{
 
 \itemize{
-\item \code{\link[=stop_]{stop_()}}, \code{\link[=warning_]{warning_()}} and other functions described on the same help
-page: enhanced stops and warnings.
-\item \code{\link[=is_numeric]{is_numeric()}}/\code{\link[=stop_is_numeric]{stop_is_numeric()}}: assertion on numeric vectors.
+\item \code{\link[=stop_]{stop_()}} enhanced stop
+\item \code{\link[=is_numeric]{is_numeric()}}/\code{\link[=stop_is_numeric]{stop_is_numeric()}}: assertion on numeric vectors
 }
 }
 

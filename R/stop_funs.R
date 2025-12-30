@@ -27,19 +27,20 @@
 #' # Extra message
 #' stop_equals(2, x, par. = list(msg = c("Some info...", x = "This is wrong"),
 #'   footer = c("*" = "A footer..."))) |> try()
-stop_equals <- `stop_==` <- function(lhs, rhs, ..., par. = list()) {
+stop_equals <- function(lhs, rhs, ..., par. = list()) {
   # TODO: implement any, all, !any and !all modifiers
-  lhs <- substitute(lhs)
-  rhs <- substitute(rhs)
-  arg <- .op$arg %||% par.$arg %||% arg_or_code(lhs)
-  arg2 <- .op$arg2 %||% par.$arg2 %||% arg_or_code(rhs)
 
-  msg2 <- msg_content(lhs)
-  msg3 <- msg_content(rhs)
+  .__top_call__. <- FALSE
+
+  arg <- lbl(.op$arg %||% par.$arg %||% substitute(lhs))
+  arg2 <- lbl(.op$arg2 %||% par.$arg2 %||% substitute(rhs))
+
+  msg2 <- mod_content(lhs, arg)
+  msg3 <- mod_content(rhs, arg2)
 
   if (mod_not(par.$mod)) {
-    msg1 <- gettext(
-      "!" = "{.code {arg}} must be different from {.code {arg2}}.")
+    msg1 <- c("!" = gettextf("{.code %s} must be different from {.code %s}.",
+      arg, arg2))
     # Special case: if mod is "!" and one of the two sides is a constant,
     # we don't need further details
     if (is.null(msg2)) {
@@ -47,25 +48,39 @@ stop_equals <- `stop_==` <- function(lhs, rhs, ..., par. = list()) {
     } else if (is.null(msg3)) {
       msg2 <- NULL
     } else { # Both sides are complex expressions, and are the same
-      x <- as.character(lhs)
-      y <- as.character(rhs)
       msg2 <- c("*" = gettextf(
-        "Both {.code %s} and {.code %s} are {.val {%s}}.", x, y, y))
+        "Both {.code %s} and {.code %s} contain {.val %s}.",
+        arg, arg2, lbl(lhs)))
       msg3 <- NULL
     }
   } else {
-    msg1 <- gettext("!" = "{.code {arg}} must be equal to {.code {arg2}}.")
+    msg1 <- c("!" = gettextf("{.code %s} must be equal to {.code %s}.",
+      arg, arg2))
   }
 
-  stop(par.$msg, msg1, msg2, msg3, par.$footer,
-    class = error_class(call = call, class_id = par.$id),
-    call = par.$call %||% stop_top_call(2L))
+  stop(par.$msg, msg1, msg2, msg3, par.$footer, class_id = par.$id,
+    call = par.$call)
 }
 
-msg_content <- function(expr) {
-  if (is.symbol(expr) || is.call(expr)) {
-    label <- arg_or_code(expr)
-    c("*" = gettextf("{.code %s} is {.val {%s}}.", label, deparse(expr)))
-  } else NULL
-}
+#' @rdname stop_equals
+#' @export
+`stop_==` <- stop_equals
 
+mod_content <- function(x, expr) {
+  if (x == expr)
+    return(NULL)
+
+  if (is.call(expr)) {
+    msg <- switch(as.character(expr[[1]]),
+      length = gettextf("length of {.code %s}", lbl(expr[[2]])),
+      nrow =,
+      NROW = gettextf("number of rows of {.code %s}", lbl(expr[[2]])),
+      ncol =,
+      NCOL = gettext("number of columns of {.code %s}", lbl(expr[[2]])),
+      sprintf("{.code {%s}}", lbl(expr))
+    )
+  } else {
+    msg <- sprintf("{.code {%s}}", lbl(expr))
+  }
+  c("*" = gettextf("%s is {.val %s}.", msg, x))
+}

@@ -2,11 +2,11 @@
 % Please edit documentation in R/stop_.R
 \name{stop_}
 \alias{stop_}
-\alias{warning_}
 \alias{stop_top_call}
 \alias{error_class}
 \alias{object_info}
-\title{Enhanced stop and warning}
+\alias{lbl}
+\title{Enhanced stop}
 \usage{
 stop_(
   ...,
@@ -24,38 +24,29 @@ stop_(
   .last_call = sys.call(-1L)
 )
 
-warning_(
-  ...,
-  call. = FALSE,
-  immediate. = FALSE,
-  noBreaks. = FALSE,
-  domain = NULL
-)
-
-stop_top_call(nframe = 2L)
+stop_top_call(nframe = 1L)
 
 error_class(call = parent.frame(), class_id = NULL)
 
 object_info(x)
+
+lbl(expr, width = 30L, nlines = 1L)
 }
 \arguments{
 \item{...}{One or more character strings with the error or warning
-messages to be translated. For \code{stop_()} only, name them \verb{'*' =}, \verb{'i' =},
-\verb{'v' =}, \verb{'x' =} or \verb{'!' =} to format a bullet-list with the message items.
-First message item is considered to use the \code{'!'} bullet by default. The
-messages also support glue interpolation and inline markups,
-see \href{https://rlang.r-lib.org/reference/topic-condition-formatting.html}{Formatting messages with cli}
-and \code{\link[cli:format_inline]{cli::format_inline()}}. \code{warning_()} messages are just concatenated
-without extra character (space) in between and without glue interpolation.}
+messages to be translated. Name them \verb{'*' =}, \verb{'i' =}, \verb{'v' =}, \verb{'x' =} or
+\verb{'!' =} to format a bullet-list with the message items. First message item
+is considered to use the \code{'!'} bullet by default. The messages also support
+glue interpolation and inline markups, see \href{https://rlang.r-lib.org/reference/topic-condition-formatting.html}{Formatting messages with cli}
+and \code{\link[cli:format_inline]{cli::format_inline()}}.}
 
 \item{domain}{The translation. domain, see \code{\link[=gettext]{gettext()}}. If \code{NA} or \code{""},
 messages are not translated (use this with messages that are already
 translated).}
 
 \item{class}{The subclass of the error condition message. By default, it is
-computed by \code{error_class()}, using the name of the function in \code{call} and
-the name of the first argument concerned by the error message, if available
-(plus, optionally, the \code{class_id}).}
+computed by \code{error_class()}, using the name of the function in \code{call}
+(plus, optionally, the \code{class_id}), or \code{"svAssert_error"} by default.}
 
 \item{class_id}{An optional identifier to append to the error subclass.}
 
@@ -95,46 +86,45 @@ injected in the call (so-called "data-dot mechanism). In this case, extra
 information is added to the error message, except if \code{.last_call} is \code{NULL}
 (use it to suppress these extra messages).}
 
-\item{call.}{Logical, whether to include the call in the warning message.}
-
-\item{immediate.}{Logical, whether to issue the warning immediately even if
-\code{getOption("warn") <= 0}. Note that this is not respected for condition
-objects.}
-
-\item{noBreaks.}{logical, indicating as far as possible that the message
-should be output as a single line when \code{options(warn = 1)}.}
-
 \item{nframe}{The number of frames to go up the call stack to start finding
 the top call (as soon as \code{.__to_call__.} is found in the environment,
 look in its parent frame).}
 
 \item{x}{An R object to describe.}
+
+\item{expr}{An R expression to deparse}
+
+\item{width}{Maximum width of the deparsed expression}
+
+\item{nlines}{Maximum number of lines for the deparsed expression}
 }
 \value{
-\code{stop_()} and \code{warning_()} are invoked for their side-effects, but
-\code{stop_()} actually stops execution of the current code.
+\code{stop_()} is invoked for its side-effects, to stop execution of the
+current code.
 
 \code{stop_top_call()} returns the top call to be used for stop condition messages
 (to be used as \code{call} argument of \code{stop_()}).
 call for stop condition messages.
 
 \code{error_class()} returns a character string with the error class name computed
-for \code{stop_()}, that is, \code{c("fun_arg1_id", "svAssert_error")}.
+for \code{stop_()}, that is, "fun_id_error", or "svAssert_error", by default.
 
 \code{object_info()} returns a character string describing the R object provided.
+
+\code{lbl()} returns a deparsed version of an expression suitable for
+\{\if{html}{\out{<format>}} \{lbl(x)\}\} where \verb{<format>} could be \code{.var}, \code{.arg}, or \code{.code}.
 }
 \description{
 \code{stop_()} is an enhanced version of \code{\link[=stop]{stop()}} to generate meaningful error
 with error-recoverable glue interpolation and translation.
-\code{warning_()} is similar to \code{\link[=warning]{warning()}} but uses \code{call. = FALSE} by default.
-\code{error_class()}, \code{stop_top_call()} and \code{object_info()} are support functions
-that help building contextual and explicit error messages.
+\code{error_class()}, \code{stop_top_call()}, \code{object_info()} and `lbl()`` are support
+functions that help building contextual and explicit error messages.
 }
 \details{
 \code{stop_()} is a wrapper around \code{\link[rlang:abort]{rlang::abort()}} that provides more control
 on the stop message thanks to \code{\link[cli:cli_abort]{cli::cli_abort()}} glue interpolation and
-\code{\link[=gettext]{gettext()}} translation. It can recover from errors in the formatting and
-translation processes. In this case, it throws the raw error message with a
+\code{\link[=gettext]{gettext()}} translation. It can recover from errors in the formatting
+processes. In this case, it throws the raw error message with a
 warning. It also adds a class to the error message, with a default one
 automatically computed by \code{error_class()}. It uses \code{stop_top_call()} to
 provide a simple mechanism to point to the execution environment of the
@@ -150,7 +140,7 @@ reminder message), \code{"branch"} (display a simplified backtrace) or \code{"fu
 (default in non-interactive sessions, display the full tree). You rarely need
 to change the default. It synchronizes with \code{rlang_backtrace_on_error} option
 used in \code{\link[rlang:abort]{rlang::abort()}} when needed.
-You can use \code{\link[rlang:global_entrace]{rlang::global_entrace()}} to format classical base R \code{\link[=stop]{stop()}}
+You can use \code{\link[rlang:global_entrace]{rlang::global_entrace()}} to display classical base R \code{\link[=stop]{stop()}}
 messages in a similar way as \code{stop_()} and \code{\link[rlang:abort]{rlang::abort()}} do. You can also
 use \code{\link[rlang:last_error]{rlang::last_error()}} to revisit the last error message, or
 \code{\link[rlang:last_error]{rlang::last_trace()}} to inspect the backtrace of the message.
@@ -159,40 +149,41 @@ Finally, the display of the error message is customisable. See
 }
 \examples{
 # If you want to include the error messages in the translation strings in
-# your package, you have to rename `stop_()` into `stop()` and `warning_()`
-# into `warning()`, because [tools::xgettext2pot()] will only pick up the
-# later ones.
+# your package, you have to rename `stop_()` into `stop()` because
+# [tools::xgettext2pot()] will only pick up messages in the later ones.
+library(svAssert)
 stop <- stop_
-warning <- warning_
 
-# Call not integrated by default now
-warning("just a test")
-warning("just a test", call. = TRUE)
-
-if (FALSE) {# Avoid running code that generates errors automatically
+# Note: the |> try() are there to catch error. Do not use them in your code!
 # Correctly formatted stop messages
 n <- "some text"
 stop("{.var n} must be a numeric vector",
-  x = "You've supplied a {.cls {class(n)}} vector.")
+  x = "You've supplied a {.cls {class(n)}} vector.") |> try()
 
+# Incorrectly formatted stop messages (error in glue formatting: missing
+# second closing `\}` in `\{.cls\{class(n)\}`
+stop("{.var n} must be a numeric vector",
+  x = "You've supplied a {.cls {class(n)} vector.") |> try()
+
+# Automatic pluralisation
 n <- 1:18
 stop("{.var n} must be a scalar numeric:",
   i = "There {?is/are} {length(n)} element{?s}.",
-  x = "Indicate a single numeric, not: {n}.")
+  x = "Provide a single numeric, not {object_info(n)}.") |> try()
 
-# When issued from within a function, the function call is used in the error
+# When issued from within a function, the function call is indicated
 test1 <- function(x) {
-  stop("{.var n} must be a scalar numeric:",
-    i = "There {?is/are} {length(x)} element{?s}.")
+  stop("{.var x} must be a scalar numeric:",
+    i = "There {?is/are} {length(x)} element{?s} in {.var x}.")
 }
-test1(1:3)
+test1(1:3) |> try()
 
 # If another function calls `test1()`, error is still reported from test1:
 
 test2 <- function(x) {
   test1(x)
 }
-test2(1:3)
+test2(1:3) |> try()
 
 # In such a case, it is better to report the error from `test2()`.
 # You can do that by stating `._top_call_. <- TRUE` in the body of `test2()`.
@@ -200,11 +191,35 @@ test2 <- function(x) {
   .__top_call__. <- TRUE
   test1(x)
 }
-test2(1:3)
-}# End of if(FALSE)
+test2(1:3) |> try()
 
-rm(stop, warning)
+# When you design an helper function (a function that is always called from
+# another function), you can set `.__top_call__. <- FALSE` to force pointing
+# to the calling function. In this case, .__top_call___. <- TRUE is not
+# needed in the calling function.
+stop_is_scalar_numeric <- function(x) {
+  .__top_call__. <- FALSE
+  stop("{.var {lbl(substitute(x))}} must be a scalar numeric")
+}
+test3 <- function(y) {# A function with a proper assertion on y
+  (is.numeric(y) && length(y) == 1L) || stop_is_scalar_numeric(y)
+
+  # Do something with y here...
+}
+test3(1:4) |> try()
+
+# If test3() is called by another function, test4(), focus depends on the
+# presence of .__top_call__. in test4()
+test4 <- function(y) test3(y)
+test4(1:4) |> try()
+# or:
+test4 <- function(y) {
+  .__top_call__. <- TRUE
+  test3(y)
+}
+test4(1:4) |> try()
+rm(stop)
 }
 \seealso{
-\code{\link[rlang:abort]{rlang::abort()}}, \code{\link[cli:cli_abort]{cli::cli_abort()}}, \code{\link[=gettext]{gettext()}} \code{\link[=stop]{stop()}}, \code{\link[=warning]{warning()}}
+\code{\link[rlang:abort]{rlang::abort()}}, \code{\link[cli:cli_abort]{cli::cli_abort()}}, \code{\link[=gettext]{gettext()}} \code{\link[=stop]{stop()}}
 }

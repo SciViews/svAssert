@@ -34,8 +34,8 @@
 .op$verbose <- FALSE
 
 # We use our own stop_() and warning_(), but renamed
-stop <- stop_
-warning <- warning_ # nocov end
+#warning <- warning_
+stop <- stop_ # nocov end
 
 # This is rlang::check_required(), but modified for translatable errors
 #check_required <- function(x) {

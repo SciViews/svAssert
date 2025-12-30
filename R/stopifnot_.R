@@ -1,3 +1,4 @@
+# TODO: better error class than just stopifnot__error
 #' Assert that expressions are all TRUE, with extended error messages
 #'
 #' If any of the expressions (in ...) are not [all] TRUE, an error is raised. If
@@ -16,6 +17,7 @@
 #' @seealso [stop_()], [base::stop()]
 #'
 #' @examples
+#' # Note that |> try() is just there to catch error; do not use in your code!
 #' stopifnot_(1 == 1, all.equal(pi, 3.14159265), 1 < 2) |> try()
 #' stopifnot_(is.character(letters), length(letters) == 1) |> try()
 #' stopifnot_(all.equal(pi, 3.141593), 2 < 2, (1:10 < 12), "a" < "b") |> try()
@@ -169,30 +171,9 @@ get_stop <- function(x, expr = substitute(x), par. = list(), call_it = TRUE,
     }
     # If stop function not found, or it does not stop
     if (isTRUE(force_stop))
-      stop("{.code {arg_or_code(expr = expr)}} is not TRUE")
+      stop("{.code {lbl(expr = expr)}} is not TRUE")
   }
   list(stop_fun = stop_fun, call = call, mod = mod, expr = corex)
-}
-
-#' @rdname stopifnot_
-#' @param width Maximum width of the deparsed expression
-#' @param nlines Maximum number of lines for the deparsed expression
-#' @export
-#' @returns `arg_or_code()` returns "\{.arg \{x\}\}" if x is a symbol, or
-#' \{.code \{x\}\} otherwise.
-#' otherwise.
-#' @examples
-#'
-#' # arg_or_code() helps building error messages for expressions
-#' y <- as.symbol('data')
-#' arg_or_code(y)
-#' y <- quote(toupper(1:10))
-#' arg_or_code(y)
-arg_or_code <- function(expr, width = 30L, nlines = 1L) {
-  res <- deparse1(expr, width.cutoff = width + 3L, nlines = nlines)
-  if (nchar(res) > width)
-    res <- paste(substr(res, 1L, width - 4L), "...")
-  res
 }
 
 #' @rdname stopifnot_
@@ -205,20 +186,17 @@ arg_or_code <- function(expr, width = 30L, nlines = 1L) {
 #' # sentence in your error message when the expression always returns a single
 #' # logical value, because in this case "any" or "all" have no effect.
 #' stop_length_one <- function(x, ..., par. = list()) {
-#'   expr <- substitute(x)
-#'   arg <- .op$arg %||% par.$arg %||% arg_or_code(expr)
+#'   arg <- lbl(.op$arg %||% par.$arg %||% substitute(expr))
 #'
 #'   # length(x) == 1 always returns a single logical, can use mod_not() here
 #'   if (mod_not(par.$mod)) {
 #'     stop(par.$msg, "!" = "{.code {arg}} cannot have length 1.", par.$footer,
-#'       class = error_class(id = par.$id),
-#'       call = par.$call %||% stop_top_call(2L))
+#'       class_id = par.$class_id, call = par.$call)
 #'   } else {
 #'     stop(
 #'       par.$msg, "!" = "{.code {arg}} must have length 1",
 #'       "*" = "Its length is {length(x)}.",
-#'       class = error_class(id = par.$id),
-#'       call = par.$call %||% stop_top_call(2L))
+#'       class_id = par.$class_id, call = par.$call)
 #'   }
 #' }
 #' length("a") == 1 || stop_length_one("a")

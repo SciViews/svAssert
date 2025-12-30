@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2025-12-29 16:16\n"
+"POT-Creation-Date: 2025-12-30 14:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 msgid "The contrary of \"{chk_msg}\""
 msgstr ""
 
-msgid "Can't use argument {.arg {arg}} ({.code {x}})."
+msgid "Can't use argument {.arg {arg}} ({object_info(x)})."
 msgstr ""
 
 msgid "Variable '%s': %s"
@@ -296,16 +296,25 @@ msgstr ""
 msgid "an object of class '%s'"
 msgstr ""
 
-msgid "{.code {arg}} must be different from {.code {arg2}}."
+msgid "{.code %s} must be different from {.code %s}."
 msgstr ""
 
-msgid "Both {.code %s} and {.code %s} are {.val {%s}}."
+msgid "Both {.code %s} and {.code %s} contain {.val %s}."
 msgstr ""
 
-msgid "{.code {arg}} must be equal to {.code {arg2}}."
+msgid "{.code %s} must be equal to {.code %s}."
 msgstr ""
 
-msgid "{.code %s} is {.val {%s}}."
+msgid "length of {.code %s}"
+msgstr ""
+
+msgid "number of rows of {.code %s}"
+msgstr ""
+
+msgid "number of columns of {.code %s}"
+msgstr ""
+
+msgid "%s is {.val %s}."
 msgstr ""
 
 msgid "%s and %s are not equal:\n  %s"
@@ -314,7 +323,7 @@ msgstr ""
 msgid "`par.` should be a list, ignoring it."
 msgstr ""
 
-msgid "{.code {arg_or_code(expr = expr)}} is not TRUE"
+msgid "{.code {lbl(expr = expr)}} is not TRUE"
 msgstr ""
 
 msgid        "%s is not TRUE"

@@ -50,12 +50,13 @@
 #' is_numeric("a")
 #' svAssert:::.checkmate_message() # Get the message set by is_numeric()
 #'
-#' my_log <- function(x) {# x must be numeric >= 0
-#'   is_numeric(x, min.len = 1, lower = 0) || stop_is_numeric(x)
-#'   log(x)
+#' my_log <- function(y) {# x must be numeric >= 0
+#'   is_numeric(y, min.len = 1, lower = 0) || stop_is_numeric(y)
+#'   log(y)
 #' }
 #' my_log(1)
-#' try(my_log(-1))
+#' # |> try() to catch the error, do not use in real code!
+#' my_log(-1:5) |> try()
 is_numeric <- .check_to_is_function(checkmate::check_numeric)
 
 #' @rdname is_numeric
@@ -72,8 +73,11 @@ is_numeric <- .check_to_is_function(checkmate::check_numeric)
 #' top-level call of the function(s) that called `error_numeric()` using
 #' [stop_top_call()].
 #' @export
+# TODO: use par. = list() here instead of msg, arg, mod, call and class_id
 stop_is_numeric <- function(x, ..., msg = NULL, arg = substitute(x), mod = NULL,
     class_id = NULL, call = NULL) {
+
+  .__top_call__. <- FALSE
 
   arg <- .op$arg %||% arg
   .op$arg <- NULL # Just to be sure...
@@ -86,9 +90,9 @@ stop_is_numeric <- function(x, ..., msg = NULL, arg = substitute(x), mod = NULL,
     gettext("The contrary of \"{chk_msg}\"") else "{chk_msg}"
 
   msg <- .op$message %||% msg %||% c(
-    gettext("Can't use argument {.arg {arg}} ({.code {x}})."), i = info)
+    gettext("Can't use argument {.arg {arg}} ({object_info(x)})."), i = info)
 
-  stop(msg, call = call, class_id = class_id)
+  stop(msg, class_id = class_id, call = call)
   #stop_(msg, class = error_class(call = call, class_id = class_id),
   #  call = call %||% stop_top_call(2L))
 }

@@ -1,18 +1,17 @@
-#' Enhanced stop and warning
+#' Enhanced stop
 #'
 #' @description
 
 #' `stop_()` is an enhanced version of [stop()] to generate meaningful error
 #' with error-recoverable glue interpolation and translation.
-#' `warning_()` is similar to [warning()] but uses `call. = FALSE` by default.
-#' `error_class()`, `stop_top_call()` and `object_info()` are support functions
-#' that help building contextual and explicit error messages.
+#' `error_class()`, `stop_top_call()`, `object_info()` and `lbl()`` are support
+#' functions that help building contextual and explicit error messages.
 #'
 #' @details
 #' `stop_()` is a wrapper around [rlang::abort()] that provides more control
 #' on the stop message thanks to [cli::cli_abort()] glue interpolation and
-#' [gettext()] translation. It can recover from errors in the formatting and
-#' translation processes. In this case, it throws the raw error message with a
+#' [gettext()] translation. It can recover from errors in the formatting
+#' processes. In this case, it throws the raw error message with a
 #' warning. It also adds a class to the error message, with a default one
 #' automatically computed by `error_class()`. It uses `stop_top_call()` to
 #' provide a simple mechanism to point to the execution environment of the
@@ -28,7 +27,7 @@
 #' (default in non-interactive sessions, display the full tree). You rarely need
 #' to change the default. It synchronizes with `rlang_backtrace_on_error` option
 #' used in [rlang::abort()] when needed.
-#' You can use [rlang::global_entrace()] to format classical base R [stop()]
+#' You can use [rlang::global_entrace()] to display classical base R [stop()]
 #' messages in a similar way as `stop_()` and [rlang::abort()] do. You can also
 #' use [rlang::last_error()] to revisit the last error message, or
 #' [rlang::last_trace()] to inspect the backtrace of the message.
@@ -37,21 +36,18 @@
 #' https://rlang.r-lib.org/reference/topic-condition-customisation.html).
 #'
 #' @param ... One or more character strings with the error or warning
-#'   messages to be translated. For `stop_()` only, name them `'*' =`, `'i' =`,
-#'   `'v' =`, `'x' =` or `'!' =` to format a bullet-list with the message items.
-#'   First message item is considered to use the `'!'` bullet by default. The
-#'   messages also support glue interpolation and inline markups,
-#'   see [Formatting messages with cli](
+#'   messages to be translated. Name them `'*' =`, `'i' =`, `'v' =`, `'x' =` or
+#'   `'!' =` to format a bullet-list with the message items. First message item
+#'   is considered to use the `'!'` bullet by default. The messages also support
+#'   glue interpolation and inline markups, see [Formatting messages with cli](
 #'   https://rlang.r-lib.org/reference/topic-condition-formatting.html)
-#'   and [cli::format_inline()]. `warning_()` messages are just concatenated
-#'   without extra character (space) in between and without glue interpolation.
+#'   and [cli::format_inline()].
 #' @param domain The translation. domain, see [gettext()]. If `NA` or `""`,
 #'   messages are not translated (use this with messages that are already
 #'   translated).
 #' @param class The subclass of the error condition message. By default, it is
-#'   computed by `error_class()`, using the name of the function in `call` and
-#'   the name of the first argument concerned by the error message, if available
-#'   (plus, optionally, the `class_id`).
+#'   computed by `error_class()`, using the name of the function in `call`
+#'   (plus, optionally, the `class_id`), or `"svAssert_error"` by default.
 #' @param class_id An optional identifier to append to the error subclass.
 #' @param call The execution environment of a currently running function where
 #'   the error should be reported from ( called the relevant function).
@@ -82,47 +78,48 @@
 #'   information is added to the error message, except if `.last_call` is `NULL`
 #'   (use it to suppress these extra messages).
 #'
-#' @returns `stop_()` and `warning_()` are invoked for their side-effects, but
-#'   `stop_()` actually stops execution of the current code.
+#' @returns `stop_()` is invoked for its side-effects, to stop execution of the
+#'   current code.
 #' @export
-#' @seealso [rlang::abort()], [cli::cli_abort()], [gettext()] [stop()], [warning()]
+#' @seealso [rlang::abort()], [cli::cli_abort()], [gettext()] [stop()]
 #'
 #' @examples
 #' # If you want to include the error messages in the translation strings in
-#' # your package, you have to rename `stop_()` into `stop()` and `warning_()`
-#' # into `warning()`, because [tools::xgettext2pot()] will only pick up the
-#' # later ones.
+#' # your package, you have to rename `stop_()` into `stop()` because
+#' # [tools::xgettext2pot()] will only pick up messages in the later ones.
+#' library(svAssert)
 #' stop <- stop_
-#' warning <- warning_
 #'
-#' # Call not integrated by default now
-#' warning("just a test")
-#' warning("just a test", call. = TRUE)
-#'
-#' if (FALSE) {# Avoid running code that generates errors automatically
+#' # Note: the |> try() are there to catch error. Do not use them in your code!
 #' # Correctly formatted stop messages
 #' n <- "some text"
 #' stop("{.var n} must be a numeric vector",
-#'   x = "You've supplied a {.cls {class(n)}} vector.")
+#'   x = "You've supplied a {.cls {class(n)}} vector.") |> try()
 #'
+#' # Incorrectly formatted stop messages (error in glue formatting: missing
+#' # second closing `\}` in `\{.cls\{class(n)\}`
+#' stop("{.var n} must be a numeric vector",
+#'   x = "You've supplied a {.cls {class(n)} vector.") |> try()
+#'
+#' # Automatic pluralisation
 #' n <- 1:18
 #' stop("{.var n} must be a scalar numeric:",
 #'   i = "There {?is/are} {length(n)} element{?s}.",
-#'   x = "Indicate a single numeric, not: {n}.")
+#'   x = "Provide a single numeric, not {object_info(n)}.") |> try()
 #'
-#' # When issued from within a function, the function call is used in the error
+#' # When issued from within a function, the function call is indicated
 #' test1 <- function(x) {
-#'   stop("{.var n} must be a scalar numeric:",
-#'     i = "There {?is/are} {length(x)} element{?s}.")
+#'   stop("{.var x} must be a scalar numeric:",
+#'     i = "There {?is/are} {length(x)} element{?s} in {.var x}.")
 #' }
-#' test1(1:3)
+#' test1(1:3) |> try()
 #'
 #' # If another function calls `test1()`, error is still reported from test1:
 #'
 #' test2 <- function(x) {
 #'   test1(x)
 #' }
-#' test2(1:3)
+#' test2(1:3) |> try()
 #'
 #' # In such a case, it is better to report the error from `test2()`.
 #' # You can do that by stating `._top_call_. <- TRUE` in the body of `test2()`.
@@ -130,10 +127,34 @@
 #'   .__top_call__. <- TRUE
 #'   test1(x)
 #' }
-#' test2(1:3)
-#' }# End of if(FALSE)
+#' test2(1:3) |> try()
 #'
-#' rm(stop, warning)
+#' # When you design an helper function (a function that is always called from
+#' # another function), you can set `.__top_call__. <- FALSE` to force pointing
+#' # to the calling function. In this case, .__top_call___. <- TRUE is not
+#' # needed in the calling function.
+#' stop_is_scalar_numeric <- function(x) {
+#'   .__top_call__. <- FALSE
+#'   stop("{.var {lbl(substitute(x))}} must be a scalar numeric")
+#' }
+#' test3 <- function(y) {# A function with a proper assertion on y
+#'   (is.numeric(y) && length(y) == 1L) || stop_is_scalar_numeric(y)
+#'
+#'   # Do something with y here...
+#' }
+#' test3(1:4) |> try()
+#'
+#' # If test3() is called by another function, test4(), focus depends on the
+#' # presence of .__top_call__. in test4()
+#' test4 <- function(y) test3(y)
+#' test4(1:4) |> try()
+#' # or:
+#' test4 <- function(y) {
+#'   .__top_call__. <- TRUE
+#'   test3(y)
+#' }
+#' test4(1:4) |> try()
+#' rm(stop)
 stop_ <- function(..., domain = NULL, class = error_class(call,
     class_id = class_id), class_id = .op$class_id, call = NULL,
     parent = NULL, .inherit = TRUE, .internal = FALSE, .file = NULL,
@@ -143,14 +164,8 @@ stop_ <- function(..., domain = NULL, class = error_class(call,
   # Default values for call and class
   if (is.null(call))
     call <- stop_top_call(2L)
-  if (is.null(class)) {
-    if (!length(class_id)) {
-      class_id <- NULL
-    } else {
-      class_id <- as.character(class_id)[[1]]
-    }
-    class <- error_class(call, class_id = class_id)
-  }
+  if (is.null(class))
+    class <- error_class(call = call, class_id = class_id)
 
   to_translate <- unlist(list(...)) # ... as a flat list, preserving names
   # Make sure to continue, even with a wrong domain
@@ -168,7 +183,7 @@ stop_ <- function(..., domain = NULL, class = error_class(call,
   # If the data-dot mechanism was activated, give more info in the error message
   if (!is.null(.last_call)) {
     message_data_dot <- .get_data_dot_error_msg(.last_call)
-   if (length(message_data_dot))
+    if (length(message_data_dot))
       message <- c(message, message_data_dot)
   }
 
@@ -176,31 +191,26 @@ stop_ <- function(..., domain = NULL, class = error_class(call,
   message_formatted <- try(vapply(message, FUN = format_inline,
     FUN.VALUE = character(1), USE.NAMES = TRUE, .envir = .envir), silent = TRUE)
   if (inherits(message_formatted, "try-error")) {
-    warning("Formatting of the error message failed, using unformatted messages.",
+    warning(
+      "Formatting of the error message failed, using unformatted messages.",
       "\n", message_formatted, call. = FALSE)
-    class <- c("cli_format_error", class)
+    class <- "cli_format_error" # Special class superseeding the one provided
     message_formatted <- message
+    .internal = TRUE
   }
 
   # Message for the internal error (same one as in abort(), but translatable)
-  if (isTRUE(.internal)) {
-    message_formatted <- c(
-      message_formatted,
-      i = gettext(
-        "This is an internal error, please report it to the package authors.")
-    )
-  }
+  if (isTRUE(.internal))
+    message_formatted <- c(message_formatted, i = gettext(
+      "This is an internal error, please report it to the package authors."))
 
   # Use my custom backtrace message reminder (for translation)
   if ("svAssert_error" %in% class) {
     bt_op <- getOption("svAssert_backtrace_on_error", NULL)
     if ((is.null(bt_op) && interactive()) || bt_op == "reminder") {
-      message_formatted <- c(
-        message_formatted,
-        format_inline(gettext(
-          "Run `{.run rlang::last_trace()}` to see where the error occurred."))
-      )
-      # Avoid displaying it twice
+      message_formatted <- c(message_formatted, format_inline(gettext(
+        "Run `{.run rlang::last_trace()}` to see where the error occurred.")))
+      # Avoid displaying it twice (silent rlang version)
       options(rlang_backtrace_on_error = "none")
     }
   }
@@ -237,19 +247,21 @@ stop_ <- function(..., domain = NULL, class = error_class(call,
   message
 }
 
-#' @rdname stop_
-#' @export
-#' @param call. Logical, whether to include the call in the warning message.
-#' @param immediate. Logical, whether to issue the warning immediately even if
-#' `getOption("warn") <= 0`. Note that this is not respected for condition
-#' objects.
-#' @param noBreaks. logical, indicating as far as possible that the message
-#'   should be output as a single line when `options(warn = 1)`.
-warning_ <- function(..., call. = FALSE, immediate. = FALSE, noBreaks. = FALSE,
-    domain = NULL) {
-  base::warning(..., call. = call., immediate. = immediate.,
-    noBreaks. = noBreaks., domain = domain)
-}
+# TODO: I need to find a better way, because warning_()..., call. = TRUE
+# returns warning in warning_(...) -> not nice
+# @rdname stop_
+# @export
+# @param call. Logical, whether to include the call in the warning message.
+# @param immediate. Logical, whether to issue the warning immediately even if
+# `getOption("warn") <= 0`. Note that this is not respected for condition
+# objects.
+# @param noBreaks. logical, indicating as far as possible that the message
+#   should be output as a single line when `options(warn = 1)`.
+#warning_ <- function(..., call. = FALSE, immediate. = FALSE, noBreaks. = FALSE,
+#    domain = NULL) {
+#  base::warning(..., call. = call., immediate. = immediate.,
+#    noBreaks. = noBreaks., domain = domain)
+#}
 
 #' @rdname stop_
 #' @export
@@ -260,15 +272,16 @@ warning_ <- function(..., call. = FALSE, immediate. = FALSE, noBreaks. = FALSE,
 #' `stop_top_call()` returns the top call to be used for stop condition messages
 #' (to be used as `call` argument of `stop_()`).
 #' call for stop condition messages.
-stop_top_call <- function(nframe = 2L) {
+stop_top_call <- function(nframe = 1L) {
   env <- call <- parent.frame(nframe)
   max_frames <- sys.nframe()
   if (max_frames > nframe) {
     for (i in (nframe + 1):max_frames) {
       call <- env
       env <- parent.frame(i)
-      if (!isTRUE(env$`.__top_call__.`))
-        break
+      if (is.null(env$`.__top_call__.`))
+        if (!isFALSE(call$`.__top_call__.`))
+          break
     }
   }
   call
@@ -278,12 +291,21 @@ stop_top_call <- function(nframe = 2L) {
 #' @export
 #' @returns
 #' `error_class()` returns a character string with the error class name computed
-#' for `stop_()`, that is, `c("fun_arg1_id", "svAssert_error")`.
+#' for `stop_()`, that is, "fun_id_error", or "svAssert_error", by default.
 error_class <- function(call = parent.frame(), class_id = NULL) {
-  mcall <- eval(quote(match.call()), envir = call)
-  class_name <- as.character(mcall)
-  class_name <- class_name[1:min(2, length(class_name))]
-  c(paste(c(class_name, class_id), collapse = '_'), "svAssert_error")
+  # Get frame number corresponding to this environment
+  idx <- which(vapply(sys.frames(), identical, logical(1), call))
+  if (length(idx)) {
+    fun <- deparse(sys.call(idx)[[1]])
+  } else {
+    fun <- NULL
+  }
+
+  class_error <- paste(c(fun, class_id, "error"), collapse = '_')
+  if (class_error == "error") # When both fun and class_id are NULL
+    class_error <- "svAssert_error"
+
+  class_error
 }
 
 #' @rdname stop_
@@ -292,12 +314,15 @@ error_class <- function(call = parent.frame(), class_id = NULL) {
 #' @returns
 #' `object_info()` returns a character string describing the R object provided.
 object_info <- function(x) {
+  # TODO: more variants (matrix, array, factor/ordered, Date, POSIXct, ...) with
+  # short but informative description
+  # TODO: name of columns for list too + name of slots for S4/S7
   if (is.null(x)) {
     "'NULL'"
   } else if (is.data.frame(x)) {
     x_names <- paste0("'", names(x), "'")
-    if (length(x_names) > 8L)
-      x_names <- c(x_names[1:8], "...")
+    if (length(x_names) > 3L)
+      x_names <- c(x_names[1:3], "...")
     x_names <- paste(x_names, collapse = ", ")
     gettextf("a data frame with %d rows and %d columns: %s",
       nrow(x), ncol(x), x_names)
@@ -308,4 +333,18 @@ object_info <- function(x) {
   } else {
     gettextf("an object of class '%s'", paste(class(x), collapse = "/"))
   }
+}
+
+#' @rdname stop_
+#' @param expr An R expression to deparse
+#' @param width Maximum width of the deparsed expression
+#' @param nlines Maximum number of lines for the deparsed expression
+#' @export
+#' @returns `lbl()` returns a deparsed version of an expression suitable for
+#' \{<format> \{lbl(x)\}\} where `<format>` could be `.var`, `.arg`, or `.code`.
+lbl <- function(expr, width = 30L, nlines = 1L) {
+  res <- deparse1(expr, width.cutoff = width + 3L, nlines = nlines)
+  if (nchar(res) > width)
+    res <- paste(substr(res, 1L, width - 4L), "...")
+  res
 }

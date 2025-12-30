@@ -2,9 +2,12 @@
 % Please edit documentation in R/stop_funs.R
 \name{stop_equals}
 \alias{stop_equals}
+\alias{stop_==}
 \title{Stop function for equality or inequality check}
 \usage{
 stop_equals(lhs, rhs, ..., par. = list())
+
+`stop_==`(lhs, rhs, ..., par. = list())
 }
 \arguments{
 \item{lhs}{The left-hand side of the comparison.}

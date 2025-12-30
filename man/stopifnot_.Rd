@@ -3,7 +3,6 @@
 \name{stopifnot_}
 \alias{stopifnot_}
 \alias{get_stop}
-\alias{arg_or_code}
 \alias{mod_not}
 \title{Assert that expressions are all TRUE, with extended error messages}
 \usage{
@@ -16,8 +15,6 @@ get_stop(
   call_it = TRUE,
   force_stop = TRUE
 )
-
-arg_or_code(expr, width = 30L, nlines = 1L)
 
 mod_not(mod)
 }
@@ -46,10 +43,6 @@ for the core expression, or if it exists but does not stop, and if
 function stops. If \code{force_stop = FALSE}, no error is raised and information
 about the stop function is returned.}
 
-\item{width}{Maximum width of the deparsed expression}
-
-\item{nlines}{Maximum number of lines for the deparsed expression}
-
 \item{mod}{A modifier string (could be \code{""}, \code{"!"}, \code{"any"}, \code{"all"},
 \code{"!any"}, \code{"!all"}, or any combination of these).}
 }
@@ -66,10 +59,6 @@ wrong). The error message build by your \code{stop_xxx()} functions should take
 this modifier into account to issue the correct error message for the core
 expression.
 
-\code{arg_or_code()} returns "\{.arg \{x\}\}" if x is a symbol, or
-\{.code \{x\}\} otherwise.
-otherwise.
-
 For \code{mod_not()}, \code{TRUE} if the modifier starts with "!", \code{FALSE}
 otherwise.
 }
@@ -83,6 +72,7 @@ generate the error message, otherwise a default message is created.
 modifiers (\link{!}, \code{\link[=any]{any()}} or \code{\link[=all]{all()}}) in expressions to build error messages.
 }
 \examples{
+# Note that |> try() is just there to catch error; do not use in your code!
 stopifnot_(1 == 1, all.equal(pi, 3.14159265), 1 < 2) |> try()
 stopifnot_(is.character(letters), length(letters) == 1) |> try()
 stopifnot_(all.equal(pi, 3.141593), 2 < 2, (1:10 < 12), "a" < "b") |> try()
@@ -98,30 +88,21 @@ get_stop(all(any(!!all(!anyNA(x)))), call_it = FALSE) # mod == "!any"
 # Call the stop function (if it exists) to raise the error
 get_stop(is.numeric(letters) && length(letters) > 0L) |> try()
 
-# arg_or_code() helps building error messages for expressions
-y <- as.symbol('data')
-arg_or_code(y)
-y <- quote(toupper(1:10))
-arg_or_code(y)
-
 # mod_not() can be used exclusively to build either a positive, or a negative
 # sentence in your error message when the expression always returns a single
 # logical value, because in this case "any" or "all" have no effect.
 stop_length_one <- function(x, ..., par. = list()) {
-  expr <- substitute(x)
-  arg <- .op$arg \%||\% par.$arg \%||\% arg_or_code(expr)
+  arg <- lbl(.op$arg \%||\% par.$arg \%||\% substitute(expr))
 
   # length(x) == 1 always returns a single logical, can use mod_not() here
   if (mod_not(par.$mod)) {
     stop(par.$msg, "!" = "{.code {arg}} cannot have length 1.", par.$footer,
-      class = error_class(id = par.$id),
-      call = par.$call \%||\% stop_top_call(2L))
+      class_id = par.$class_id, call = par.$call)
   } else {
     stop(
       par.$msg, "!" = "{.code {arg}} must have length 1",
       "*" = "Its length is {length(x)}.",
-      class = error_class(id = par.$id),
-      call = par.$call \%||\% stop_top_call(2L))
+      class_id = par.$class_id, call = par.$call)
   }
 }
 length("a") == 1 || stop_length_one("a")

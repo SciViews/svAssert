@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2025-12-29 16:16\n"
-"PO-Revision-Date: 2025-12-29 16:20+0100\n"
+"POT-Creation-Date: 2025-12-30 14:13\n"
+"PO-Revision-Date: 2025-12-30 14:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -15,8 +15,8 @@ msgstr ""
 msgid "The contrary of \"{chk_msg}\""
 msgstr "Le contraire de « {chk_msg} »"
 
-msgid "Can't use argument {.arg {arg}} ({.code {x}})."
-msgstr "Impossible d'utiliser l'argument {.arg {arg}} ({.code {x}})."
+msgid "Can't use argument {.arg {arg}} ({object_info(x)})."
+msgstr "Argument {.arg {arg}} inutilisable ({.code {x}})."
 
 msgid "Variable '%s': %s"
 msgstr "Variable '%s' : %s"
@@ -349,17 +349,26 @@ msgstr "un vecteur de type '%s' et %d éléments"
 msgid "an object of class '%s'"
 msgstr "un objet de classe '%s'"
 
-msgid "{.code {arg}} must be different from {.code {arg2}}."
-msgstr "{.code {arg}} doit être différent de {.code {arg2}}."
+msgid "{.code %s} must be different from {.code %s}."
+msgstr "{.code %s} doit être différent de {.code %s}."
 
-msgid "Both {.code %s} and {.code %s} are {.val {%s}}."
-msgstr "{.code %s} et {.code %s} sont tous deux {.val {%s}}."
+msgid "Both {.code %s} and {.code %s} contain {.val %s}."
+msgstr "{.code %s} et {.code %s} sont tous deux {.val %s}."
 
-msgid "{.code {arg}} must be equal to {.code {arg2}}."
-msgstr "{.code {arg}} doit être égal à {.code {arg2}}."
+msgid "{.code %s} must be equal to {.code %s}."
+msgstr "{.code %s} doit être égal à {.code %s}."
 
-msgid "{.code %s} is {.val {%s}}."
-msgstr "{.code %s} est {.val {%s}}."
+msgid "length of {.code %s}"
+msgstr "la longueur de {.code %s}"
+
+msgid "number of rows of {.code %s}"
+msgstr "Le nombre de lignes de {.code %s}"
+
+msgid "number of columns of {.code %s}"
+msgstr "le nombre de colonnes de {.code %s}"
+
+msgid "%s is {.val %s}."
+msgstr "%s est {.val %s}."
 
 msgid ""
 "%s and %s are not equal:\n"
@@ -371,8 +380,8 @@ msgstr ""
 msgid "`par.` should be a list, ignoring it."
 msgstr "« par. » doit être une liste, elle est ignorée."
 
-msgid "{.code {arg_or_code(expr = expr)}} is not TRUE"
-msgstr "{.code {arg_or_code(expr = expr)}} n'est pas VRAI"
+msgid "{.code {lbl(expr = expr)}} is not TRUE"
+msgstr "{.code {lbl(expr = expr)}} n'est pas VRAI"
 
 msgid "%s is not TRUE"
 msgid_plural "%s are not all TRUE"

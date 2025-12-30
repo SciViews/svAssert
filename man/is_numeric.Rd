@@ -108,12 +108,13 @@ is_numeric(1.2) # Better using is_num() in this simple case
 is_numeric("a")
 svAssert:::.checkmate_message() # Get the message set by is_numeric()
 
-my_log <- function(x) {# x must be numeric >= 0
-  is_numeric(x, min.len = 1, lower = 0) || stop_is_numeric(x)
-  log(x)
+my_log <- function(y) {# x must be numeric >= 0
+  is_numeric(y, min.len = 1, lower = 0) || stop_is_numeric(y)
+  log(y)
 }
 my_log(1)
-try(my_log(-1))
+# |> try() to catch the error, do not use in real code!
+my_log(-1:5) |> try()
 }
 \seealso{
 \code{\link[checkmate:checkNumeric]{checkmate::check_numeric()}}
