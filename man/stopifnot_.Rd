@@ -2,13 +2,13 @@
 % Please edit documentation in R/stopifnot_.R
 \name{stopifnot_}
 \alias{stopifnot_}
-\alias{get_stop}
+\alias{get_stop_fun}
 \alias{mod_not}
 \title{Assert that expressions are all TRUE, with extended error messages}
 \usage{
 stopifnot_(...)
 
-get_stop(
+get_stop_fun(
   x,
   expr = substitute(x),
   par. = list(),
@@ -49,9 +49,10 @@ about the stop function is returned.}
 \value{
 For \code{stopifnot_()}, \link{NULL} if all statements in ... are TRUE.
 
-For \code{get_stop(call_it = FALSE)}, a list with \code{stop_fun} the name of
-the stop function (that exists) or \code{NULL}otherwise, \code{call} the complete call
-to the stop function, \code{mod} the modifier, and \code{expr} the core expression.
+For \code{get_stop_fun(call_it = FALSE)}, a list with \code{stop_fun} the name
+of the stop function, \code{call} the call to the stop function (if it exists,
+otherwise \code{NULL}), \code{mod} the modifier, and \code{expr} the core expression,
+excluding the modifier.
 \code{mod} can be \code{NULL} or \code{""} if no modifier is present. Otherwise, it is "!"
 (not true), "any" (at least one element is true), "all" (all elements are
 true), "!any" (all elements are wrong), or "!all" (at least one element is
@@ -68,8 +69,9 @@ a \code{stop_expr()} function exists for the expression \code{expr}, it is calle
 generate the error message, otherwise a default message is created.
 }
 \details{
-\code{get_mod()} and \code{mod_not()} are utility functions to extract and manage
-modifiers (\link{!}, \code{\link[=any]{any()}} or \code{\link[=all]{all()}}) in expressions to build error messages.
+\code{get_stop_fun()} and \code{mod_not()} are utility functions to compute the stop
+function call and manage a modifier (\link{!}, \code{\link[=any]{any()}} or \code{\link[=all]{all()}}) in expressions
+to ease building error messages.
 }
 \examples{
 # Note that |> try() is just there to catch error; do not use in your code!
@@ -77,30 +79,32 @@ stopifnot_(1 == 1, all.equal(pi, 3.14159265), 1 < 2) |> try()
 stopifnot_(is.character(letters), length(letters) == 1) |> try()
 stopifnot_(all.equal(pi, 3.141593), 2 < 2, (1:10 < 12), "a" < "b") |> try()
 
-# get_stop() returns infos about a stop function when call_it = FALSE
-get_stop(length(letters) == 1L, call_it = FALSE)
-get_stop(length("a") != 1L, call_it = FALSE) # mod == "!", expr = "=="
-get_stop(!any(c(TRUE, TRUE, NA)), call_it = FALSE) # mod == "!any"
+# get_stop_fun() returns infos about a stop function when call_it = FALSE
+get_stop_fun(length(letters) == 1L, call_it = FALSE)
+get_stop_fun(length("a") != 1L, call_it = FALSE) # mod == "!", expr = "=="
+get_stop_fun(!any(c(TRUE, TRUE, NA)), call_it = FALSE) # mod == "!any"
 # all! is the same as !any (and any! is !all)
-get_stop(all(!c(TRUE, FALSE, NA)), call_it = FALSE) # mod == "!any"
+get_stop_fun(all(!c(TRUE, FALSE, NA)), call_it = FALSE) # mod == "!any"
 # Contrived and weird example: it got simplified for mod
-get_stop(all(any(!!all(!anyNA(x)))), call_it = FALSE) # mod == "!any"
+get_stop_fun(all(any(!!all(!anyNA(x)))), call_it = FALSE) # mod == "!any"
 # Call the stop function (if it exists) to raise the error
-get_stop(is.numeric(letters) && length(letters) > 0L) |> try()
+get_stop_fun(is.numeric(letters) && length(letters) > 0L) |> try()
 
 # mod_not() can be used exclusively to build either a positive, or a negative
 # sentence in your error message when the expression always returns a single
 # logical value, because in this case "any" or "all" have no effect.
 stop_length_one <- function(x, ..., par. = list()) {
-  arg <- lbl(.op$arg \%||\% par.$arg \%||\% substitute(expr))
+  arg <- lbl(.op$arg \%||\% par.$arg \%||\% substitute(x))
 
   # length(x) == 1 always returns a single logical, can use mod_not() here
+  # and safely ignore 'any' or 'all' modifiers
   if (mod_not(par.$mod)) {
-    stop(par.$msg, "!" = "{.code {arg}} cannot have length 1.", par.$footer,
+    stop(par.$msg,
+      "!" = "{.code {arg}} cannot have length 1.", par.$footer,
       class_id = par.$class_id, call = par.$call)
   } else {
-    stop(
-      par.$msg, "!" = "{.code {arg}} must have length 1",
+    stop(par.$msg,
+      "!" = "{.code {arg}} must have length 1",
       "*" = "Its length is {length(x)}.",
       class_id = par.$class_id, call = par.$call)
   }

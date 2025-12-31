@@ -3,7 +3,7 @@
 export("stop_==")
 export(.op)
 export(error_class)
-export(get_stop)
+export(get_stop_fun)
 export(is_numeric)
 export(lbl)
 export(mod_not)

@@ -21,7 +21,7 @@ The {svAssert} package provides tools for defensive programming in R,
 with fast, but versatile assertions partly based on {checkmate}. When an
 assertion fails, it works hard to issue meaningful and rich-formatted
 error messages (thanks to `rlang::abort()` and `cli::cli_abort()`).
-These message can be easily translated in other natural languages.
+These messages can be easily translated in other natural languages.
 {svAssert} can even translate messages in other packages after they are
 thrown.
 
