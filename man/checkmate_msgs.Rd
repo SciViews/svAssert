@@ -21,7 +21,7 @@ A list with two components:
 checkmate_msgs
 }
 \description{
-Messages and regular expressions required for translating \{checkmate\} error
-using \code{\link[=translate]{translate()}}.
+Messages and regular expressions required translate \{checkmate\} error using
+\code{\link[=translate]{translate()}}.
 }
 \keyword{datasets}

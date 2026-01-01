@@ -16,6 +16,7 @@
 ## usethis namespace: start
 #' @importFrom checkmate qtest
 #' @importFrom cli format_inline
-#' @importFrom rlang abort
+#' @importFrom rlang abort cnd_message is_interactive is_false is_null is_true
+#'   local_options peek_option try_fetch
 ## usethis namespace: end
 NULL

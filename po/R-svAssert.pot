@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2025-12-30 14:13\n"
+"POT-Creation-Date: 2026-01-01 14:18\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -266,6 +266,15 @@ msgstr ""
 msgid "Additional chars found in rule!"
 msgstr ""
 
+msgid "Mean absolute difference: %g"
+msgstr ""
+
+msgid "Mean scaled difference: %g"
+msgstr ""
+
+msgid "Mean relative difference: %g"
+msgstr ""
+
 msgid "Formatting of the error message failed, using unformatted messages."
 msgstr ""
 
@@ -282,6 +291,18 @@ msgid "(see {.help svBase::data_dot_mechanism})."
 msgstr ""
 
 msgid "{.emph {.code .} is {object_info(.)}}"
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "in"
+msgstr ""
+
+msgid "at"
+msgstr ""
+
+msgid "Caused by error in"
 msgstr ""
 
 msgid "a data frame with %d rows and %d columns: %s"
@@ -317,7 +338,10 @@ msgstr ""
 msgid "%s is {.val %s}."
 msgstr ""
 
-msgid "%s and %s are not equal:\n  %s"
+msgid "{.code %s} and {.code %s} are not equal"
+msgstr ""
+
+msgid "stopifnot"
 msgstr ""
 
 msgid "`par.` should be a list, ignoring it."
@@ -326,7 +350,7 @@ msgstr ""
 msgid "{.code {lbl(expr = expr)}} is not TRUE"
 msgstr ""
 
-msgid        "%s is not TRUE"
-msgid_plural "%s are not all TRUE"
+msgid        "{. code %s} is not {.val TRUE}"
+msgid_plural "{. code %s} are not all {.val TRUE}"
 msgstr[0]    ""
 msgstr[1]    ""

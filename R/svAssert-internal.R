@@ -28,7 +28,7 @@
 #})
 
 # Internal options
-# TODo: change this!
+# TODO: change this!
 #' @export
 .op <- new.env()
 .op$verbose <- FALSE

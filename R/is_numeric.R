@@ -93,6 +93,4 @@ stop_is_numeric <- function(x, ..., msg = NULL, arg = substitute(x), mod = NULL,
     gettext("Can't use argument {.arg {arg}} ({object_info(x)})."), i = info)
 
   stop(msg, class_id = class_id, call = call)
-  #stop_(msg, class = error_class(call = call, class_id = class_id),
-  #  call = call %||% stop_top_call(2L))
 }

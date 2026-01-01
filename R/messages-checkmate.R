@@ -1,7 +1,7 @@
 #' \{checkmate\} messages for translation
 #'
-#' Messages and regular expressions required for translating \{checkmate\} error
-#' using [translate()].
+#' Messages and regular expressions required translate \{checkmate\} error using
+#' [translate()].
 #'
 #' @format ## `checkmate_msgs`
 #' A list with two components:

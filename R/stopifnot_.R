@@ -44,6 +44,10 @@ stopifnot_ <- function(...) {
       if (is.null(msg <- names(dots)) || !nzchar(msg <- msg[i])) {
         cl.i <- dots[[i]]
 
+        # More translations (Mean absolute|relative|scaled difference:)
+        if (is.character(r))
+          r <- translate(get('general_msgs'), r)
+
         # Run stop_xxx() function, if found
         get_stop_fun(expr = cl.i, call_it = TRUE, force_stop = FALSE)
 
@@ -51,12 +55,16 @@ stopifnot_ <- function(...) {
         msg <- if (is.call(cl.i) && identical(1L, pmatch(quote(all.equal),
           cl.i[[1]])) && (is.null(ni <- names(cl.i)) ||
               length(cl.i) == 3L || length(cl.i <- cl.i[!nzchar(ni)]) == 3L))
-          sprintf(gettext("%s and %s are not equal:\n  %s"),
-            Dparse(cl.i[[2]]), Dparse(cl.i[[3]]), abbrev(r))
-        else sprintf(ngettext(length(r), "%s is not TRUE",
-          "%s are not all TRUE"), Dparse(cl.i))
+          #sprintf(gettext("%s and %s are not equal:\n  %s"),
+          #  Dparse(cl.i[[2]]), Dparse(cl.i[[3]]), abbrev(r))
+          c(sprintf(gettext("{.code %s} and {.code %s} are not equal"),
+            Dparse(cl.i[[2]]), Dparse(cl.i[[3]])),
+            i = abbrev(r))
+        else sprintf(ngettext(length(r), "{. code %s} is not {.val TRUE}",
+          "{. code %s} are not all {.val TRUE}"), Dparse(cl.i))
       }
-      stop(simpleError(msg, call = if (p <- sys.parent(1L)) sys.call(p)))
+      #stop(simpleError(msg, call = if (p <- sys.parent(1L)) sys.call(p)))
+      stop(msg, class_id = "stopifnot")
     }
   }
   invisible()
@@ -125,7 +133,7 @@ get_stop_fun <- function(x, expr = substitute(x), par. = list(), call_it = TRUE,
   # Do we execute the call now?
   if (isTRUE(call_it)) {
     if (!is.null(stop_fun_call$call))
-      rlang::eval_bare(stop_fun_call$call, parent.frame()) # This is supposed to stop
+      rlang::eval_bare(stop_fun_call$call, parent.frame()) # Supposed to stop
 
     # If stop function not found (call == NULL), or it does not stop...
     # force stop now with a generic error message
@@ -170,20 +178,27 @@ get_stop_fun <- function(x, expr = substitute(x), par. = list(), call_it = TRUE,
 
 # Simplify a (mod)ifier string by removing redundant parts
 .simplify_modifier <- function(mod) {
+  # If already correct (often the case), return it right away
+  if (mod %in% c("", "any", "all", "!", "!any", "!all"))
+    return(mod)
+
+  # Simplify expression of any complexity
   # - Eliminate parentheses (they are useless in the context)
   mod <- gsub("(", "", mod, fixed = TRUE)
   # - Eliminate any and all before the last one, if they appear multiple times
   #   (any() or all() applies multiple times have no effect past first one)
   #   a) Protect last one using sentence case (Any or All)
+  #      Capture any or all followed by any number of '!' at the end
+  #      and replace by Any or All with uppercase 'A'
   mod <- sub("(a)([nl][yl]!*)$", "A\\2", mod)
   #   b) Eliminate all remaining lowercase any or all
   mod <- gsub("any", "", mod, fixed = TRUE)
   mod <- gsub("all", "", mod, fixed = TRUE)
-  #   c) Restore last one to lowercase
+  #   c) Restore last one Any or All to lowercase any or all
   mod <- sub("A", "a", mod, fixed = TRUE)
   # - Eliminate double negations a first time
   mod <- gsub("!!", "", mod, fixed = TRUE)
-  # - all! is !any and any! is !all for last one
+  # - all! is the same as !any and any! is the same as !all for last one
   #   In order to limit the number of cases to deal with, we transform these
   #   to always have '!' in a leading position in the mod(ifier)
   mod <- sub("all!", "!any", mod)

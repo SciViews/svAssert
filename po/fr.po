@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2025-12-30 14:13\n"
-"PO-Revision-Date: 2025-12-30 14:15+0100\n"
+"POT-Creation-Date: 2026-01-01 14:18\n"
+"PO-Revision-Date: 2026-01-01 14:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -315,6 +315,15 @@ msgstr "Tous les éléments doivent être %s -Inf"
 msgid "Additional chars found in rule!"
 msgstr "Caractères supplémentaires trouvés dans la règle !"
 
+msgid "Mean absolute difference: %g"
+msgstr "Différence moyenne absolue : %g"
+
+msgid "Mean scaled difference: %g"
+msgstr "Différence moyenne mise à l’échelle : %g"
+
+msgid "Mean relative difference: %g"
+msgstr "Différence moyenne relative : %g"
+
 msgid "Formatting of the error message failed, using unformatted messages."
 msgstr ""
 "Le formatage du message d'erreur a échoué, utilisation de messages non "
@@ -336,6 +345,18 @@ msgstr "(voir {.help svBase::data_dot_mechanism})."
 
 msgid "{.emph {.code .} is {object_info(.)}}"
 msgstr "{.emph {.code .} est {object_info(.)}}"
+
+msgid "Error"
+msgstr "Erreur"
+
+msgid "in"
+msgstr "dans"
+
+msgid "at"
+msgstr "à"
+
+msgid "Caused by error in"
+msgstr "Causé par une erreur dans"
 
 msgid "a data frame with %d rows and %d columns: %s"
 msgstr "un data frame avec %d lignes et %d colonnes : %s"
@@ -370,12 +391,11 @@ msgstr "le nombre de colonnes de {.code %s}"
 msgid "%s is {.val %s}."
 msgstr "%s est {.val %s}."
 
-msgid ""
-"%s and %s are not equal:\n"
-"  %s"
-msgstr ""
-"%s et %s ne sont pas égaux :\n"
-"  %s"
+msgid "{.code %s} and {.code %s} are not equal"
+msgstr "{.code %s} et {.code %s} ne sont pas égaux :"
+
+msgid "stopifnot"
+msgstr "Stopifnot"
 
 msgid "`par.` should be a list, ignoring it."
 msgstr "« par. » doit être une liste, elle est ignorée."
@@ -383,10 +403,10 @@ msgstr "« par. » doit être une liste, elle est ignorée."
 msgid "{.code {lbl(expr = expr)}} is not TRUE"
 msgstr "{.code {lbl(expr = expr)}} n'est pas VRAI"
 
-msgid "%s is not TRUE"
-msgid_plural "%s are not all TRUE"
-msgstr[0] "%s n'est pas VRAI"
-msgstr[1] "%s ne sont pas VRAI"
+msgid "{. code %s} is not {.val TRUE}"
+msgid_plural "{. code %s} are not all {.val TRUE}"
+msgstr[0] "{.code %s} n'est pas {.val TRUE}"
+msgstr[1] "{.code %s} ne sont pas tous {.val TRUE}"
 
 #~ msgid "Translation of the error message failed, using original messages."
 #~ msgstr ""

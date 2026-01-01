@@ -194,7 +194,7 @@ stop_ <- function(..., domain = NULL, class = error_class(call,
     warning(
       "Formatting of the error message failed, using unformatted messages.",
       "\n", message_formatted, call. = FALSE)
-    class <- "cli_format_error" # Special class superseeding the one provided
+    class <- "cli_format_error" # Special class superseding the one provided
     message_formatted <- message
     .internal = TRUE
   }
@@ -205,7 +205,7 @@ stop_ <- function(..., domain = NULL, class = error_class(call,
       "This is an internal error, please report it to the package authors."))
 
   # Use my custom backtrace message reminder (for translation)
-  if ("svAssert_error" %in% class) {
+  #if ("svAssert_error" %in% class) {
     bt_op <- getOption("svAssert_backtrace_on_error", NULL)
     if ((is.null(bt_op) && interactive()) || bt_op == "reminder") {
       message_formatted <- c(message_formatted, format_inline(gettext(
@@ -213,7 +213,7 @@ stop_ <- function(..., domain = NULL, class = error_class(call,
       # Avoid displaying it twice (silent rlang version)
       options(rlang_backtrace_on_error = "none")
     }
-  }
+  #}
 
   abort(message_formatted, class = class, call = call, parent = parent,
     use_cli_format = TRUE, .inherit = .inherit, .file = .file, .frame = .frame,
@@ -246,6 +246,88 @@ stop_ <- function(..., domain = NULL, class = error_class(call,
 
   message
 }
+
+# .signal_stop_ <- function(cnd, file = NULL) {
+#   .__signal_frame__. <- TRUE
+#   if (is_true(peek_option("rlang::::force_unhandled_error"))) {
+#     fallback <- cnd
+#   } else {
+#     signalCondition(cnd)
+#     fallback <- cnd
+#     class(fallback) <- c("svAssert_error", "rlang_error", "condition")
+#     fallback$message <- ""
+#     fallback$rlang$internal$entraced <- TRUE
+#   }
+#   # Already done in rlang::signal_abort()
+#   #poke_last_error(cnd)
+#   if (.peek_show_error_messages()) {
+#     #cnd <- cnd_set_backtrace_on_error(cnd, peek_backtrace_on_error())
+#     # Translate Error (in) (at) : + Caused by
+#     trans <- paste0("\\1", gettext(error_ = "Error", in_ = "in", at_ = "at",
+#       caused_by_ = "Caused by error in"), "\\2")
+#     names(trans) <- c("error_", "in_", "at_", "caused_by_")
+#     msg <- cnd_message(cnd, inherit = TRUE, prefix = TRUE)
+#     msg <- sub("^(.+Error.+)in(.+)", trans[['in_']], msg, perl = TRUE)
+#     msg <- sub("^(.+Error.+)at(.+)", trans[['at_']], msg, perl = TRUE)
+#     msg <- sub("^(.+)Error([^:]+:.+)", trans[['error_']], msg, perl = TRUE)
+#     msg <- sub("^(.+)Caused by error in(.+)", trans[['caused_by_']], msg,
+#       perl = TRUE)
+#     .cat_line(msg, file = file %||% .default_message_file())
+#   }
+#   local_options(show.error.messages = FALSE)
+#   base::stop(cnd) #stop(fallback)
+# }
+#
+# # Unexported functions from rlang needed for .signal_stop_()
+# # rlang:::.peek_show_error_messages()
+# .peek_show_error_messages <- function() {
+#   !is_false(peek_option("show.error.messages"))
+# }
+#
+# # rlang:::cat_line()
+# .cat_line <- function(..., .trailing = TRUE, file = "") {
+#   cat(.paste_line(..., .trailing = .trailing), file = file)
+# }
+#
+# # rlang:::paste_line()
+# .paste_line <- function(..., .trailing = FALSE) {
+#   text <- .chr(...)
+#   if (.trailing) {
+#     paste0(text, "\n", collapse = "")
+#   } else {
+#     paste(text, collapse = "\n")
+#   }
+# }
+#
+# # rlang:::chr()
+# .chr <- rlang:::chr
+#
+# # rlang:::default_message_file()
+# .default_message_file <- function() {
+#   opt <- peek_option("rlang:::message_file")
+#   if (!is_null(opt)) {
+#     return(opt)
+#   }
+#   if ((is_interactive() || .is_rstudio()) && sink.number("output") ==
+#       0 && sink.number("message") == 2) {
+#     stdout()
+#   }
+#   else {
+#     stderr()
+#   }
+# }
+#
+# # rlang:::is_rstudio()
+# .is_rstudio <- function() {
+#   Sys.getenv("RSTUDIO_SESSION_PID") %in% c(Sys.getpid(), .getppid())
+# }
+#
+# # Get parent pid, not exported from rlang
+# .getppid <- rlang:::getppid
+# # Or, using package {ps}
+# #.getppid <- function() {
+# #  ps_ppid(ps_handle())
+# #}
 
 # TODO: I need to find a better way, because warning_()..., call. = TRUE
 # returns warning in warning_(...) -> not nice
