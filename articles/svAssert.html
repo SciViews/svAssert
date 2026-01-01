@@ -107,7 +107,7 @@ Messages</h1>
                         <h4 data-toc-skip class="author">Philippe
 Grosjean</h4>
             
-            <h4 data-toc-skip class="date">2025-12-31</h4>
+            <h4 data-toc-skip class="date">2026-01-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SciViews/svAssert/blob/main/vignettes/svAssert.Rmd" class="external-link"><code>vignettes/svAssert.Rmd</code></a></small>
       <div class="hidden name"><code>svAssert.Rmd</code></div>
@@ -264,21 +264,17 @@ into play.</p>
 <span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">my_calc4</span><span class="op">(</span><span class="st">"text"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use argument `x` (a vector of type 'character' and 1 elements).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Must be of type 'numeric', not 'character'</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `if ((is.null(bt_op) &amp;&amp; interactive()) || bt_op == "reminder") ...`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> missing value where TRUE/FALSE needed</span></span>
 <span><span class="fu">my_calc4</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use argument `x` (a vector of type 'logical' and 1 elements).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Must be of type 'numeric', not 'logical'</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `if ((is.null(bt_op) &amp;&amp; interactive()) || bt_op == "reminder") ...`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> missing value where TRUE/FALSE needed</span></span>
 <span><span class="fu">my_calc4</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use argument `x` (a vector of type 'integer' and 11 elements).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Element 1 is not &gt;= 0</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `if ((is.null(bt_op) &amp;&amp; interactive()) || bt_op == "reminder") ...`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> missing value where TRUE/FALSE needed</span></span>
 <span><span class="fu">my_calc4</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use argument `x` (a vector of type 'double' and 3 elements).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Contains missing values (element 2)</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `if ((is.null(bt_op) &amp;&amp; interactive()) || bt_op == "reminder") ...`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> missing value where TRUE/FALSE needed</span></span></code></pre></div>
 <p>Now we got a little bit more information in the error messages.
 {svAssert} assertions are composed of two parts: an
 <code>is_xxx()</code> that does the tests as fast as possible, and a
@@ -385,11 +381,11 @@ inputs are correct. Let’s compare our different versions of
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference  591.16ns 642.03ns  1<span style="text-decoration: underline;">381</span>345.        0B      0  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop      1.19µs   1.36µs   <span style="text-decoration: underline;">687</span>362.        0B     68.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot    3.95µs   4.49µs   <span style="text-decoration: underline;">212</span>887.        0B     21.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert     2.86µs   3.18µs   <span style="text-decoration: underline;">303</span>847.        0B     30.4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate    4.03µs   4.54µs   <span style="text-decoration: underline;">210</span>425.        0B     21.0</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference  611.06ns 662.05ns  1<span style="text-decoration: underline;">382</span>398.        0B    138. </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       1.2µs   1.38µs   <span style="text-decoration: underline;">669</span>411.        0B     66.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot    3.97µs   4.55µs   <span style="text-decoration: underline;">210</span>532.        0B     21.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert     2.98µs   3.39µs   <span style="text-decoration: underline;">284</span>685.        0B     28.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate    4.26µs   4.85µs   <span style="text-decoration: underline;">197</span>453.        0B     19.7</span></span></code></pre></div>
 <p>Minimum impact is here with <code>if (...) stop(...)</code>,
 providing you only use quick primitive functions like
 <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric()</a></code> / <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA()</a></code>, or simple comparisons
@@ -411,11 +407,11 @@ no memory impact.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference     522µs 822.01µs     <span style="text-decoration: underline;">1</span>228.   781.3KB     12.4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       779µs   1.22ms      836.    1.15MB     25.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot     769µs   1.22ms      845.    1.15MB     17.2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert      622µs 926.09µs     <span style="text-decoration: underline;">1</span>100.   781.3KB     22.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate     624µs 925.05µs     <span style="text-decoration: underline;">1</span>095.   781.3KB     11.1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference     516µs 818.07µs     <span style="text-decoration: underline;">1</span>281.   781.3KB     26.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       765µs   1.22ms      897.    1.15MB     18.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot     765µs   1.23ms      836.    1.15MB     17.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert      614µs 919.57µs     <span style="text-decoration: underline;">1</span>155.   781.3KB     23.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate     618µs 922.25µs     <span style="text-decoration: underline;">1</span>152.   781.3KB     23.5</span></span></code></pre></div>
 <p>The results are quite different. Now, both {svAssert} and {checkmate}
 are clearly better, both in term of speed and in memory use (still
 negligible). <code>if (...) stop(...)</code> and
@@ -460,14 +456,12 @@ now):</p>
 <!-- GitHub CI that renders the {pkgdown} version is not able to translate messages, so, we fake its results here... but it should work in your R session. -->
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">my_calc4</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` ne convient pas.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Doit être de type 'numeric', et non 'logical'.</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `if ((is.null(bt_op) &amp;&amp; interactive()) || bt_op == "reminder") ...`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> missing value where TRUE/FALSE needed</span></span></code></pre>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">my_calc4</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc4()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `x` ne convient pas.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> L'élément 1 n'est pas &gt;= 0</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `if ((is.null(bt_op) &amp;&amp; interactive()) || bt_op == "reminder") ...`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> missing value where TRUE/FALSE needed</span></span></code></pre>
 <p>Also note that the translated message adopt the better
 <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> layout (list with two bullets here).</p>
 </div>
