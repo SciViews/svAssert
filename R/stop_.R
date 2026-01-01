@@ -161,13 +161,13 @@ stop_ <- function(..., domain = NULL, class = error_class(call,
     .envir = parent.frame(), .frame = .envir, .trace_bottom = NULL,
     .last_call = sys.call(-1L)) {
 
-  # Default values for call and class
-  if (is.null(call))
-    call <- stop_top_call(2L)
-  if (is.null(class))
-    class <- error_class(call = call, class_id = class_id)
+  par. <- get0('par.', envir = parent.frame(), inherits = FALSE)
+  call <- call %||% par.$call %||% stop_top_call(2L)
+  class_id <- class_id %||% par.$class_id %||% .op$class_id
+  class <- class %||% error_class(call = call, class_id = class_id)
 
   to_translate <- unlist(list(...)) # ... as a flat list, preserving names
+  to_translate <- c(par.$msg, to_translate, par.$footer)
   # Make sure to continue, even with a wrong domain
   if (!length(domain) || anyNA(domain) ||
       !is.character(domain) || domain[1] == "") {
@@ -398,23 +398,31 @@ error_class <- function(call = parent.frame(), class_id = NULL) {
 object_info <- function(x) {
   # TODO: more variants (matrix, array, factor/ordered, Date, POSIXct, ...) with
   # short but informative description
-  # TODO: name of columns for list too + name of slots for S4/S7
-  if (is.null(x)) {
-    "'NULL'"
-  } else if (is.data.frame(x)) {
-    x_names <- paste0("'", names(x), "'")
+  x_names <- paste0("'", names(x), "'")
+  if (length(x_names) != 1L || x_names != "''") {
     if (length(x_names) > 3L)
       x_names <- c(x_names[1:3], "...")
     x_names <- paste(x_names, collapse = ", ")
-    gettextf("a data frame with %d rows and %d columns: %s",
-      nrow(x), ncol(x), x_names)
-  } else if (is.list(x)) {
-    gettextf("a list with %d elements", length(x))
-  } else if (is.vector(x)) {
-    gettextf("a vector of type '%s' and %d elements", typeof(x), length(x))
-  } else {
-    gettextf("an object of class '%s'", paste(class(x), collapse = "/"))
+    x_names <- paste(":", x_names)
+  } else {# Nothing
+    x_names <- ""
   }
+
+  if (is.null(x)) {
+    res <- "{.code NULL}"
+  } else if (is.data.frame(x)) {
+    res <- gettextf(
+      "a data frame with {nrow(x)} row{?s} and {ncol(x)} column{?s}%s", x_names)
+  } else if (is.list(x)) {
+    res <- gettextf("a list with {length(x)} element{?s}%s", x_names)
+  } else if (is.vector(x)) {
+    res <- gettext(
+      "a vector of type {.cls {typeof(x)}} and {length(x)} element{?s}")
+  } else {
+    res <- gettext(
+      "an object of class {.cls {class(x)}}")
+  }
+  format_inline(res)
 }
 
 #' @rdname stop_

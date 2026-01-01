@@ -62,35 +62,30 @@ is_numeric <- .check_to_is_function(checkmate::check_numeric)
 #' @rdname is_numeric
 #' @param x The R object that was tested, typically with `is_numeric()`.
 #' @param ... Any additional arguments (not checked, and not used).
-#' @param msg An optional custom error message. If `NULL` (default), a
-#' standard message is created indicating that `x` is not numeric.
-#' @param arg The argument name, as a **string**, default is the expression
-#' provided to `x`.
-#' @param mod An optional modifier string, or `NULL` for none (default). Only
-#' `"!"` is considered here, indicating negation of the condition.
-#' @param class_id An optional identifier to append to the error subclass.
-#' @param call The call where the error was generated. The default computes the
-#' top-level call of the function(s) that called `error_numeric()` using
-#' [stop_top_call()].
+#' @param par. An optional list with further parameters, like `msg` a custom
+#' error message, `arg` the argument name, as a **string**, default is the
+#' expression provided to `x`, `mod` a modifier string (only `"!"` is considered
+#' here, indicating negation of the condition), `class_id` an identifier to
+#' append to the error subclass, `call` the call where the error was generated
+#' (the default computes the top-level call of the function(s) that called
+#' `error_numeric()` using [stop_top_call()].
 #' @export
-# TODO: use par. = list() here instead of msg, arg, mod, call and class_id
-stop_is_numeric <- function(x, ..., msg = NULL, arg = substitute(x), mod = NULL,
-    class_id = NULL, call = NULL) {
+stop_is_numeric <- function(x, ..., par. = list()) {
 
   .__top_call__. <- FALSE
 
-  arg <- .op$arg %||% arg
+  arg <- .op$arg %||% par.$arg %||% substitute(x)
   .op$arg <- NULL # Just to be sure...
 
   chk_msg <- .checkmate_message() %||% ""
 
   # mod "any" or "all" have no effect on functions returning a single logical
   # is_not == TRUE is a problem because is_numeric() is not really negatable!
-  info <- if (mod_not(mod))
+  info <- if (mod_not(par.$mod))
     gettext("The contrary of \"{chk_msg}\"") else "{chk_msg}"
 
-  msg <- .op$message %||% msg %||% c(
+  msg <- .op$message %||% par.$msg %||% c(
     gettext("Can't use argument {.arg {arg}} ({object_info(x)})."), i = info)
 
-  stop(msg, class_id = class_id, call = call)
+  stop(msg)
 }

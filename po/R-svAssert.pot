@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2026-01-01 14:18\n"
+"POT-Creation-Date: 2026-01-01 19:09\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -293,49 +293,37 @@ msgstr ""
 msgid "{.emph {.code .} is {object_info(.)}}"
 msgstr ""
 
-msgid "Error"
+msgid "a data frame with {nrow(x)} row{?s} and {ncol(x)} column{?s}%s"
 msgstr ""
 
-msgid "in"
+msgid "a list with {length(x)} element{?s}%s"
 msgstr ""
 
-msgid "at"
+msgid "a vector of type {.cls {typeof(x)}} and {length(x)} element{?s}"
 msgstr ""
 
-msgid "Caused by error in"
+msgid "an object of class {.cls {class(x)}}"
 msgstr ""
 
-msgid "a data frame with %d rows and %d columns: %s"
+msgid "{.code {arg}} is not different from {.code {arg2}}."
 msgstr ""
 
-msgid "a list with %d elements"
+msgid "Both {.code {arg}} and {.code {arg2}} contain {.val {lhs}}."
 msgstr ""
 
-msgid "a vector of type '%s' and %d elements"
+msgid "{.code {arg}} is not equal to {.code {arg2}}."
 msgstr ""
 
-msgid "an object of class '%s'"
+msgid "length of {.code {expr[[2]]}}"
 msgstr ""
 
-msgid "{.code %s} must be different from {.code %s}."
+msgid "number of rows of {.code {expr[[2]]}}"
 msgstr ""
 
-msgid "Both {.code %s} and {.code %s} contain {.val %s}."
+msgid "number of columns of {.code {expr[[2]]}}"
 msgstr ""
 
-msgid "{.code %s} must be equal to {.code %s}."
-msgstr ""
-
-msgid "length of {.code %s}"
-msgstr ""
-
-msgid "number of rows of {.code %s}"
-msgstr ""
-
-msgid "number of columns of {.code %s}"
-msgstr ""
-
-msgid "%s is {.val %s}."
+msgid "is {.val {x}}."
 msgstr ""
 
 msgid "{.code %s} and {.code %s} are not equal"

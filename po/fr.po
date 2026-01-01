@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2026-01-01 14:18\n"
-"PO-Revision-Date: 2026-01-01 14:21+0100\n"
+"POT-Creation-Date: 2026-01-01 19:09\n"
+"PO-Revision-Date: 2026-01-01 19:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgid "The contrary of \"{chk_msg}\""
 msgstr "Le contraire de « {chk_msg} »"
 
 msgid "Can't use argument {.arg {arg}} ({object_info(x)})."
-msgstr "Argument {.arg {arg}} inutilisable ({.code {x}})."
+msgstr "Argument {.arg {arg}} inutilisable ({object_info(x)})."
 
 msgid "Variable '%s': %s"
 msgstr "Variable '%s' : %s"
@@ -346,56 +346,45 @@ msgstr "(voir {.help svBase::data_dot_mechanism})."
 msgid "{.emph {.code .} is {object_info(.)}}"
 msgstr "{.emph {.code .} est {object_info(.)}}"
 
-msgid "Error"
-msgstr "Erreur"
+msgid "a data frame with {nrow(x)} row{?s} and {ncol(x)} column{?s}%s"
+msgstr "un data frame avec {nrow(x)} ligne{?s} et {ncol(x)} colonne{?s} %s"
 
-msgid "in"
-msgstr "dans"
+msgid "a list with {length(x)} element{?s}%s"
+msgstr "une liste contenant {length(x)} élément{?s} %s"
 
-msgid "at"
-msgstr "à"
+msgid "a vector of type {.cls {typeof(x)}} and {length(x)} element{?s}"
+msgstr ""
+"un vecteur de type {.cls {typeof(x)}} contenant {length(x)} élément{?s}"
 
-msgid "Caused by error in"
-msgstr "Causé par une erreur dans"
+msgid "an object of class {.cls {class(x)}}"
+msgstr "un objet de classe {.cls {class(x)}}"
 
-msgid "a data frame with %d rows and %d columns: %s"
-msgstr "un data frame avec %d lignes et %d colonnes : %s"
+msgid "{.code {arg}} is not different from {.code {arg2}}."
+msgstr "{.code {arg}} n’est pas différent de {.code {arg2}}."
 
-msgid "a list with %d elements"
-msgstr "une liste avec %d éléments"
+msgid "Both {.code {arg}} and {.code {arg2}} contain {.val {lhs}}."
+msgstr "{.code {arg}} et {.code {arg2}} sont tous deux {.val {lhs}}."
 
-msgid "a vector of type '%s' and %d elements"
-msgstr "un vecteur de type '%s' et %d éléments"
+msgid "{.code {arg}} is not equal to {.code {arg2}}."
+msgstr "{.code {arg}} n’est pas égal à {.code {arg2}}."
 
-msgid "an object of class '%s'"
-msgstr "un objet de classe '%s'"
+msgid "length of {.code {expr[[2]]}}"
+msgstr "la longueur de {.code {expr[[2]]}}"
 
-msgid "{.code %s} must be different from {.code %s}."
-msgstr "{.code %s} doit être différent de {.code %s}."
+msgid "number of rows of {.code {expr[[2]]}}"
+msgstr "le nombre de lignes de {.code {expr[[2]]}}"
 
-msgid "Both {.code %s} and {.code %s} contain {.val %s}."
-msgstr "{.code %s} et {.code %s} sont tous deux {.val %s}."
+msgid "number of columns of {.code {expr[[2]]}}"
+msgstr "le nombre de colonnes de {.code {expr[[2]]}}"
 
-msgid "{.code %s} must be equal to {.code %s}."
-msgstr "{.code %s} doit être égal à {.code %s}."
-
-msgid "length of {.code %s}"
-msgstr "la longueur de {.code %s}"
-
-msgid "number of rows of {.code %s}"
-msgstr "Le nombre de lignes de {.code %s}"
-
-msgid "number of columns of {.code %s}"
-msgstr "le nombre de colonnes de {.code %s}"
-
-msgid "%s is {.val %s}."
-msgstr "%s est {.val %s}."
+msgid "is {.val {x}}."
+msgstr "est {.val {x}}."
 
 msgid "{.code %s} and {.code %s} are not equal"
-msgstr "{.code %s} et {.code %s} ne sont pas égaux :"
+msgstr "{.code %s} et {.code %s} ne sont pas égaux"
 
 msgid "stopifnot"
-msgstr "Stopifnot"
+msgstr "stopifnot"
 
 msgid "`par.` should be a list, ignoring it."
 msgstr "« par. » doit être une liste, elle est ignorée."
@@ -407,6 +396,18 @@ msgid "{. code %s} is not {.val TRUE}"
 msgid_plural "{. code %s} are not all {.val TRUE}"
 msgstr[0] "{.code %s} n'est pas {.val TRUE}"
 msgstr[1] "{.code %s} ne sont pas tous {.val TRUE}"
+
+#~ msgid "Error"
+#~ msgstr "Erreur"
+
+#~ msgid "in"
+#~ msgstr "dans"
+
+#~ msgid "at"
+#~ msgstr "à"
+
+#~ msgid "Caused by error in"
+#~ msgstr "Causé par une erreur dans"
 
 #~ msgid "Translation of the error message failed, using original messages."
 #~ msgstr ""

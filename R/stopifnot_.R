@@ -252,14 +252,12 @@ get_stop_fun <- function(x, expr = substitute(x), par. = list(), call_it = TRUE,
 #'   # length(x) == 1 always returns a single logical, can use mod_not() here
 #'   # and safely ignore 'any' or 'all' modifiers
 #'   if (mod_not(par.$mod)) {
-#'     stop(par.$msg,
-#'       "!" = "{.code {arg}} cannot have length 1.", par.$footer,
-#'       class_id = par.$class_id, call = par.$call)
+#'     stop(
+#'       "!" = "{.code {arg}} cannot have length 1.")
 #'   } else {
-#'     stop(par.$msg,
+#'     stop(
 #'       "!" = "{.code {arg}} must have length 1",
-#'       "*" = "Its length is {length(x)}.",
-#'       class_id = par.$class_id, call = par.$call)
+#'       "*" = "Its length is {length(x)}.")
 #'   }
 #' }
 #' length("a") == 1 || stop_length_one("a")

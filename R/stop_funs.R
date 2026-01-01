@@ -32,15 +32,20 @@ stop_equals <- function(lhs, rhs, ..., par. = list()) {
 
   .__top_call__. <- FALSE
 
-  arg <- lbl(.op$arg %||% par.$arg %||% substitute(lhs))
-  arg2 <- lbl(.op$arg2 %||% par.$arg2 %||% substitute(rhs))
+  arg <- .op$arg %||% par.$arg %||% substitute(lhs)
+  arg2 <- .op$arg2 %||% par.$arg2 %||% substitute(rhs)
+  .op$arg <- NULL # Just to be sure...
+  .op$arg2 <- NULL # Just to be sure...
 
   msg2 <- mod_content(lhs, arg)
   msg3 <- mod_content(rhs, arg2)
 
+  arg <- lbl(arg)
+  arg2 <- lbl(arg2)
+
   if (mod_not(par.$mod)) {
-    msg1 <- c("!" = gettextf("{.code %s} must be different from {.code %s}.",
-      arg, arg2))
+    msg1 <- c("!" = gettext(
+      "{.code {arg}} is not different from {.code {arg2}}."))
     # Special case: if mod is "!" and one of the two sides is a constant,
     # we don't need further details
     if (is.null(msg2)) {
@@ -48,18 +53,15 @@ stop_equals <- function(lhs, rhs, ..., par. = list()) {
     } else if (is.null(msg3)) {
       msg2 <- NULL
     } else { # Both sides are complex expressions, and are the same
-      msg2 <- c("*" = gettextf(
-        "Both {.code %s} and {.code %s} contain {.val %s}.",
-        arg, arg2, lbl(lhs)))
+      msg2 <- c("*" = gettext(
+        "Both {.code {arg}} and {.code {arg2}} contain {.val {lhs}}."))
       msg3 <- NULL
     }
   } else {
-    msg1 <- c("!" = gettextf("{.code %s} must be equal to {.code %s}.",
-      arg, arg2))
+    msg1 <- c("!" = gettext("{.code {arg}} is not equal to {.code {arg2}}."))
   }
 
-  stop(par.$msg, msg1, msg2, msg3, par.$footer, class_id = par.$id,
-    call = par.$call)
+  stop(msg1, msg2, msg3)
 }
 
 #' @rdname stop_equals
@@ -72,15 +74,16 @@ mod_content <- function(x, expr) {
 
   if (is.call(expr)) {
     msg <- switch(as.character(expr[[1]]),
-      length = gettextf("length of {.code %s}", lbl(expr[[2]])),
+      length = gettext("length of {.code {expr[[2]]}}"),
       nrow =,
-      NROW = gettextf("number of rows of {.code %s}", lbl(expr[[2]])),
+      NROW = gettext("number of rows of {.code {expr[[2]]}}"),
       ncol =,
-      NCOL = gettext("number of columns of {.code %s}", lbl(expr[[2]])),
-      sprintf("{.code {%s}}", lbl(expr))
+      NCOL = gettext("number of columns of {.code {expr[[2]]}}"),
+      "{.code {expr}}"
     )
   } else {
-    msg <- sprintf("{.code {%s}}", lbl(expr))
+    msg <- "{.code {expr}}"
   }
-  c("*" = gettextf("%s is {.val %s}.", msg, x))
+  msg <- paste(msg, gettext("is {.val {x}}."))
+  c("*" = format_inline(msg))
 }

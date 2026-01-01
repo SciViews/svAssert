@@ -22,15 +22,7 @@ is_numeric(
   null.ok = FALSE
 )
 
-stop_is_numeric(
-  x,
-  ...,
-  msg = NULL,
-  arg = substitute(x),
-  mod = NULL,
-  class_id = NULL,
-  call = NULL
-)
+stop_is_numeric(x, ..., par. = list())
 }
 \arguments{
 \item{x}{The R object that was tested, typically with \code{is_numeric()}.}
@@ -77,20 +69,13 @@ is \code{FALSE}.}
 
 \item{...}{Any additional arguments (not checked, and not used).}
 
-\item{msg}{An optional custom error message. If \code{NULL} (default), a
-standard message is created indicating that \code{x} is not numeric.}
-
-\item{arg}{The argument name, as a \strong{string}, default is the expression
-provided to \code{x}.}
-
-\item{mod}{An optional modifier string, or \code{NULL} for none (default). Only
-\code{"!"} is considered here, indicating negation of the condition.}
-
-\item{class_id}{An optional identifier to append to the error subclass.}
-
-\item{call}{The call where the error was generated. The default computes the
-top-level call of the function(s) that called \code{error_numeric()} using
-\code{\link[=stop_top_call]{stop_top_call()}}.}
+\item{par.}{An optional list with further parameters, like \code{msg} a custom
+error message, \code{arg} the argument name, as a \strong{string}, default is the
+expression provided to \code{x}, \code{mod} a modifier string (only \code{"!"} is considered
+here, indicating negation of the condition), \code{class_id} an identifier to
+append to the error subclass, \code{call} the call where the error was generated
+(the default computes the top-level call of the function(s) that called
+\code{error_numeric()} using \code{\link[=stop_top_call]{stop_top_call()}}.}
 }
 \value{
 Logical for \code{is_numeric()}, \code{TRUE} if \code{x} passes all checks, \code{FALSE}
