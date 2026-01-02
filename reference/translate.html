@@ -80,34 +80,141 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">translate</span><span class="op">(</span><span class="va">x</span>, <span class="va">msg</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">translate</span><span class="op">(</span></span>
+<span>  <span class="va">msg</span>,</span>
+<span>  <span class="va">dictionary</span>,</span>
+<span>  domain <span class="op">=</span> <span class="st">"R-svAssert"</span>,</span>
+<span>  trim <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  format <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">format_inline_</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  collapse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  keep_whitespace <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  post_translate <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">create_messages_script</span><span class="op">(</span></span>
+<span>  <span class="va">dictionary</span>,</span>
+<span>  <span class="va">topic</span>,</span>
+<span>  pkg_dir <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  export <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  source <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  release <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
 
 
-<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A list with two elements: msgs (character vector of known messages)
-and rexs (character vector of regex patterns corresponding to msgs)</p></dd>
-
-
-<dt id="arg-msg">msg<a class="anchor" aria-label="anchor" href="#arg-msg"></a></dt>
+<dl><dt id="arg-msg">msg<a class="anchor" aria-label="anchor" href="#arg-msg"></a></dt>
 <dd><p>The message to be translated</p></dd>
+
+
+<dt id="arg-dictionary">dictionary<a class="anchor" aria-label="anchor" href="#arg-dictionary"></a></dt>
+<dd><p>A character vector with messages to translate and
+regular expressions to find the corresponding error strings as names.</p></dd>
+
+
+<dt id="arg-domain">domain<a class="anchor" aria-label="anchor" href="#arg-domain"></a></dt>
+<dd><p>The domain where to look for messages (see <code><a href="https://rdrr.io/r/base/gettext.html" class="external-link">gettext()</a></code>). The
+default looks in "R-svAssert", and it should be changed for translations
+that are available in another package.</p></dd>
+
+
+<dt id="arg-trim">trim<a class="anchor" aria-label="anchor" href="#arg-trim"></a></dt>
+<dd><p>Logical, indicating whether leading and trailing whitespace
+before looking for message translation. <code>TRUE</code> by default.</p></dd>
+
+
+<dt id="arg-format">format<a class="anchor" aria-label="anchor" href="#arg-format"></a></dt>
+<dd><p>Logical, indicating whether to format the translated message
+with <code>format_inline_()</code>. Default is <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Messages passed to <code>format_inline()</code>.</p></dd>
+
+
+<dt id="arg--envir">.envir<a class="anchor" aria-label="anchor" href="#arg--envir"></a></dt>
+<dd><p>The environment in which to evaluate expressions in <code>...</code>.</p></dd>
+
+
+<dt id="arg-collapse">collapse<a class="anchor" aria-label="anchor" href="#arg-collapse"></a></dt>
+<dd><p>Logical, indicating whether to collapse multiple lines into
+a single string with newlines.</p></dd>
+
+
+<dt id="arg-keep-whitespace">keep_whitespace<a class="anchor" aria-label="anchor" href="#arg-keep-whitespace"></a></dt>
+<dd><p>Logical, indicating whether to keep whitespace in
+the formatted message.</p></dd>
+
+
+<dt id="arg-post-translate">post_translate<a class="anchor" aria-label="anchor" href="#arg-post-translate"></a></dt>
+<dd><p>Logical, indicating whether to translate ", and " and
+", or " in the final message.</p></dd>
+
+
+<dt id="arg-topic">topic<a class="anchor" aria-label="anchor" href="#arg-topic"></a></dt>
+<dd><p>The identifier for a dictionary. Usually, it should be the name
+of the package that generates the messages, but it is not mandatory. Use
+<code>"general"</code> for a set with no particular topic.</p></dd>
+
+
+<dt id="arg-pkg-dir">pkg_dir<a class="anchor" aria-label="anchor" href="#arg-pkg-dir"></a></dt>
+<dd><p>The root directory of the sources of an R package. The
+produced <code>messages-topic.R</code> script file is created in the <code>R/</code>
+subdirectory.</p></dd>
+
+
+<dt id="arg-export">export<a class="anchor" aria-label="anchor" href="#arg-export"></a></dt>
+<dd><p>Logical, indicating whether the created object should be
+exported. Default is <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-source">source<a class="anchor" aria-label="anchor" href="#arg-source"></a></dt>
+<dd><p>An optional URL indicating where the messages come from, e.g.,
+a GitHub repository.</p></dd>
+
+
+<dt id="arg-release">release<a class="anchor" aria-label="anchor" href="#arg-release"></a></dt>
+<dd><p>An optional string indicating the release version of the
+source where the messages were extracted from.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The translated message if a correspondence is found and a
-translation is known, or the original message otherwise.</p>
+    <p>For <code>translate()</code> the translated message if a correspondence is
+found in the dictionary and a translation is known, or the original
+message otherwise.</p>
+<p>For <code>format_inline_()</code> a formatted message as a string. If an error
+occurs during formatting, a warning is issued and a simple concatenation of
+the arguments is returned instead.</p>
+<p>For <code>create_messages_script()</code> the name of the script file that is
+created is returned invisibly. The function is used for its side effect of
+creating the adequate script file.</p>
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
+    <div class="dont-index"><p><code><a href="https://cli.r-lib.org/reference/format_inline.html" class="external-link">cli::format_inline()</a></code></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">checkmate_msgs</span><span class="op">)</span> <span class="co"># Translations for {checkmate} messages</span></span></span>
-<span class="r-in"><span><span class="va">msg</span> <span class="op">&lt;-</span> <span class="st">"Must be of type 'numeric', not 'character'"</span></span></span>
-<span class="r-in"><span><span class="fu">translate</span><span class="op">(</span><span class="va">checkmate_msgs</span>, <span class="va">msg</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Must be of type 'numeric', not 'character'"</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">checkmate_msgs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span> <span class="co"># First 3 {checkmate} messages</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                        ^Variable '([^']*)': (.+)$ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                         "Variable {.var %s}: %s." </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ^Unknown type '([^']*)' to specify check for names\\. Supported are 'unnamed', 'named', 'unique' and 'strict'\\.$ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        "Unknown option '%s' to specify check for names. Supported are 'unnamed', 'named', 'unique' and 'strict'." </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                              ^Unknown class identifier '([^']*)'$ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                             "Unknown class identifier {.cls %s}." </span>
+<span class="r-in"><span><span class="va">msg</span> <span class="op">&lt;-</span> <span class="st">"Unknown class identifier 'my_class'"</span></span></span>
+<span class="r-in"><span><span class="fu">translate</span><span class="op">(</span><span class="va">msg</span>, <span class="va">checkmate_msgs</span>, domain <span class="op">=</span> <span class="st">"R-svAssert"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Unknown class identifier 'my_class'"</span>
 </code></pre></div>
     </div>
   </div>

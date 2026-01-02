@@ -107,7 +107,7 @@ Messages</h1>
                         <h4 data-toc-skip class="author">Philippe
 Grosjean</h4>
             
-            <h4 data-toc-skip class="date">2026-01-01</h4>
+            <h4 data-toc-skip class="date">2026-01-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SciViews/svAssert/blob/main/vignettes/svAssert.Rmd" class="external-link"><code>vignettes/svAssert.Rmd</code></a></small>
       <div class="hidden name"><code>svAssert.Rmd</code></div>
@@ -341,25 +341,25 @@ replacement of base <code><a href="https://rdrr.io/r/base/stopifnot.html" class=
 Here is how you could use it in <code>my_calc6()</code>:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">assert_numeric</span> <span class="op">&lt;-</span> <span class="fu">checkmate</span><span class="fu">::</span><span class="va"><a href="https://mllg.github.io/checkmate/reference/checkNumeric.html" class="external-link">assert_numeric</a></span></span>
-<span><span class="va">my_calc5</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">other_args</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">assert_numeric</span><span class="op">(</span><span class="va">x</span>, lower <span class="op">=</span> <span class="fl">0</span>, any.missing <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">my_calc6</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">other_args</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/stopifnot_.html">stopifnot_</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span></span>
 <span>  <span class="op">(</span><span class="va">ylog</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">my_calc5</span><span class="op">(</span><span class="st">"text"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc5()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Assertion on 'x' failed: Must be of type 'numeric', not 'character'.</span></span>
-<span><span class="fu">my_calc5</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc5()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Assertion on 'x' failed: Must be of type 'numeric', not 'logical'.</span></span>
-<span><span class="fu">my_calc5</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc5()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Assertion on 'x' failed: Element 1 is not &gt;= 0.</span></span>
-<span><span class="fu">my_calc5</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `my_calc5()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Assertion on 'x' failed: Contains missing values (element 2).</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">my_calc6</span><span class="op">(</span><span class="st">"text"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `if ((is.null(bt_op) &amp;&amp; interactive()) || bt_op == "reminder") ...`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> missing value where TRUE/FALSE needed</span></span>
+<span><span class="fu">my_calc6</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `if ((is.null(bt_op) &amp;&amp; interactive()) || bt_op == "reminder") ...`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> missing value where TRUE/FALSE needed</span></span>
+<span><span class="fu">my_calc6</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `if ((is.null(bt_op) &amp;&amp; interactive()) || bt_op == "reminder") ...`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> missing value where TRUE/FALSE needed</span></span>
+<span><span class="fu">my_calc6</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `if ((is.null(bt_op) &amp;&amp; interactive()) || bt_op == "reminder") ...`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> missing value where TRUE/FALSE needed</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="impact-on-performances">Impact on performances<a class="anchor" aria-label="anchor" href="#impact-on-performances"></a>
@@ -372,51 +372,56 @@ inputs are correct. Let’s compare our different versions of
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, min <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="https://bench.r-lib.org/reference/mark.html" class="external-link">mark</a></span><span class="op">(</span></span>
-<span>  reference <span class="op">=</span> <span class="fu">my_calc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
-<span>  if_stop   <span class="op">=</span> <span class="fu">my_calc2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
-<span>  stopifnot <span class="op">=</span> <span class="fu">my_calc3</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
-<span>  svAssert  <span class="op">=</span> <span class="fu">my_calc4</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
-<span>  checkmate <span class="op">=</span> <span class="fu">my_calc5</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  reference  <span class="op">=</span> <span class="fu">my_calc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  if_stop    <span class="op">=</span> <span class="fu">my_calc2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  stopifnot  <span class="op">=</span> <span class="fu">my_calc3</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  svAssert   <span class="op">=</span> <span class="fu">my_calc4</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  checkmate  <span class="op">=</span> <span class="fu">my_calc5</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  stopifnot_ <span class="op">=</span> <span class="fu">my_calc6</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"expression"</span>, <span class="st">"min"</span>, <span class="st">"median"</span>, <span class="st">"itr/sec"</span>, <span class="st">"mem_alloc"</span>, <span class="st">"gc/sec"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference  591.16ns 632.13ns  1<span style="text-decoration: underline;">409</span>691.        0B      0  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       1.2µs   1.36µs   <span style="text-decoration: underline;">683</span>456.        0B      0  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot     3.9µs   4.44µs   <span style="text-decoration: underline;">215</span>132.        0B     21.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert     2.88µs   3.21µs   <span style="text-decoration: underline;">301</span>624.        0B     30.2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate    4.04µs   4.54µs   <span style="text-decoration: underline;">209</span>667.        0B     21.0</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference  591.04ns  641.1ns  1<span style="text-decoration: underline;">407</span>990.        0B    141. </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       1.2µs   1.35µs   <span style="text-decoration: underline;">686</span>725.        0B     68.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot    3.88µs   4.48µs   <span style="text-decoration: underline;">214</span>875.        0B     21.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert     2.81µs   3.15µs   <span style="text-decoration: underline;">301</span>574.        0B     30.2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate       4µs   4.51µs   <span style="text-decoration: underline;">214</span>023.        0B     21.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> stopifnot_   3.48µs   3.99µs   <span style="text-decoration: underline;">241</span>078.        0B     24.1</span></span></code></pre></div>
 <p>Minimum impact is here with <code>if (...) stop(...)</code>,
 providing you only use quick primitive functions like
 <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric()</a></code> / <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA()</a></code>, or simple comparisons
 like <code>x &lt; 0</code> for <strong>testing small objects</strong>.
 The second best is {svAssert}, but checkmate’s
-<code>assert_numeric()</code> and <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> are not far
-away, and honestly, quite good<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. With such a small <code>x</code>, there is
+<code>assert_numeric()</code> and
+<code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code>/<code><a href="../reference/stopifnot_.html">stopifnot_()</a></code> are not far away, and
+honestly, quite good<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. With such a small <code>x</code>, there is
 no memory impact.</p>
 <p>Here is the same tests with a much larger vector:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1e5</span>, min <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="https://bench.r-lib.org/reference/mark.html" class="external-link">mark</a></span><span class="op">(</span>iterations <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  reference <span class="op">=</span> <span class="fu">my_calc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
-<span>  if_stop   <span class="op">=</span> <span class="fu">my_calc2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
-<span>  stopifnot <span class="op">=</span> <span class="fu">my_calc3</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
-<span>  svAssert  <span class="op">=</span> <span class="fu">my_calc4</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
-<span>  checkmate <span class="op">=</span> <span class="fu">my_calc5</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  reference  <span class="op">=</span> <span class="fu">my_calc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  if_stop    <span class="op">=</span> <span class="fu">my_calc2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  stopifnot  <span class="op">=</span> <span class="fu">my_calc3</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  svAssert   <span class="op">=</span> <span class="fu">my_calc4</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  checkmate  <span class="op">=</span> <span class="fu">my_calc5</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  stopifnot_ <span class="op">=</span> <span class="fu">my_calc6</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"expression"</span>, <span class="st">"min"</span>, <span class="st">"median"</span>, <span class="st">"itr/sec"</span>, <span class="st">"mem_alloc"</span>, <span class="st">"gc/sec"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference     518µs 885.19µs     <span style="text-decoration: underline;">1</span>175.   781.3KB     11.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       769µs   1.24ms      843.    1.15MB     26.1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot     770µs   1.23ms      840.    1.15MB     17.1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert      615µs 924.52µs     <span style="text-decoration: underline;">1</span>113.   781.3KB     22.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate     623µs 926.92µs     <span style="text-decoration: underline;">1</span>096.   781.3KB     22.4</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference     515µs 817.33µs     <span style="text-decoration: underline;">1</span>256.   781.3KB     12.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       764µs   1.21ms      892.    1.15MB     27.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot     762µs   1.21ms      874.    1.15MB     27.0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert      613µs 915.68µs     <span style="text-decoration: underline;">1</span>142.   781.3KB     11.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate     615µs 918.71µs     <span style="text-decoration: underline;">1</span>143.   781.3KB     23.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> stopifnot_    763µs   1.23ms      741.    1.15MB     22.9</span></span></code></pre></div>
 <p>The results are quite different. Now, both {svAssert} and {checkmate}
 are clearly better, both in term of speed and in memory use (still
 negligible). <code>if (...) stop(...)</code> and
-<code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> take significantly more time and have to
-allocate memory, it is for the
+<code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code>/<code><a href="../reference/stopifnot_.html">stopifnot_()</a></code> take significantly
+more time and have to allocate memory, it is for the
 <code>x &lt; 0</code>/<code>x &gt;= 0</code> tests. The trend is
 increasing with even larger <code>x</code>.</p>
 <p><em>All in all, {svAssert} offers both quick and efficient options
