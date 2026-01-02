@@ -210,11 +210,13 @@ stop_ <- function(..., domain = NULL, class = error_class(call,
   # Use my custom backtrace message reminder (for translation)
   #if ("svAssert_error" %in% class) {
     bt_op <- getOption("svAssert_backtrace_on_error", NULL)
-    if ((is.null(bt_op) && interactive()) || bt_op == "reminder") {
-      message_formatted <- c(message_formatted, format_inline(gettext(
-        "Run `{.run rlang::last_trace()}` to see where the error occurred.")))
-      # Avoid displaying it twice (silent rlang version)
-      options(rlang_backtrace_on_error = "none")
+    if (is.null(bt_op) || bt_op == "reminder") {
+      if (interactive()) {
+        message_formatted <- c(message_formatted, format_inline(gettext(
+          "Run `{.run rlang::last_trace()}` to see where the error occurred.")))
+        # Avoid displaying it twice (silent rlang version)
+        options(rlang_backtrace_on_error = "none")
+      }
     }
   #}
 
