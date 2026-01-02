@@ -74,6 +74,7 @@ function call and manage a modifier (\link{!}, \code{\link[=any]{any()}} or \cod
 to ease building error messages.
 }
 \examples{
+# stop <- stop_
 # Note that |> try() is just there to catch error; do not use in your code!
 stopifnot_(1 == 1, all.equal(pi, 3.14159265), 1 < 2) |> try()
 stopifnot_(is.character(letters), length(letters) == 1) |> try()
@@ -115,6 +116,7 @@ length("a") == 1 || stop_length_one("a")
 # any() or all() have no effect on single logical and can then be ignored
 (any(length("a") != 1) ||
   stop_length_one("a", par. = list(mod = "!all"))) |> try()
+rm(stop)
 }
 \seealso{
 \code{\link[=stop_]{stop_()}}, \code{\link[base:stop]{base::stop()}}

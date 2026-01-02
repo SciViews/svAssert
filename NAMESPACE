@@ -2,7 +2,11 @@
 
 export("stop_==")
 export(.op)
+export(checkmate_msgs)
+export(create_messages_script)
 export(error_class)
+export(format_inline_)
+export(general_msgs)
 export(get_stop_fun)
 export(is_numeric)
 export(lbl)

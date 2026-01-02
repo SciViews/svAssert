@@ -19,6 +19,7 @@
 #' @seealso [stop_()], [base::stop()]
 #'
 #' @examples
+#' # stop <- stop_
 #' # Note that |> try() is just there to catch error; do not use in your code!
 #' stopifnot_(1 == 1, all.equal(pi, 3.14159265), 1 < 2) |> try()
 #' stopifnot_(is.character(letters), length(letters) == 1) |> try()
@@ -46,7 +47,7 @@ stopifnot_ <- function(...) {
 
         # More translations (Mean absolute|relative|scaled difference:)
         if (is.character(r))
-          r <- translate(get('general_msgs'), r)
+          r <- translate(r, get('general_msgs'))
 
         # Run stop_xxx() function, if found
         get_stop_fun(expr = cl.i, call_it = TRUE, force_stop = FALSE)
@@ -60,8 +61,8 @@ stopifnot_ <- function(...) {
           c(sprintf(gettext("{.code %s} and {.code %s} are not equal"),
             Dparse(cl.i[[2]]), Dparse(cl.i[[3]])),
             i = abbrev(r))
-        else sprintf(ngettext(length(r), "{. code %s} is not {.val TRUE}",
-          "{. code %s} are not all {.val TRUE}"), Dparse(cl.i))
+        else sprintf(ngettext(length(r), "{.code %s} is not {.val TRUE}",
+          "{.code %s} are not all {.val TRUE}"), Dparse(cl.i))
       }
       #stop(simpleError(msg, call = if (p <- sys.parent(1L)) sys.call(p)))
       stop(msg, class_id = "stopifnot")
@@ -268,6 +269,7 @@ get_stop_fun <- function(x, expr = substitute(x), par. = list(), call_it = TRUE,
 #' # any() or all() have no effect on single logical and can then be ignored
 #' (any(length("a") != 1) ||
 #'   stop_length_one("a", par. = list(mod = "!all"))) |> try()
+#' rm(stop)
 mod_not <- function(mod) {
   !is.null(mod) && mod != "" && startsWith(mod, "!")
 }

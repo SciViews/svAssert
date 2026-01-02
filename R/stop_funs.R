@@ -15,7 +15,7 @@
 #' @export
 #'
 #' @examples
-#' stop_equals(1, 2) |> try()
+#' stop_equals(1, 2) |> try() # A little bit silly with two constants
 #' x <- 1
 #' stop_equals(x, 2) |> try()
 #' stop_equals(x, 1, par. = list(mod = "!")) |> try()
@@ -45,7 +45,7 @@ stop_equals <- function(lhs, rhs, ..., par. = list()) {
 
   if (mod_not(par.$mod)) {
     msg1 <- c("!" = gettext(
-      "{.code {arg}} is not different from {.code {arg2}}."))
+      "{.code {arg}} must be different from {.code {arg2}}."))
     # Special case: if mod is "!" and one of the two sides is a constant,
     # we don't need further details
     if (is.null(msg2)) {
@@ -58,7 +58,7 @@ stop_equals <- function(lhs, rhs, ..., par. = list()) {
       msg3 <- NULL
     }
   } else {
-    msg1 <- c("!" = gettext("{.code {arg}} is not equal to {.code {arg2}}."))
+    msg1 <- c("!" = gettext("{.code {arg}} must be equal to {.code {arg2}}."))
   }
 
   stop(msg1, msg2, msg3)
@@ -69,7 +69,7 @@ stop_equals <- function(lhs, rhs, ..., par. = list()) {
 `stop_==` <- stop_equals
 
 mod_content <- function(x, expr) {
-  if (x == expr)
+  if (length(x) == 1L && x == expr)
     return(NULL)
 
   if (is.call(expr)) {

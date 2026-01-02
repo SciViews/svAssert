@@ -2,25 +2,103 @@
 % Please edit documentation in R/translate.R
 \name{translate}
 \alias{translate}
+\alias{format_inline_}
+\alias{create_messages_script}
 \title{Translate a message given a set of known messages and regex patterns}
 \usage{
-translate(x, msg)
+translate(
+  msg,
+  dictionary,
+  domain = "R-svAssert",
+  trim = TRUE,
+  format = TRUE,
+  ...
+)
+
+format_inline_(
+  ...,
+  .envir = parent.frame(),
+  collapse = TRUE,
+  keep_whitespace = TRUE,
+  post_translate = TRUE
+)
+
+create_messages_script(
+  dictionary,
+  topic,
+  pkg_dir = ".",
+  export = TRUE,
+  source = NULL,
+  release = NULL
+)
 }
 \arguments{
-\item{x}{A list with two elements: msgs (character vector of known messages)
-and rexs (character vector of regex patterns corresponding to msgs)}
-
 \item{msg}{The message to be translated}
+
+\item{dictionary}{A character vector with messages to translate and
+regular expressions to find the corresponding error strings as names.}
+
+\item{domain}{The domain where to look for messages (see \code{\link[=gettext]{gettext()}}). The
+default looks in "R-svAssert", and it should be changed for translations
+that are available in another package.}
+
+\item{trim}{Logical, indicating whether leading and trailing whitespace
+before looking for message translation. \code{TRUE} by default.}
+
+\item{format}{Logical, indicating whether to format the translated message
+with \code{format_inline_()}. Default is \code{TRUE}.}
+
+\item{...}{Messages passed to \code{\link[=format_inline]{format_inline()}}.}
+
+\item{.envir}{The environment in which to evaluate expressions in \code{...}.}
+
+\item{collapse}{Logical, indicating whether to collapse multiple lines into
+a single string with newlines.}
+
+\item{keep_whitespace}{Logical, indicating whether to keep whitespace in
+the formatted message.}
+
+\item{post_translate}{Logical, indicating whether to translate ", and " and
+", or " in the final message.}
+
+\item{topic}{The identifier for a dictionary. Usually, it should be the name
+of the package that generates the messages, but it is not mandatory. Use
+\code{"general"} for a set with no particular topic.}
+
+\item{pkg_dir}{The root directory of the sources of an R package. The
+produced \code{messages-topic.R} script file is created in the \verb{R/}
+subdirectory.}
+
+\item{export}{Logical, indicating whether the created object should be
+exported. Default is \code{TRUE}.}
+
+\item{source}{An optional URL indicating where the messages come from, e.g.,
+a GitHub repository.}
+
+\item{release}{An optional string indicating the release version of the
+source where the messages were extracted from.}
 }
 \value{
-The translated message if a correspondence is found and a
-translation is known, or the original message otherwise.
+For \code{translate()} the translated message if a correspondence is
+found in the dictionary and a translation is known, or the original
+message otherwise.
+
+For \code{format_inline_()} a formatted message as a string. If an error
+occurs during formatting, a warning is issued and a simple concatenation of
+the arguments is returned instead.
+
+For \code{create_messages_script()} the name of the script file that is
+created is returned invisibly. The function is used for its side effect of
+creating the adequate script file.
 }
 \description{
 Translate a message given a set of known messages and regex patterns
 }
 \examples{
-data(checkmate_msgs) # Translations for {checkmate} messages
-msg <- "Must be of type 'numeric', not 'character'"
-translate(checkmate_msgs, msg)
+checkmate_msgs[1:3] # First 3 {checkmate} messages
+msg <- "Unknown class identifier 'my_class'"
+translate(msg, checkmate_msgs, domain = "R-svAssert")
+}
+\seealso{
+\code{\link[cli:format_inline]{cli::format_inline()}}
 }

@@ -188,16 +188,19 @@ stop_ <- function(..., domain = NULL, class = error_class(call,
   }
 
   # Equivalent to cli::cli_abort, but catching errors in message formatting
-  message_formatted <- try(vapply(message, FUN = format_inline,
-    FUN.VALUE = character(1), USE.NAMES = TRUE, .envir = .envir), silent = TRUE)
-  if (inherits(message_formatted, "try-error")) {
-    warning(
-      "Formatting of the error message failed, using unformatted messages.",
-      "\n", message_formatted, call. = FALSE)
-    class <- "cli_format_error" # Special class superseding the one provided
-    message_formatted <- message
-    .internal = TRUE
-  }
+  #message_formatted <- try(vapply(message, FUN = format_inline,
+  #  FUN.VALUE = character(1), USE.NAMES = TRUE, .envir = .envir), silent = TRUE)
+  #if (inherits(message_formatted, "try-error")) {
+  #  warning(
+  #    "Formatting of the error message failed, using unformatted messages.",
+  #    "\n", message_formatted, call. = FALSE)
+  #  class <- "cli_format_error" # Special class superseding the one provided
+  #  message_formatted <- message
+  #  .internal = TRUE
+  #}
+  # TODO: manage translated vs non translated for and and or!
+  message_formatted <- vapply(message, FUN = format_inline_,
+    FUN.VALUE = character(1), USE.NAMES = TRUE, .envir = .envir)
 
   # Message for the internal error (same one as in abort(), but translatable)
   if (isTRUE(.internal))

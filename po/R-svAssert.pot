@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2026-01-01 19:09\n"
+"POT-Creation-Date: 2026-01-02 14:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,250 +17,250 @@ msgstr ""
 msgid "Can't use argument {.arg {arg}} ({object_info(x)})."
 msgstr ""
 
-msgid "Variable '%s': %s"
+msgid "Variable {.var %s}: %s."
 msgstr ""
 
-msgid "Unknown type '%s' to specify check for names. Supported are 'unnamed', 'named', 'unique' and 'strict'."
+msgid "Unknown option '%s' to specify check for names. Supported are 'unnamed', 'named', 'unique' and 'strict'."
 msgstr ""
 
-msgid "Unknown class identifier '%c'"
+msgid "Unknown class identifier {.cls %s}."
 msgstr ""
 
-msgid "Timezones of 'x' and 'upper' must match"
+msgid "Timezones of {.arg x} and {.arg upper} must match."
 msgstr ""
 
-msgid "Timezones of 'x' and 'lower' must match"
+msgid "Timezones of {.arg x} and {.arg lower} must match."
 msgstr ""
 
-msgid "Rule may not be NA"
+msgid "Rule may not be {.code NA}."
 msgstr ""
 
-msgid "Must store numerics"
+msgid "Must store numerics."
 msgstr ""
 
-msgid "Must store logicals"
+msgid "Must store logicals."
 msgstr ""
 
-msgid "Must store integers"
+msgid "Must store integers."
 msgstr ""
 
-msgid "Must store integerish values"
+msgid "Must store integerish values."
 msgstr ""
 
-msgid "Must store doubles"
+msgid "Must store doubles."
 msgstr ""
 
-msgid "Must store complexs"
+msgid "Must store complexs."
 msgstr ""
 
-msgid "Must store characters"
+msgid "Must store characters."
 msgstr ""
 
-msgid "Must store a list"
+msgid "Must store a list."
 msgstr ""
 
-msgid "Must have unique %s, but element %i is duplicated"
+msgid "Must have unique %s, but element %i is duplicated."
 msgstr ""
 
-msgid "Must have length 1"
+msgid "Must have length 1."
 msgstr ""
 
-msgid "Must have length >= %g, but has length %g"
+msgid "Must have length >= %g, but has length %g."
 msgstr ""
 
-msgid "Must have length <= %g, but has length %g"
+msgid "Must have length <= %g, but has length %g."
 msgstr ""
 
-msgid "Must have length %g, but has length %g"
+msgid "Must have length %g, but has length %g."
 msgstr ""
 
-msgid "Must have exactly %i rows, but has %i rows"
+msgid "Must have exactly %i rows, but has %i rows."
 msgstr ""
 
-msgid "Must have exactly %i cols, but has %i cols"
+msgid "Must have exactly %i cols, but has %i cols."
 msgstr ""
 
-msgid "Must have at most %i rows, but has %i rows"
+msgid "Must have at most %i rows, but has %i rows."
 msgstr ""
 
-msgid "Must have at most %i cols, but has %i cols"
+msgid "Must have at most %i cols, but has %i cols."
 msgstr ""
 
-msgid "Must have at least %i rows, but has %i rows"
+msgid "Must have at least %i rows, but has %i rows."
 msgstr ""
 
-msgid "Must have at least %i cols, but has %i cols"
+msgid "Must have at least %i cols, but has %i cols."
 msgstr ""
 
-msgid "Must have >=%i dimensions, but has dimension %i"
+msgid "Must have >=%i dimensions, but has dimension %i."
 msgstr ""
 
-msgid "Must have <=%i dimensions, but has dimension %i"
+msgid "Must have <=%i dimensions, but has dimension %i."
 msgstr ""
 
-msgid "Must have %s, but is NA at position %i"
+msgid "Must have %s, but is {.code NA} at position %i."
 msgstr ""
 
-msgid "Must have %s, but element %i is empty"
+msgid "Must have %s, but element %i is empty."
 msgstr ""
 
-msgid "Must have %s according to R's variable naming conventions, but element %i does not comply"
+msgid "Must have %s according to R's variable naming conventions, but element %i does not comply."
 msgstr ""
 
-msgid "Must have %s"
+msgid "Must have %s."
 msgstr ""
 
-msgid "Must be sorted"
+msgid "Must be sorted."
 msgstr ""
 
-msgid "Must be of type 'integerish'%s, not '%s'"
+msgid "Must be of type 'integerish'%s, not {.cls %s}."
 msgstr ""
 
-msgid "Must be of type 'integerish', not 'NULL'"
+msgid "Must be of type 'integerish', not {.code NULL}."
 msgstr ""
 
-msgid "Must be of type 'integerish', but element %g is not in integer range"
+msgid "Must be of type 'integerish', but element %g is not in integer range."
 msgstr ""
 
-msgid "Must be of type 'integerish', but element %g is not close to an integer"
+msgid "Must be of type 'integerish', but element %g is not close to an integer."
 msgstr ""
 
-msgid "Must be of type 'integerish', but element %g has an imaginary part"
+msgid "Must be of type 'integerish', but element %g has an imaginary part."
 msgstr ""
 
-msgid "Must be of type '%s'%s, not '%s'"
+msgid "Must be of type {.cls %s}%s, not {.cls %s}."
 msgstr ""
 
-msgid "Must be of type '%s', not 'NULL'"
+msgid "Must be of type {.cls %s}, not {.code NULL}."
 msgstr ""
 
-msgid "Must be of type '%s', not '%s'"
+msgid "Must be of type {.cls %s}, not {.cls %s}."
 msgstr ""
 
-msgid "Must be of length %s %i, but has length %g"
+msgid "Must be of length %s %i, but has length %g."
 msgstr ""
 
-msgid "Must be of class '%s', not '%s'"
+msgid "Must be of class {.cls %s}, not {.cls %s}."
 msgstr ""
 
-msgid "Must be finite"
+msgid "Must be finite."
 msgstr ""
 
-msgid "Must be atomic"
+msgid "Must be atomic."
 msgstr ""
 
-msgid "Must be a character vector"
+msgid "Must be a character vector."
 msgstr ""
 
-msgid "Must be a %i-d array, but has dimension %i"
+msgid "Must be a %i-d array, but has dimension %i."
 msgstr ""
 
-msgid "Must be >= %i"
+msgid "Must be >= %i."
 msgstr ""
 
-msgid "May not have %s"
+msgid "May not have %s."
 msgstr ""
 
-msgid "May not contain missing values, first at position %i"
+msgid "May not contain missing values, first at position %i."
 msgstr ""
 
-msgid "May not contain missing values, first at column %i, element %i"
+msgid "May not contain missing values, first at column %i, element %i."
 msgstr ""
 
-msgid "May not contain missing values, first at column '%s', element %i"
+msgid "May not contain missing values, first at column {.field %s}, element %i."
 msgstr ""
 
-msgid "May not be NA"
+msgid "May not be {.code NA}."
 msgstr ""
 
-msgid "Invalid length definition: %s"
+msgid "Invalid length definition: %s."
 msgstr ""
 
-msgid "Invalid bound definition, missing opening '(' or '[': %s"
+msgid "Invalid bound definition, missing opening '(' or '[': %s."
 msgstr ""
 
-msgid "Invalid bound definition, error parsing upper bound or missing closing ')' or ']': %s"
+msgid "Invalid bound definition, error parsing upper bound or missing closing ')' or ']': %s."
 msgstr ""
 
-msgid "Invalid bound definition, error parsing lower bound, missing separator ',' or missing closing ')' or ']': %s"
+msgid "Invalid bound definition, error parsing lower bound, missing separator ',' or missing closing ')' or ']': %s."
 msgstr ""
 
-msgid "Invalid argument 'mode'. Must be one of 'logical', 'integer', 'integerish', 'double', 'numeric', 'complex', 'character', 'list' or 'atomic'"
+msgid "Invalid argument {.arg mode}. Must be one of 'logical', 'integer', 'integerish', 'double', 'numeric', 'complex', 'character', 'list' or 'atomic'."
 msgstr ""
 
-msgid "Empty rule"
+msgid "Empty rule."
 msgstr ""
 
-msgid "Element %i is not >= %s"
+msgid "Element %i is not >= %s."
 msgstr ""
 
-msgid "Element %i is not >= %g"
+msgid "Element %i is not >= %g."
 msgstr ""
 
-msgid "Element %i is not <= %s"
+msgid "Element %i is not <= %s."
 msgstr ""
 
-msgid "Element %i is not <= %g"
+msgid "Element %i is not <= %g."
 msgstr ""
 
-msgid "Contains only missing values"
+msgid "Contains only missing values."
 msgstr ""
 
-msgid "Contains missing values (row %i, col %i)"
+msgid "Contains missing values (row %i, col %i)."
 msgstr ""
 
-msgid "Contains missing values (element %i)"
+msgid "Contains missing values (element %i)."
 msgstr ""
 
-msgid "Contains missing values (column '%s', row %i)"
+msgid "Contains missing values (column {.field %s}, row %i)."
 msgstr ""
 
-msgid "Contains missing values"
+msgid "Contains missing values."
 msgstr ""
 
-msgid "Contains duplicated values, position %i"
+msgid "Contains duplicated values, position %i."
 msgstr ""
 
-msgid "Cannot handle length >= %i"
+msgid "Cannot handle length >= %i."
 msgstr ""
 
-msgid "Cannot check for negative length"
+msgid "Cannot check for negative length."
 msgstr ""
 
-msgid "Bound checks only possible for numeric variables, strings and factors, not %s"
+msgid "Bound checks only possible for numeric variables, strings and factors, not %s."
 msgstr ""
 
-msgid "Argument 'x' must be a list or data.frame"
+msgid "Argument {.arg x} must be a list or data.frame."
 msgstr ""
 
-msgid "Argument 'upper' must be provided as single POSIXct time"
+msgid "Argument {.arg upper} must be provided as single {.cls POSIXct} time."
 msgstr ""
 
-msgid "Argument 'rules' must be a string"
+msgid "Argument {.arg rules} must be a string."
 msgstr ""
 
-msgid "Argument 'lower' must be provided as single POSIXct time"
+msgid "Argument {.arg lower} must be provided as single {.cls POSIXct} time."
 msgstr ""
 
-msgid "All elements must have exactly %i characters, but element %i has %i chararacters"
+msgid "All elements must have exactly %i characters, but element %i has %i characters."
 msgstr ""
 
-msgid "All elements must have at most %i characters, but element %i has %i characters"
+msgid "All elements must have at most %i characters, but element %i has %i characters."
 msgstr ""
 
-msgid "All elements must have at least %i characters, but element %i has %i characters"
+msgid "All elements must have at least %i characters, but element %i has %i characters."
 msgstr ""
 
-msgid "All elements must have %s %g chars"
+msgid "All elements must have %s %g chars."
 msgstr ""
 
-msgid "All elements must be %s Inf"
+msgid "All elements must be %s {.code Inf}."
 msgstr ""
 
-msgid "All elements must be %s %g"
+msgid "All elements must be %s %g."
 msgstr ""
 
-msgid "All elements must be %s -Inf"
+msgid "All elements must be %s {.code -Inf}."
 msgstr ""
 
 msgid "Additional chars found in rule!"
@@ -273,9 +273,6 @@ msgid "Mean scaled difference: %g"
 msgstr ""
 
 msgid "Mean relative difference: %g"
-msgstr ""
-
-msgid "Formatting of the error message failed, using unformatted messages."
 msgstr ""
 
 msgid "This is an internal error, please report it to the package authors."
@@ -305,13 +302,13 @@ msgstr ""
 msgid "an object of class {.cls {class(x)}}"
 msgstr ""
 
-msgid "{.code {arg}} is not different from {.code {arg2}}."
+msgid "{.code {arg}} must be different from {.code {arg2}}."
 msgstr ""
 
 msgid "Both {.code {arg}} and {.code {arg2}} contain {.val {lhs}}."
 msgstr ""
 
-msgid "{.code {arg}} is not equal to {.code {arg2}}."
+msgid "{.code {arg}} must be equal to {.code {arg2}}."
 msgstr ""
 
 msgid "length of {.code {expr[[2]]}}"
@@ -338,7 +335,19 @@ msgstr ""
 msgid "{.code {lbl(expr = expr)}} is not TRUE"
 msgstr ""
 
-msgid        "{. code %s} is not {.val TRUE}"
-msgid_plural "{. code %s} are not all {.val TRUE}"
+msgid "Cannot format error message (signal it to package authors):"
+msgstr ""
+
+msgid ", and"
+msgstr ""
+
+msgid ", or"
+msgstr ""
+
+msgid "(or {.code NULL})"
+msgstr ""
+
+msgid        "{.code %s} is not {.val TRUE}"
+msgid_plural "{.code %s} are not all {.val TRUE}"
 msgstr[0]    ""
 msgstr[1]    ""

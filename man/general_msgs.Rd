@@ -3,23 +3,19 @@
 \docType{data}
 \name{general_msgs}
 \alias{general_msgs}
-\title{General messages for translation}
+\title{Messages for Translation: general}
 \format{
 \subsection{\code{general_msgs}}{
 
-A list with two components:
-\describe{
-\item{msgs}{Messages to translate}
-\item{rexs}{Corresponding regular expressions to extract variables from
-messages}
-}
+A character vector with messages and corresponding regular
+expressions as names.
 }
 }
 \usage{
 general_msgs
 }
 \description{
-Messages and regular expressions required to translate general error using
-\code{\link[=translate]{translate()}}.
+Messages and regular expressions required to identify error strings
+to translate using \code{\link[=translate]{translate()}} for 'general'.
 }
 \keyword{datasets}

@@ -3,25 +3,22 @@
 \docType{data}
 \name{checkmate_msgs}
 \alias{checkmate_msgs}
-\title{\{checkmate\} messages for translation}
+\title{Messages for Translation: checkmate}
 \format{
 \subsection{\code{checkmate_msgs}}{
 
-A list with two components:
-\describe{
-\item{msgs}{Messages found in \{checkmate\}}
-\item{rexs}{Corresponding regular expressions to extract variables from  a message}
-}
+A character vector with messages and corresponding regular
+expressions as names.
 }
 }
 \source{
-\url{https://github.com/mllg/checkmate}
+\url{https://github.com/mllg/checkmate} (release v2.3.3)
 }
 \usage{
 checkmate_msgs
 }
 \description{
-Messages and regular expressions required translate \{checkmate\} error using
-\code{\link[=translate]{translate()}}.
+Messages and regular expressions required to identify error strings
+to translate using \code{\link[=translate]{translate()}} for 'checkmate'.
 }
 \keyword{datasets}

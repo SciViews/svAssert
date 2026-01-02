@@ -172,8 +172,8 @@ my_calc5(c(1, NA, 3))
 
 ```{r}
 assert_numeric <- checkmate::assert_numeric
-my_calc5 <- function(x, other_args, ...) {
-  assert_numeric(x, lower = 0, any.missing = FALSE)
+my_calc6 <- function(x, other_args, ...) {
+  stopifnot_(is.numeric(x), !anyNA(x), all(x >= 0))
   
   y <- x
   (ylog <- log(y))
@@ -181,10 +181,10 @@ my_calc5 <- function(x, other_args, ...) {
 ```
 
 ```{r, error=TRUE}
-my_calc5("text")
-my_calc5(FALSE)
-my_calc5(-5:5)
-my_calc5(c(1, NA, 3))
+my_calc6("text")
+my_calc6(FALSE)
+my_calc6(-5:5)
+my_calc6(c(1, NA, 3))
 ```
 
 
@@ -197,15 +197,16 @@ Now, the comparison:
 ```{r}
 x <- runif(10, min = 1, max = 100)
 bench::mark(
-  reference = my_calc(x),
-  if_stop   = my_calc2(x),
-  stopifnot = my_calc3(x),
-  svAssert  = my_calc4(x),
-  checkmate = my_calc5(x)
+  reference  = my_calc(x),
+  if_stop    = my_calc2(x),
+  stopifnot  = my_calc3(x),
+  svAssert   = my_calc4(x),
+  checkmate  = my_calc5(x),
+  stopifnot_ = my_calc6(x)
 )[, c("expression", "min", "median", "itr/sec", "mem_alloc", "gc/sec")]
 ```
 
-Minimum impact is here with `if (...) stop(...)`, providing you only use quick primitive functions like `is.numeric()` / `anyNA()`, or simple comparisons like `x < 0` for **testing small objects**. The second best is {svAssert}, but checkmate's `assert_numeric()` and `stopifnot()` are not far away, and honestly, quite good[^3]. With such a small `x`, there is no memory impact.
+Minimum impact is here with `if (...) stop(...)`, providing you only use quick primitive functions like `is.numeric()` / `anyNA()`, or simple comparisons like `x < 0` for **testing small objects**. The second best is {svAssert}, but checkmate's `assert_numeric()` and `stopifnot()`/`stopifnot_()` are not far away, and honestly, quite good[^3]. With such a small `x`, there is no memory impact.
 
 [^3]: There are many other implementations of assertions on CRAN that we do not review here. Some of them have *huge* impact on the performances! Always balance performance with features while you decide the way you make your assertions. You probably do not want to end up with a function that is significantly slower, uses more memory, or both, than the one with just the code that perform the actual computation.
 
@@ -214,15 +215,16 @@ Here is the same tests with a much larger vector:
 ```{r}
 x <- runif(1e5, min = 1, max = 100)
 bench::mark(iterations = 100,
-  reference = my_calc(x),
-  if_stop   = my_calc2(x),
-  stopifnot = my_calc3(x),
-  svAssert  = my_calc4(x),
-  checkmate = my_calc5(x)
+  reference  = my_calc(x),
+  if_stop    = my_calc2(x),
+  stopifnot  = my_calc3(x),
+  svAssert   = my_calc4(x),
+  checkmate  = my_calc5(x),
+  stopifnot_ = my_calc6(x)
 )[, c("expression", "min", "median", "itr/sec", "mem_alloc", "gc/sec")]
 ```
 
-The results are quite different. Now, both {svAssert} and {checkmate} are clearly better, both in term of speed and in memory use (still negligible). `if (...) stop(...)` and `stopifnot()` take significantly more time and have to allocate memory, it is for the `x < 0`/`x >= 0` tests. The trend is increasing with even larger `x`.
+The results are quite different. Now, both {svAssert} and {checkmate} are clearly better, both in term of speed and in memory use (still negligible). `if (...) stop(...)` and `stopifnot()`/`stopifnot_()` take significantly more time and have to allocate memory, it is for the `x < 0`/`x >= 0` tests. The trend is increasing with even larger `x`.
 
 *All in all, {svAssert} offers both quick and efficient options for assertions*. Only for functions that have to be *extremely* fast on very small objects, the `if (...) stop (...)` could be considered as a preferred alternative.
 
@@ -254,8 +256,8 @@ my_calc4(FALSE)
 ```{r, echo=FALSE, error=TRUE}
 my_true_calc4 <- my_calc4
 my_calc4 <- function(x) {
-  stop_("`x` ne convient pas.",
-    i = "Doit être de type 'numeric', et non 'logical'.")
+  stop_("Argument {.arg x} inapproprié ({object_info(x)}}).",
+    i = "Doit être de type {.cls numeric}, et non {.cls logical}.")
 }
 my_calc4(FALSE)
 my_calc4 <- my_true_calc4
@@ -267,7 +269,7 @@ my_calc4(-5:5)
 
 ```{r, echo=FALSE, error=TRUE}
 my_calc4 <- function(x) {
-  stop_("`x` ne convient pas.",
+  stop_("Argument {.arg x} inapproprié ({object_info(x)}}).",
     i = "L'élément 1 n'est pas >= 0")
 }
 my_calc4(-5:5)

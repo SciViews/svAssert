@@ -29,7 +29,7 @@ This function always stops with an error.
 \code{stop_equals()} generates an error message for both \code{==} and \code{!=} assertions.
 }
 \examples{
-stop_equals(1, 2) |> try()
+stop_equals(1, 2) |> try() # A little bit silly with two constants
 x <- 1
 stop_equals(x, 2) |> try()
 stop_equals(x, 1, par. = list(mod = "!")) |> try()
