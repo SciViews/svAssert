@@ -15,7 +15,12 @@
 <url><loc>https://www.sciviews.org/svAssert/reference/index.html</loc></url>
 <url><loc>https://www.sciviews.org/svAssert/reference/is_numeric.html</loc></url>
 <url><loc>https://www.sciviews.org/svAssert/reference/stop_.html</loc></url>
-<url><loc>https://www.sciviews.org/svAssert/reference/stop_equals.html</loc></url>
+<url><loc>https://www.sciviews.org/svAssert/reference/stop_equal.html</loc></url>
+<url><loc>https://www.sciviews.org/svAssert/reference/stop_greater_or_equal.html</loc></url>
+<url><loc>https://www.sciviews.org/svAssert/reference/stop_greater_than.html</loc></url>
+<url><loc>https://www.sciviews.org/svAssert/reference/stop_less_or_equal.html</loc></url>
+<url><loc>https://www.sciviews.org/svAssert/reference/stop_less_than.html</loc></url>
+<url><loc>https://www.sciviews.org/svAssert/reference/stop_not_equal.html</loc></url>
 <url><loc>https://www.sciviews.org/svAssert/reference/stopifnot_.html</loc></url>
 <url><loc>https://www.sciviews.org/svAssert/reference/svAssert-package.html</loc></url>
 <url><loc>https://www.sciviews.org/svAssert/reference/translate.html</loc></url>

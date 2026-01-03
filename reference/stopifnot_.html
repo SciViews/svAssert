@@ -94,7 +94,9 @@ generate the error message, otherwise a default message is created.</p>
 <span>  force_stop <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">mod_not</span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">mod_not</span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mod_content</span><span class="op">(</span><span class="va">x</span>, <span class="va">expr</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -157,6 +159,8 @@ this modifier into account to issue the correct error message for the core
 expression.</p>
 <p>For <code>mod_not()</code>, <code>TRUE</code> if the modifier starts with "!", <code>FALSE</code>
 otherwise.</p>
+<p>For <code>mod_content()</code>, a message with the content of <code>expr</code> and its
+value <code>x</code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -175,9 +179,10 @@ to ease building error messages.</p>
 <span class="r-in"><span><span class="co"># Note that |&gt; try() is just there to catch error; do not use in your code!</span></span></span>
 <span class="r-in"><span><span class="fu">stopifnot_</span><span class="op">(</span><span class="fl">1</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">pi</span>, <span class="fl">3.14159265</span><span class="op">)</span>, <span class="fl">1</span> <span class="op">&lt;</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">stopifnot_</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">is.character</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> one_1_x_1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Error in stopifnot_(is.character(letters), length(letters) == 1) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #BBBB00;">!</span> `length(letters)` must be equal to `1`.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> length of `letters` is <span style="color: #0000BB;">26</span>.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #BBBB00;">!</span> `length(letters)` must be == `1`.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `length(letters)` is: <span style="color: #0000BB;">26</span>.</span>
 <span class="r-in"><span><span class="fu">stopifnot_</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">pi</span>, <span class="fl">3.141593</span><span class="op">)</span>, <span class="fl">2</span> <span class="op">&lt;</span> <span class="fl">2</span>, <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op">&lt;</span> <span class="fl">12</span><span class="op">)</span>, <span class="st">"a"</span> <span class="op">&lt;</span> <span class="st">"b"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Error in stopifnot_(all.equal(pi, 3.141593), 2 &lt; 2, (1:10 &lt; 12), "a" &lt;  : </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `pi` and `3.141593` are not equal</span>
