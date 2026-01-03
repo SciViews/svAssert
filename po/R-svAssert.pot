@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2026-01-02 14:44\n"
+"POT-Creation-Date: 2026-01-03 22:24\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -302,25 +302,88 @@ msgstr ""
 msgid "an object of class {.cls {class(x)}}"
 msgstr ""
 
-msgid "{.code {arg}} must be different from {.code {arg2}}."
+msgid "Invalid {.var mod} parameter in {.fun {fun}}: {.val {mod}}."
 msgstr ""
 
-msgid "Both {.code {arg}} and {.code {arg2}} contain {.val {lhs}}."
+msgid "Allowed values are '', 'any', and 'all'."
 msgstr ""
 
-msgid "{.code {arg}} must be equal to {.code {arg2}}."
+msgid "Wrong case in {.fun {fun}}: {.val %s}."
 msgstr ""
 
-msgid "length of {.code {expr[[2]]}}"
+msgid ".internal"
 msgstr ""
 
-msgid "number of rows of {.code {expr[[2]]}}"
+msgid "Both {.code %s} and {.code %s} have length 0."
 msgstr ""
 
-msgid "number of columns of {.code {expr[[2]]}}"
+msgid "{.code %s} has length 0."
 msgstr ""
 
-msgid "is {.val {x}}."
+msgid "Must have length >= 1."
+msgstr ""
+
+msgid "Should be OK, but {.fun %s} called anyway."
+msgstr ""
+
+msgid "{.code %s} must be %s {.code %s}."
+msgstr ""
+
+msgid "{.code %s} is: {.val {%s}}."
+msgstr ""
+
+msgid "{.code %s} %s {.code %s}."
+msgstr ""
+
+msgid "Missing value where TRUE / FALSE is required."
+msgstr ""
+
+msgid "{.code %s} is {.code NA}."
+msgstr ""
+
+msgid "Missing value in {.code %s} not allowed."
+msgstr ""
+
+msgid "Missing value in {.code %s}."
+msgstr ""
+
+msgid "Both {.code %s} and {.code %s} must have length 1."
+msgstr ""
+
+msgid "Length of the second one: %i."
+msgstr ""
+
+msgid "Length of the first one: %i."
+msgstr ""
+
+msgid "Not any {.code %s} is %s {.code %s}."
+msgstr ""
+
+msgid "Must have at least one %s."
+msgstr ""
+
+msgid "Not all {.code %s} are %s {.code %s}."
+msgstr ""
+
+msgid "Must all be %s."
+msgstr ""
+
+msgid "{%s} missing value{?s} when comparing {.code %s} with {.code %s}."
+msgstr ""
+
+msgid "May not have missing values."
+msgstr ""
+
+msgid "All values are missing when comparing {.code %s} with {.code %s}."
+msgstr ""
+
+msgid "Must have at least one non missing value."
+msgstr ""
+
+msgid "At least one is TRUE in {.code %s} %s {.code %s}."
+msgstr ""
+
+msgid "All are TRUE in {.code %s} %s {.code %s}."
 msgstr ""
 
 msgid "{.code %s} and {.code %s} are not equal"
@@ -333,6 +396,18 @@ msgid "`par.` should be a list, ignoring it."
 msgstr ""
 
 msgid "{.code {lbl(expr = expr)}} is not TRUE"
+msgstr ""
+
+msgid "length of {.code {expr[[2]]}}"
+msgstr ""
+
+msgid "number of rows of {.code {expr[[2]]}}"
+msgstr ""
+
+msgid "number of columns of {.code {expr[[2]]}}"
+msgstr ""
+
+msgid "is {.val {x}}."
 msgstr ""
 
 msgid "Cannot format error message (signal it to package authors):"

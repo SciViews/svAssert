@@ -274,3 +274,26 @@ mod_not <- function(mod) {
   !is.null(mod) && mod != "" && startsWith(mod, "!")
 }
 
+#' @rdname stopifnot_
+#' @export
+#' @returns For `mod_content()`, a message with the content of `expr` and its
+#'   value `x`.
+mod_content <- function(x, expr) {
+  if (length(x) == 1L && x == expr)
+    return(NULL)
+
+  if (is.call(expr)) {
+    msg <- switch(as.character(expr[[1]]),
+      length = gettext("length of {.code {expr[[2]]}}"),
+      nrow =,
+      NROW = gettext("number of rows of {.code {expr[[2]]}}"),
+      ncol =,
+      NCOL = gettext("number of columns of {.code {expr[[2]]}}"),
+      "{.code {expr}}"
+    )
+  } else {
+    msg <- "{.code {expr}}"
+  }
+  msg <- paste(msg, gettext("is {.val {x}}."))
+  c("*" = format_inline(msg))
+}

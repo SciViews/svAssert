@@ -21,3 +21,13 @@
 # create_messages_script(.gen_msgs, "general")
 # # Clean up
 # rm(.gen_msgs)
+
+# all(NULL), or all(logical(0)) is TRUE, thus, it is a simpler way than to
+# write length(x) == 0L || x == TRUE
+# However in this case, it is not explicit enough, so we define:
+all_or_length0_null <- all
+
+# any(NULL), or any(logical(0)) is FALSE, thus, it is a simpler way than to
+# write length(x) > 0L && x == TRUE
+# The more explicit any is:
+any_not_length0_null <- any

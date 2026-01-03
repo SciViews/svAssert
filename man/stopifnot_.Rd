@@ -4,6 +4,7 @@
 \alias{stopifnot_}
 \alias{get_stop_fun}
 \alias{mod_not}
+\alias{mod_content}
 \title{Assert that expressions are all TRUE, with extended error messages}
 \usage{
 stopifnot_(...)
@@ -17,6 +18,8 @@ get_stop_fun(
 )
 
 mod_not(mod)
+
+mod_content(x, expr)
 }
 \arguments{
 \item{...}{Any number of R expressions, which should each evaluate to (a
@@ -62,6 +65,9 @@ expression.
 
 For \code{mod_not()}, \code{TRUE} if the modifier starts with "!", \code{FALSE}
 otherwise.
+
+For \code{mod_content()}, a message with the content of \code{expr} and its
+value \code{x}.
 }
 \description{
 If any of the expressions (in ...) are not \link{all} TRUE, an error is raised. If

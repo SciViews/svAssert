@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2026-01-02 14:44\n"
-"PO-Revision-Date: 2026-01-02 14:45+0100\n"
+"POT-Creation-Date: 2026-01-03 22:24\n"
+"PO-Revision-Date: 2026-01-03 22:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -364,26 +364,93 @@ msgstr ""
 msgid "an object of class {.cls {class(x)}}"
 msgstr "un objet de classe {.cls {class(x)}}"
 
-msgid "{.code {arg}} must be different from {.code {arg2}}."
-msgstr "{.code {arg}} doit être différent de {.code {arg2}}."
+msgid "Invalid {.var mod} parameter in {.fun {fun}}: {.val {mod}}."
+msgstr "Paramètre {.var mod} incorrect dans {.fun {fun}} : {.val {mod}}."
 
-msgid "Both {.code {arg}} and {.code {arg2}} contain {.val {lhs}}."
-msgstr "{.code {arg}} et {.code {arg2}} sont tous deux {.val {lhs}}."
+msgid "Allowed values are '', 'any', and 'all'."
+msgstr "Les valeurs autorisées sont ‘’, ‘any’ et ‘all’."
 
-msgid "{.code {arg}} must be equal to {.code {arg2}}."
-msgstr "{.code {arg}} doit être égal à {.code {arg2}}."
+msgid "Wrong case in {.fun {fun}}: {.val %s}."
+msgstr "Cas incorrect dans {.fun {fun}} : {.val %s}."
 
-msgid "length of {.code {expr[[2]]}}"
-msgstr "la longueur de {.code {expr[[2]]}}"
+msgid ".internal"
+msgstr ".internal"
 
-msgid "number of rows of {.code {expr[[2]]}}"
-msgstr "le nombre de lignes de {.code {expr[[2]]}}"
+msgid "Both {.code %s} and {.code %s} have length 0."
+msgstr "{.code %s} et {.code %s} ont tous deux une longueur nulle."
 
-msgid "number of columns of {.code {expr[[2]]}}"
-msgstr "le nombre de colonnes de {.code {expr[[2]]}}"
+msgid "{.code %s} has length 0."
+msgstr "{.code %s} a une longueur nulle."
 
-msgid "is {.val {x}}."
-msgstr "est {.val {x}}."
+msgid "Must have length >= 1."
+msgstr "Longueur >= 1 requise."
+
+msgid "Should be OK, but {.fun %s} called anyway."
+msgstr "Cela devrait fonctionner, mais {.fun %s} a quand même été appelé."
+
+msgid "{.code %s} must be %s {.code %s}."
+msgstr "{.code %s} doit être %s {.code %s}."
+
+msgid "{.code %s} is: {.val {%s}}."
+msgstr "{.code %s} vaut {.val {%s}}."
+
+msgid "{.code %s} %s {.code %s}."
+msgstr "{.code %s} %s {.code %s}."
+
+msgid "Missing value where TRUE / FALSE is required."
+msgstr "Valeur manquante là où TRUE / FALSE est requis."
+
+msgid "{.code %s} is {.code NA}."
+msgstr "{.code %s} est {.code NA}."
+
+msgid "Missing value in {.code %s} not allowed."
+msgstr "Valeur manquante dans {.code %s} non autorisée."
+
+msgid "Missing value in {.code %s}."
+msgstr "Valeur manquante dans {.code %s}."
+
+msgid "Both {.code %s} and {.code %s} must have length 1."
+msgstr "{.code %s} et {.code %s} doivent tous deux avoir une longueur de 1."
+
+msgid "Length of the second one: %i."
+msgstr "Longueur du deuxième : %i."
+
+msgid "Length of the first one: %i."
+msgstr "Longueur du premier : %i."
+
+msgid "Not any {.code %s} is %s {.code %s}."
+msgstr "Pas un seul {.code %s} n’est %s {.code %s}."
+
+msgid "Must have at least one %s."
+msgstr "Doit avoir au moins un %s."
+
+msgid "Not all {.code %s} are %s {.code %s}."
+msgstr "Les {.code %s} ne sont pas tous %s {.code %s}."
+
+msgid "Must all be %s."
+msgstr "Tout doit être %s."
+
+msgid "{%s} missing value{?s} when comparing {.code %s} with {.code %s}."
+msgstr ""
+"{%s} valeur{?s} manquante{?s} lors de la comparaison de {.code %s} avec "
+"{.code %s}."
+
+msgid "May not have missing values."
+msgstr "Ne doit pas comporter de valeurs manquantes."
+
+msgid "All values are missing when comparing {.code %s} with {.code %s}."
+msgstr ""
+"Toutes les valeurs sont manquantes lors de la comparaison de {.code %s} avec "
+"{.code %s}."
+
+msgid "Must have at least one non missing value."
+msgstr "Doit comporter au moins une valeur non manquante."
+
+msgid "At least one is TRUE in {.code %s} %s {.code %s}."
+msgstr "Au moins un est VRAI dans {.code %s} %s {.code %s}."
+
+msgid "All are TRUE in {.code %s} %s {.code %s}."
+msgstr "Toutes les comparaisons sont VRAIES dans {.code %s} %s {.code %s}."
 
 msgid "{.code %s} and {.code %s} are not equal"
 msgstr "{.code %s} et {.code %s} ne sont pas égaux"
@@ -396,6 +463,18 @@ msgstr "« par. » doit être une liste, elle est ignorée."
 
 msgid "{.code {lbl(expr = expr)}} is not TRUE"
 msgstr "{.code {lbl(expr = expr)}} n'est pas VRAI"
+
+msgid "length of {.code {expr[[2]]}}"
+msgstr "la longueur de {.code {expr[[2]]}}"
+
+msgid "number of rows of {.code {expr[[2]]}}"
+msgstr "le nombre de lignes de {.code {expr[[2]]}}"
+
+msgid "number of columns of {.code {expr[[2]]}}"
+msgstr "le nombre de colonnes de {.code {expr[[2]]}}"
+
+msgid "is {.val {x}}."
+msgstr "est {.val {x}}."
 
 msgid "Cannot format error message (signal it to package authors):"
 msgstr ""
@@ -415,6 +494,23 @@ msgid "{.code %s} is not {.val TRUE}"
 msgid_plural "{.code %s} are not all {.val TRUE}"
 msgstr[0] "{.code %s} n'est pas {.val TRUE}"
 msgstr[1] "{.code %s} ne sont pas tous {.val TRUE}"
+
+#, fuzzy
+#~| msgid "{.code %s} are not all %s {.code %s}."
+#~ msgid "All {.code %s} are not %s {.code %s}."
+#~ msgstr "{.code %s} ne sont pas tous %s {.code %s}."
+
+#~ msgid "First one is: {.val {%s}}."
+#~ msgstr "Le premier est : {.val {%s}}."
+
+#~ msgid "Second one is: {.val {%s}}."
+#~ msgstr "Le deuxième est : {.val {%s}}."
+
+#~ msgid "{.code {arg}} must be different from {.code {arg2}}."
+#~ msgstr "{.code {arg}} doit être différent de {.code {arg2}}."
+
+#~ msgid "Both {.code {arg}} and {.code {arg2}} contain {.val {lhs}}."
+#~ msgstr "{.code {arg}} et {.code {arg2}} sont tous deux {.val {lhs}}."
 
 #~ msgid "Formatting of the error message failed, using unformatted messages."
 #~ msgstr ""
