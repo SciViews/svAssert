@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2026-01-03 22:24\n"
+"POT-Creation-Date: 2026-01-04 11:39\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -314,6 +314,36 @@ msgstr ""
 msgid ".internal"
 msgstr ""
 
+msgid "Running `%s`..."
+msgstr ""
+
+msgid "{.code %s} and {.code %s} are not equal"
+msgstr ""
+
+msgid "stopifnot"
+msgstr ""
+
+msgid "`par.` should be a list, ignoring it."
+msgstr ""
+
+msgid "{.code {lbl(expr = expr)}} is not TRUE"
+msgstr ""
+
+msgid "length of {.code {expr[[2]]}}"
+msgstr ""
+
+msgid "number of rows of {.code {expr[[2]]}}"
+msgstr ""
+
+msgid "number of columns of {.code {expr[[2]]}}"
+msgstr ""
+
+msgid "is {.val {x}}."
+msgstr ""
+
+msgid "Comparison case code:"
+msgstr ""
+
 msgid "Both {.code %s} and {.code %s} have length 0."
 msgstr ""
 
@@ -330,6 +360,9 @@ msgid "{.code %s} must be %s {.code %s}."
 msgstr ""
 
 msgid "{.code %s} is: {.val {%s}}."
+msgstr ""
+
+msgid "It is silly to compare two constants, may be check you code."
 msgstr ""
 
 msgid "{.code %s} %s {.code %s}."
@@ -386,28 +419,16 @@ msgstr ""
 msgid "All are TRUE in {.code %s} %s {.code %s}."
 msgstr ""
 
-msgid "{.code %s} and {.code %s} are not equal"
+msgid "Revise: {.code %s %s %s} is a nonsense."
 msgstr ""
 
-msgid "stopifnot"
+msgid "Did you mean {.code %s(%s)} instead of {.code %s == %s}?"
 msgstr ""
 
-msgid "`par.` should be a list, ignoring it."
+msgid "Did you mean {.code anyNA(%s)} instead of {.code any(%s == %s)}?"
 msgstr ""
 
-msgid "{.code {lbl(expr = expr)}} is not TRUE"
-msgstr ""
-
-msgid "length of {.code {expr[[2]]}}"
-msgstr ""
-
-msgid "number of rows of {.code {expr[[2]]}}"
-msgstr ""
-
-msgid "number of columns of {.code {expr[[2]]}}"
-msgstr ""
-
-msgid "is {.val {x}}."
+msgid "Did you mean {.code %s(%s)} instead of {.code %s %s %s}?"
 msgstr ""
 
 msgid "Cannot format error message (signal it to package authors):"

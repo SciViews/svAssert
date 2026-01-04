@@ -10,7 +10,7 @@
 stopifnot_(...)
 
 get_stop_fun(
-  x,
+  x = NULL,
   expr = substitute(x),
   par. = list(),
   call_it = TRUE,
@@ -82,7 +82,12 @@ to ease building error messages.
 \examples{
 # stop <- stop_
 # Note that |> try() is just there to catch error; do not use in your code!
-stopifnot_(1 == 1, all.equal(pi, 3.14159265), 1 < 2) |> try()
+x <- 1
+stopifnot_(1 == 1, all.equal(pi, 3.14159265), x < 2) # No error
+stopifnot_(1 == 1, all.equal(pi, 3.14159265), x > 2) |> try()
+# Compare with the message you got using base::stopifnot():
+stopifnot(1 == 1, all.equal(pi, 3.14159265), x > 2) |> try()
+
 stopifnot_(is.character(letters), length(letters) == 1) |> try()
 stopifnot_(all.equal(pi, 3.141593), 2 < 2, (1:10 < 12), "a" < "b") |> try()
 

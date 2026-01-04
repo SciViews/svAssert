@@ -21,7 +21,12 @@
 #' @examples
 #' # stop <- stop_
 #' # Note that |> try() is just there to catch error; do not use in your code!
-#' stopifnot_(1 == 1, all.equal(pi, 3.14159265), 1 < 2) |> try()
+#' x <- 1
+#' stopifnot_(1 == 1, all.equal(pi, 3.14159265), x < 2) # No error
+#' stopifnot_(1 == 1, all.equal(pi, 3.14159265), x > 2) |> try()
+#' # Compare with the message you got using base::stopifnot():
+#' stopifnot(1 == 1, all.equal(pi, 3.14159265), x > 2) |> try()
+#'
 #' stopifnot_(is.character(letters), length(letters) == 1) |> try()
 #' stopifnot_(all.equal(pi, 3.141593), 2 < 2, (1:10 < 12), "a" < "b") |> try()
 stopifnot_ <- function(...) {
@@ -50,6 +55,7 @@ stopifnot_ <- function(...) {
           r <- translate(r, get('general_msgs'))
 
         # Run stop_xxx() function, if found
+        if (.op$verbose) message(sprintf("Running `%s`...", Dparse(cl.i)))
         get_stop_fun(expr = cl.i, call_it = TRUE, force_stop = FALSE)
 
         # Here is the regular stopifnot() treatment in case not stopped yet
@@ -113,8 +119,8 @@ stopifnot_ <- function(...) {
 #' get_stop_fun(all(any(!!all(!anyNA(x)))), call_it = FALSE) # mod == "!any"
 #' # Call the stop function (if it exists) to raise the error
 #' get_stop_fun(is.numeric(letters) && length(letters) > 0L) |> try()
-get_stop_fun <- function(x, expr = substitute(x), par. = list(), call_it = TRUE,
-    force_stop = TRUE) {
+get_stop_fun <- function(x = NULL, expr = substitute(x), par. = list(),
+    call_it = TRUE, force_stop = TRUE) {
 
   # In case wrong par., ignore it with a warning (critical code, no stop here!)
   if (!is.list(par.)) {

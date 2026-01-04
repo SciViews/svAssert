@@ -37,7 +37,7 @@
 #warning <- warning_
 stop <- stop_ # nocov end
 
-# Construct a code indicating what case we have in a relation test
+# Construct a code indicating what case we have in a comparison (==, <, ...)
 # It is `mod_lx_x_ly` where
 # - mod is 'one', 'any' or 'all',
 # - x represents '==', '!=', '>', '<', '>=', or '<='
@@ -52,7 +52,7 @@ stop <- stop_ # nocov end
 #   3) other cases (no NA or some NA + na.rm == TRUE): append '_T' if cond T
 # For _T, only if test_it = TRUE (otherwise, we trust, ans consider it is FALSE)
 # Return a list with code, length_x, length_y, nas, and no_nas
-.case_relation <- function(x = NULL, y = NULL, rel = "==", mod = "",
+.case_comparison <- function(x = NULL, y = NULL, rel = "==", mod = "",
   na.rm = FALSE, test_it = TRUE) {
 
   # Main part of the code
@@ -98,16 +98,16 @@ stop <- stop_ # nocov end
     }
   }
 
-  message(code)
+  if (.op$verbose) message("Comparison case code: ", code)
 
   list(code = code, length_x = length_x, length_y = length_y,  nas = nas,
     no_nas = no_nas)
 }
 
-# Build a contextual relation error message given the case, the rel(ation) and
-# the two arguments' names
-.relation_message <- function(case, rel, arg, arg2, arg_name, arg2_name, x, y,
-  fun) {
+# Build a contextual comparison error message given the case, the rel(ational)
+# operator and the two arguments' names
+.case_comparison_message <- function(case, rel, arg, arg2, arg_name, arg2_name, x, y,
+  fun, mod) {
 
   x_name <- as.character(substitute(x))
   y_name <- as.character(substitute(y))
@@ -119,45 +119,72 @@ stop <- stop_ # nocov end
     one_0_x_0 = c(
       '!' = gettextf("Both {.code %s} and {.code %s} have length 0.",
         arg, arg2),
-      'i' = gettext("Must have length 1.")),
+      'i' = gettext("Must have length 1."),
+      # Check if something like x == NULL -> is.null(x)
+      .case_null_in_comparison_message(arg, arg2, arg_name,
+        arg2_name, x, y, fun, rel, mod, else_msg = NULL)),
     one_0_x_1 = ,
     one_0_x_m = c(
       '!' = gettextf("{.code %s} has length 0.", arg),
-      'i' = gettext("Must have length 1.")),
+      'i' = gettext("Must have length 1."),
+      # Check if something like x == NULL -> is.null(x)
+      .case_null_in_comparison_message(arg, arg2, arg_name,
+        arg2_name, x, y, fun, rel, mod, else_msg = NULL)),
     one_1_x_0 = ,
     one_m_x_0 = c(
       '!' = gettextf("{.code %s} has length 0.", arg2),
-      'i' = gettext("Must have length 1.")),
+      'i' = gettext("Must have length 1."),
+      # Check if something like x == NULL -> is.null(x)
+      .case_null_in_comparison_message(arg, arg2, arg_name,
+        arg2_name, x, y, fun, rel, mod, else_msg = NULL)),
 
     any_0_x_0 = c(
       '!' = gettextf("Both {.code %s} and {.code %s} have length 0.",
         arg, arg2),
-      'i' = gettext("Must have length >= 1.")),
+      'i' = gettext("Must have length >= 1."),
+      # Check if something like x == NULL -> is.null(x)
+      .case_null_in_comparison_message(arg, arg2, arg_name,
+        arg2_name, x, y, fun, rel, mod, else_msg = NULL)),
     any_0_x_1 = ,
     any_0_x_m = c(
       '!' = gettextf("{.code %s} has length 0.", arg),
-      'i' = gettext("Must have length >= 1.")),
+      'i' = gettext("Must have length >= 1."),
+      # Check if something like x == NULL -> is.null(x)
+      .case_null_in_comparison_message(arg, arg2, arg_name,
+        arg2_name, x, y, fun, rel, mod, else_msg = NULL)),
     any_1_x_0 = ,
     any_m_x_0 = c(
       '!' = gettextf("{.code %s} has length 0.", arg2),
-      'i' = gettext("Must have length >= 1.")),
+      'i' = gettext("Must have length >= 1."),
+      # Check if something like x == NULL -> is.null(x)
+      .case_null_in_comparison_message(arg, arg2, arg_name,
+        arg2_name, x, y, fun, rel, mod, else_msg = NULL)),
 
     # Got one or two length 0 logical -> should be OK for all()
     all_0_x_0 = c(
       '!' = gettextf("Both {.code %s} and {.code %s} have length 0.",
         arg, arg2),
-      'i' = gettextf("Should be OK, but {.fun %s} called anyway.", fun),
-      .internal = TRUE),
+      # Check if something like x == NULL -> is.null(x)
+      .case_null_in_comparison_message(arg, arg2, arg_name,
+        arg2_name, x, y, fun, rel, mod, else_msg = c('i' =
+          gettextf("Should be OK, but {.fun %s} called anyway.", fun),
+          .internal = TRUE))),
     all_0_x_1 = ,
     all_0_x_m = c(
       '!' = gettextf("{.code %s} has length 0.", arg),
-      'i' = gettextf("Should be OK, but {.fun %s} called anyway.", fun),
-      .internal = TRUE),
+      # Check if something like x == NULL -> is.null(x)
+      .case_null_in_comparison_message(arg, arg2, arg_name,
+        arg2_name, x, y, fun, rel, mod, else_msg = c('i' =
+            gettextf("Should be OK, but {.fun %s} called anyway.", fun),
+          .internal = TRUE))),
     all_1_x_0 = ,
     all_m_x_0 = c(
       '!' = gettextf("{.code %s} has length 0.", arg2),
-      'i' = gettextf("Should be OK, but {.fun %s} called anyway.", fun),
-      .internal = TRUE),
+      # Check if something like x == NULL -> is.null(x)
+      .case_null_in_comparison_message(arg, arg2, arg_name,
+        arg2_name, x, y, fun, rel, mod, else_msg = c('i' =
+            gettextf("Should be OK, but {.fun %s} called anyway.", fun),
+          .internal = TRUE))),
 
     # We have both sides being length one. any() or all() have no effect here
     # but if it is a missing value, depends on na.rm=TRUE/FALSE for any()/all()
@@ -169,7 +196,10 @@ stop <- stop_ # nocov end
       'i' = if (is.language(arg_name)) # If not a constant, show its value
         gettextf("{.code %s} is: {.val {%s}}.", arg, x_name) else NULL,
       'i' = if (is.language(arg2_name)) # If not a constant, show its value
-        gettextf("{.code %s} is: {.val {%s}}.", arg2, y_name) else NULL),
+        gettextf("{.code %s} is: {.val {%s}}.", arg2, y_name) else NULL,
+      'x' = if (!is.language(arg_name) && !is.language(arg2_name))
+        gettext("It is silly to compare two constants, may be check you code.")
+          else NULL),
 
     one_1_x_1_T = ,
     any_1_x_1_T = ,
@@ -181,30 +211,44 @@ stop <- stop_ # nocov end
     one_1_x_1_NA = ,
     any_1_x_1_NA = ,
     all_1_x_1_NA = c(# Cannot have NA in these cases
-      # TODO: if one or both are constant NA or NaN, (or NA_integer_, etc.)
-      # Tel to use is.na(), is.nan(), anyNA(),
       '!' = gettext("Missing value where TRUE / FALSE is required."),
-      'i' = gettextf("{.code %s} is {.code NA}.",
-        if (is.na(x)) arg else arg2)),
+      # This one deals with constant NA/NaN values in comparisons
+      # x == NA for is.na(x) and the like
+      .case_na_in_comparison_message(arg, arg2, arg_name, arg2_name, x, y, fun,
+        rel, mod, else_msg = c(
+          'i' = gettextf("{.code %s} is {.code NA}.",
+            if (is.na(x)) arg else arg2)))),
 
     any_1_x_1_NA_rm = c(# any(NA, na.rm = TRUE) is FALSE
       '!' = gettextf("Missing value in {.code %s} not allowed.",
-        if (is.na(x)) arg else arg2)),
+        if (is.na(x)) arg else arg2),
+      # Deal with constant NA/NaN values in comparisons
+      .case_na_in_comparison_message(arg, arg2, arg_name, arg2_name, x, y, fun,
+        rel, mod, else_msg = NULL)),
     all_1_x_1_NA_rm = c(# all(NA, na.rm = TRUE) is TRUE
       '!' = gettextf("Missing value in {.code %s}.",
         if (is.na(x)) arg else arg2),
-      'i' = gettextf("Should be OK, but {.fun %s} called anyway.", fun),
-      .internal = TRUE),
+      # Deal with constant NA/NaN values in comparisons
+      .case_na_in_comparison_message(arg, arg2, arg_name, arg2_name, x, y, fun,
+        rel, mod, else_msg = c('i' =
+          gettextf("Should be OK, but {.fun %s} called anyway.", fun),
+          .internal = TRUE))),
 
     # At least one side has length > 1, one is always wrong
     one_1_x_m = c(
       '!' = gettextf("Both {.code %s} and {.code %s} must have length 1.",
         arg, arg2),
-      'i' = gettextf("Length of the second one: %i.", case$length_y)),
+      'i' = gettextf("Length of the second one: %i.", case$length_y),
+      # Deal with constant NA/NaN values in comparisons
+      .case_na_in_comparison_message(arg, arg2, arg_name, arg2_name, x, y, fun,
+        rel, mod, else_msg = NULL)),
     one_m_x_1 = c(
       '!' = gettextf("Both {.code %s} and {.code %s} must have length 1.",
         arg, arg2),
-      'i' = gettextf("Length of the first one: %i.", case$length_x)),
+      'i' = gettextf("Length of the first one: %i.", case$length_x),
+      # Deal with constant NA/NaN values in comparisons
+      .case_na_in_comparison_message(arg, arg2, arg_name, arg2_name, x, y, fun,
+        rel, mod, else_msg = NULL)),
     one_m_x_m = c(
       '!' = gettextf("Both {.code %s} and {.code %s} must have length 1.",
         arg, arg2),
@@ -227,23 +271,28 @@ stop <- stop_ # nocov end
     any_multi_NA = ,
     all_multi_NA = c(
       '!' = gettextf(
-        # TODO: if one of the two operands in 'NA', or 'NaN', tell to use is.na,
-        # anyNA, ...
         "{%s} missing value{?s} when comparing {.code %s} with {.code %s}.",
         "case$nas", arg, arg2),
-      'i' = gettext("May not have missing values.")),
+      # Deal with constant NA/NaN values in comparisons
+      .case_na_in_comparison_message(arg, arg2, arg_name, arg2_name, x, y, fun,
+        rel, mod, else_msg = c('i' =
+            gettext("May not have missing values.")))),
 
     any_multi_NA_rm_all = c(
       '!' = gettextf(
         "All values are missing when comparing {.code %s} with {.code %s}.",
         arg, arg2),
-      'i' = gettext("Must have at least one non missing value.")),
+      .case_na_in_comparison_message(arg, arg2, arg_name, arg2_name, x, y, fun,
+        rel, mod, else_msg = c('i' =
+          gettext("Must have at least one non missing value.")))),
     all_multi_NA_rm_all = c(
       '!' = gettextf(
         "All values are missing when comparing {.code %s} with {.code %s}.",
         arg, arg2),
-      'i' = gettextf("Should be OK, but {.fun %s} called anyway.", fun),
-      .internal = TRUE),
+      .case_na_in_comparison_message(arg, arg2, arg_name, arg2_name, x, y, fun,
+        rel, mod, else_msg = c('i' =
+          gettextf("Should be OK, but {.fun %s} called anyway.", fun),
+          .internal = TRUE))),
 
     any_multi_T = c(
       '!' = gettextf("At least one is TRUE in {.code %s} %s {.code %s}.",
@@ -269,6 +318,81 @@ stop <- stop_ # nocov end
   attr(msg, ".internal") <- isTRUE(.internal)
 
   msg
+}
+
+# In a comparison, if one or both are constant NA or NaN, (or NA_integer_, etc.)
+# Tel to use is.na(), is.nan(), anyNA(), allNA(), ...
+.case_na_in_comparison_message <- function(arg, arg2, arg_name, arg2_name,
+  x, y, fun, rel, mod, else_msg) {
+
+  # Check if one or both arguments are constant NA/NaN
+  arg_na <- deparse(arg_name) %in% c("NA", "NA_integer_", "NA_real_",
+    "NA_character_", "NA_complex_", "NaN")
+  arg2_na <- deparse(arg2_name) %in% c("NA", "NA_integer_", "NA_real_",
+    "NA_character_", "NA_complex_", "NaN")
+
+  if ((arg_na || arg2_na) && rel != "==") {# Silly x > NA
+    c('x' = gettextf("Revise: {.code %s %s %s} is a nonsense.",
+      arg, rel, arg2))
+  } else if (arg_na && arg2_na) { # Silly again NA == NA
+    c('x' = gettextf("Revise: {.code %s %s %s} is a nonsense.",
+      arg, rel, arg2))
+  } else if (arg_na) {# First arg is NA or NaN == x
+    if (deparse(arg_name) == "NaN") {
+      c('i' = gettextf(
+        "Did you mean {.code %s(%s)} instead of {.code %s == %s}?",
+          "is.nan", arg2, "NaN", arg2))
+    } else if (mod == "any") {# any(NA == x) -> anyNA(x)
+      c('i' = gettextf
+        ("Did you mean {.code anyNA(%s)} instead of {.code any(%s == %s)}?",
+          arg2, arg, arg2))
+    } else {# NA == x -> is.na(x)
+      c('i' = gettextf
+        ("Did you mean {.code %s(%s)} instead of {.code %s == %s}?",
+          "is.na", arg2, arg, arg2))
+    }
+  } else if (arg2_na) {
+    if (deparse(arg2_name) == "NaN") {
+      c('i' = gettextf(
+        "Did you mean {.code %s(%s)} instead of {.code %s == %s}?",
+        "is.nan", arg, arg, "NaN"))
+    } else if (mod == "any") {# any(x == NA) -> anyNA(x)
+      c('i' = gettextf
+        ("Did you mean {.code anyNA(%s)} instead of {.code any(%s == %s)}?",
+          arg, arg, arg2))
+    } else {# x == NA -> is.na(x)
+      c('i' = gettextf
+        ("Did you mean {.code %s(%s)} instead of {.code %s == %s}?",
+          "is.na", arg, arg, arg2))
+    }
+  } else {# Just one or both arguments contain NA/NaN values
+    else_msg
+  }
+}
+
+# In a comparison, something like x == NULL should be replace by is.null(x)
+.case_null_in_comparison_message <- function(arg, arg2, arg_name, arg2_name,
+  x, y, fun, rel, mod, else_msg) {
+
+  # Check if one or both arguments are constant NULL
+  arg_null <- deparse(arg_name) == "NULL"
+  arg2_null <- deparse(arg2_name) == "NULL"
+
+  if ((arg_null || arg2_null) && rel != "==") { # Silly x > NULL
+    c('x' = gettextf("Revise: {.code %s %s %s} is a nonsense.",
+      arg, rel, arg2))
+  } else if (arg_null && arg2_null) { # Silly NULL == NULL
+    c('x' = gettextf("Revise: {.code %s %s %s} is a nonsense.",
+      arg, rel, arg2))
+  } else if (arg_null) {# First arg is NULL
+    c('i' = gettextf("Did you mean {.code %s(%s)} instead of {.code %s %s %s}?",
+        "is.null", arg2, arg, rel, arg2))
+  } else if (arg2_null) {
+    c('i' = gettextf("Did you mean {.code %s(%s)} instead of {.code %s %s %s}?",
+        "is.null", arg, arg, rel, arg2))
+  } else {# Just one or both arguments contain NULL values
+    else_msg
+  }
 }
 
 # This is rlang::check_required(), but modified for translatable errors

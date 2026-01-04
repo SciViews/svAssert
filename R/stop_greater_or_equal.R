@@ -55,10 +55,11 @@ stop_greater_or_equal <- function(lhs, rhs, ..., mod = NULL, na.rm = FALSE,
       i = "Allowed values are '', 'any', and 'all'.",
       .internal = TRUE)
 
-  case <- .case_relation(lhs, rhs, rel = rel, mod = mod, na.rm = na.rm,
+  case <- .case_comparison(lhs, rhs, rel = rel, mod = mod, na.rm = na.rm,
     test_it = test_it)
-  msg <- .relation_message(case = case, rel = rel, arg = arg, arg2 = arg2,
-    arg_name = arg_name, arg2_name = arg2_name,  x = lhs, y = rhs, fun = fun)
+  msg <- .case_comparison_message(case = case, rel = rel, arg = arg,
+    arg2 = arg2, arg_name = arg_name, arg2_name = arg2_name,  x = lhs,
+    y = rhs, fun = fun, mod = mod)
 
   if (length(msg) == 1L && msg == "")
     stop(gettextf("Wrong case in {.fun {fun}}: {.val %s}.", case$code),

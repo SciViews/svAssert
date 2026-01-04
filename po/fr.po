@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: svAssert 0.1.0\n"
-"POT-Creation-Date: 2026-01-03 22:24\n"
-"PO-Revision-Date: 2026-01-03 22:34+0100\n"
+"POT-Creation-Date: 2026-01-04 11:39\n"
+"PO-Revision-Date: 2026-01-04 11:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -376,6 +376,36 @@ msgstr "Cas incorrect dans {.fun {fun}} : {.val %s}."
 msgid ".internal"
 msgstr ".internal"
 
+msgid "Running `%s`..."
+msgstr "Exécution de `%s`…"
+
+msgid "{.code %s} and {.code %s} are not equal"
+msgstr "{.code %s} et {.code %s} ne sont pas égaux"
+
+msgid "stopifnot"
+msgstr "stopifnot"
+
+msgid "`par.` should be a list, ignoring it."
+msgstr "« par. » doit être une liste, elle est ignorée."
+
+msgid "{.code {lbl(expr = expr)}} is not TRUE"
+msgstr "{.code {lbl(expr = expr)}} n'est pas VRAI"
+
+msgid "length of {.code {expr[[2]]}}"
+msgstr "la longueur de {.code {expr[[2]]}}"
+
+msgid "number of rows of {.code {expr[[2]]}}"
+msgstr "le nombre de lignes de {.code {expr[[2]]}}"
+
+msgid "number of columns of {.code {expr[[2]]}}"
+msgstr "le nombre de colonnes de {.code {expr[[2]]}}"
+
+msgid "is {.val {x}}."
+msgstr "est {.val {x}}."
+
+msgid "Comparison case code:"
+msgstr "Code du cas de comparaison :"
+
 msgid "Both {.code %s} and {.code %s} have length 0."
 msgstr "{.code %s} et {.code %s} ont tous deux une longueur nulle."
 
@@ -393,6 +423,9 @@ msgstr "{.code %s} doit être %s {.code %s}."
 
 msgid "{.code %s} is: {.val {%s}}."
 msgstr "{.code %s} vaut {.val {%s}}."
+
+msgid "It is silly to compare two constants, may be check you code."
+msgstr "Il est ridicule de comparer deux constantes, vérifiez votre code."
 
 msgid "{.code %s} %s {.code %s}."
 msgstr "{.code %s} %s {.code %s}."
@@ -452,29 +485,17 @@ msgstr "Au moins un est VRAI dans {.code %s} %s {.code %s}."
 msgid "All are TRUE in {.code %s} %s {.code %s}."
 msgstr "Toutes les comparaisons sont VRAIES dans {.code %s} %s {.code %s}."
 
-msgid "{.code %s} and {.code %s} are not equal"
-msgstr "{.code %s} et {.code %s} ne sont pas égaux"
+msgid "Revise: {.code %s %s %s} is a nonsense."
+msgstr "Révisez : {.code %s %s %s} n'a aucun sens."
 
-msgid "stopifnot"
-msgstr "stopifnot"
+msgid "Did you mean {.code %s(%s)} instead of {.code %s == %s}?"
+msgstr "Vouliez-vous dire {.code %s(%s)} au lieu de {.code %s == %s} ?"
 
-msgid "`par.` should be a list, ignoring it."
-msgstr "« par. » doit être une liste, elle est ignorée."
+msgid "Did you mean {.code anyNA(%s)} instead of {.code any(%s == %s)}?"
+msgstr "Vouliez-vous dire {.code anyNA(%s)} au lieu de {.code any(%s == %s)} ?"
 
-msgid "{.code {lbl(expr = expr)}} is not TRUE"
-msgstr "{.code {lbl(expr = expr)}} n'est pas VRAI"
-
-msgid "length of {.code {expr[[2]]}}"
-msgstr "la longueur de {.code {expr[[2]]}}"
-
-msgid "number of rows of {.code {expr[[2]]}}"
-msgstr "le nombre de lignes de {.code {expr[[2]]}}"
-
-msgid "number of columns of {.code {expr[[2]]}}"
-msgstr "le nombre de colonnes de {.code {expr[[2]]}}"
-
-msgid "is {.val {x}}."
-msgstr "est {.val {x}}."
+msgid "Did you mean {.code %s(%s)} instead of {.code %s %s %s}?"
+msgstr "Vouliez-vous dire {.code %s(%s)} au lieu de {.code %s %s %s} ?"
 
 msgid "Cannot format error message (signal it to package authors):"
 msgstr ""
@@ -494,6 +515,9 @@ msgid "{.code %s} is not {.val TRUE}"
 msgid_plural "{.code %s} are not all {.val TRUE}"
 msgstr[0] "{.code %s} n'est pas {.val TRUE}"
 msgstr[1] "{.code %s} ne sont pas tous {.val TRUE}"
+
+#~ msgid "` ..."
+#~ msgstr "` ..."
 
 #, fuzzy
 #~| msgid "{.code %s} are not all %s {.code %s}."
