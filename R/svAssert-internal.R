@@ -27,6 +27,38 @@
 #  e
 #})
 
+if (FALSE) {
+
+.process_cnd <- function(cnd) {
+  if (grepl("^objet '.+' introuvable$", cnd$message)) {
+    object <- sub("^objet '(.*)' introuvable$", "\\1", cnd$message)
+    # TODO: check parent.frame() of top function is .GlobalEnv
+    # look for variable name like this object in data.frames
+    objects <- ls(.GlobalEnv, all.names = TRUE)
+    for (oname in objects) {
+      obj <- get(oname, envir = .GlobalEnv)
+      if (is.data.frame(obj) && object %in% names(obj)) {
+        msg <- c(sprintf("Objet {.var %s} introuvable.", object),
+          i = sprintf("Vouliez-vous dire {.code %s$%s} ou {.code %s[['%s']]}?",
+            oname, object, oname, object))
+          #i = gettextf("Did you mean {.code %s$%s} or {.code %s[['%s']]}?",
+          #    oname, object, oname, object, domain = "R-svAssert"))
+        cli::cli_abort(msg)
+        break
+      }
+    }
+  }
+  #cat(cnd$message)
+  cnd
+}
+
+globalCallingHandlers(error = function(cnd) {
+  cnd <- .process_cnd(cnd)
+  .rs.globalCallingHandlers.onErrorImpl(cnd)
+})
+
+}
+
 # Internal options
 # TODO: change this!
 #' @export
@@ -106,8 +138,8 @@ stop <- stop_ # nocov end
 
 # Build a contextual comparison error message given the case, the rel(ational)
 # operator and the two arguments' names
-.case_comparison_message <- function(case, rel, arg, arg2, arg_name, arg2_name, x, y,
-  fun, mod) {
+.case_comparison_message <- function(case, rel, arg, arg2, arg_name, arg2_name,
+    x, y, fun, mod) {
 
   x_name <- as.character(substitute(x))
   y_name <- as.character(substitute(y))

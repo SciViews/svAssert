@@ -18,9 +18,9 @@ Search for assert, check, test (partial, only package name starting with 'test')
 -   editrules: superseeded by validate and errorlocate.
 -   erify: imports glue. `check_xxx()` functions but not optimized for speed and a little bit unnecessary complex to construct the error message.
 -   errorlocate: complement to validate, not for assetions.
--   quickcheck: for {testthat}, generate various kind of data for tests unsing `any_xxx()` functions. Not for assertions, but could be useful for tests.
+-   quickcheck: for {testthat}, generate various kind of data for tests using `any_xxx()` functions. Not for assertions, but could be useful for tests.
 -   pointblank: many dependencies. Haevy validators for datasets. Not adapted for assertions.
--   **precondition**: assertion routines to replace `stopifnot()`. `precondition()`, `postcondition()` (executed when a functioon exits) and `sanity_check()`. Allow to give more information in certain conditions... interesting idea, and use C code and `globalCallingHandlers()`.
+-   **precondition**: assertion routines to replace `stopifnot()`. `precondition()`, `postcondition()` (executed when a function exits) and `sanity_check()`. Allow to give more information in certain conditions... interesting idea, and use C code and `globalCallingHandlers()`.
 -   testdat: validate data in testthat tests or pipelines. Not really designed for assertions.
 -   tester: losts of `is_xxx()` or `has_xxx()` functions. Also unnecessarily wrap existing functions like `is_matrix <- function(x) is.matrix(x)`, or something like `is_string <- function(x) if (is.character(x)) TRUE else FALSE` (sic!) }
 -   typehint: uses `#| degrees_celsius numeric dim(1) not(NA, NULL)` in a function, plus `check_types()`. I don't know if it is a good idea.
