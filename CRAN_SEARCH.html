@@ -97,10 +97,10 @@
 <li>editrules: superseeded by validate and errorlocate.</li>
 <li>erify: imports glue. <code>check_xxx()</code> functions but not optimized for speed and a little bit unnecessary complex to construct the error message.</li>
 <li>errorlocate: complement to validate, not for assetions.</li>
-<li>quickcheck: for {testthat}, generate various kind of data for tests unsing <code>any_xxx()</code> functions. Not for assertions, but could be useful for tests.</li>
+<li>quickcheck: for {testthat}, generate various kind of data for tests using <code>any_xxx()</code> functions. Not for assertions, but could be useful for tests.</li>
 <li>pointblank: many dependencies. Haevy validators for datasets. Not adapted for assertions.</li>
 <li>
-<strong>precondition</strong>: assertion routines to replace <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code>. <code>precondition()</code>, <code>postcondition()</code> (executed when a functioon exits) and <code>sanity_check()</code>. Allow to give more information in certain conditions… interesting idea, and use C code and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">globalCallingHandlers()</a></code>.</li>
+<strong>precondition</strong>: assertion routines to replace <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code>. <code>precondition()</code>, <code>postcondition()</code> (executed when a function exits) and <code>sanity_check()</code>. Allow to give more information in certain conditions… interesting idea, and use C code and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">globalCallingHandlers()</a></code>.</li>
 <li>testdat: validate data in testthat tests or pipelines. Not really designed for assertions.</li>
 <li>tester: losts of <code>is_xxx()</code> or <code>has_xxx()</code> functions. Also unnecessarily wrap existing functions like <code>is_matrix &lt;- function(x) is.matrix(x)</code>, or something like <code>is_string &lt;- function(x) if (is.character(x)) TRUE else FALSE</code> (sic!) }</li>
 <li>typehint: uses <code>#| degrees_celsius numeric dim(1) not(NA, NULL)</code> in a function, plus <code>check_types()</code>. I don’t know if it is a good idea.</li>
