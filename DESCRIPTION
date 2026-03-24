@@ -1,6 +1,6 @@
 Package: svAssert
 Type: Package
-Version: 0.1.0
+Version: 0.1.1
 Title: 'SciViews::R' - Assertions and Meaningful Error Messages
 Description: Assertions combining `is_xxx()` and `stop_xxx()` functions for
   maximum flexibility. Enhanced error messages for 'SciViews::R' based on
