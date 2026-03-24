@@ -86,7 +86,7 @@
 </li>
       </ul>
 <div class="navbar-title">
-        <a class="navbar-brand" href="../index.html"><p class="h2">svAssert <small>v0.1.0</small></p></a>
+        <a class="navbar-brand" href="../index.html"><p class="h2">svAssert <small>v0.1.1</small></p></a>
       </div>
     </div>
 <!--/.nav-collapse -->
@@ -388,12 +388,12 @@ inputs are correct. Let’s compare our different versions of
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference  640.98ns 692.09ns  1<span style="text-decoration: underline;">314</span>461.        0B      0  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop      1.22µs   1.46µs   <span style="text-decoration: underline;">636</span>553.        0B     63.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot    3.96µs   4.56µs   <span style="text-decoration: underline;">210</span>456.        0B     21.0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert     2.95µs   3.28µs   <span style="text-decoration: underline;">293</span>258.        0B     29.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate    4.07µs   4.62µs   <span style="text-decoration: underline;">205</span>073.        0B     20.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> stopifnot_   3.56µs   4.13µs   <span style="text-decoration: underline;">231</span>948.        0B     23.2</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference   641.1ns 701.05ns  1<span style="text-decoration: underline;">320</span>361.        0B      0  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop      1.24µs   1.44µs   <span style="text-decoration: underline;">641</span>290.        0B     64.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot    3.99µs   4.59µs   <span style="text-decoration: underline;">209</span>939.        0B     21.0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert     3.13µs   3.48µs   <span style="text-decoration: underline;">276</span>035.        0B     27.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate    4.29µs   4.84µs   <span style="text-decoration: underline;">196</span>457.        0B     19.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> stopifnot_   3.61µs   4.18µs   <span style="text-decoration: underline;">230</span>587.        0B     23.1</span></span></code></pre></div>
 <p>Minimum impact is here with <code>if (...) stop(...)</code>,
 providing you only use quick primitive functions like
 <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric()</a></code> / <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA()</a></code>, or simple comparisons
@@ -417,12 +417,12 @@ no memory impact.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference     514µs 865.06µs     <span style="text-decoration: underline;">1</span>191.   781.3KB     12.0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       755µs   1.27ms      850.    1.15MB     26.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot     769µs   1.29ms      831.    1.15MB     25.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert      645µs 998.03µs     <span style="text-decoration: underline;">1</span>041.   781.3KB     10.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate     647µs      1ms     <span style="text-decoration: underline;">1</span>063.   781.3KB     21.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> stopifnot_    771µs   1.29ms      829.    1.15MB     25.6</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> reference     516µs 865.23µs     <span style="text-decoration: underline;">1</span>195.   781.3KB     12.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> if_stop       756µs   1.27ms      857.    1.15MB     26.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> stopifnot     770µs   1.29ms      828.    1.15MB     25.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> svAssert      646µs 997.29µs     <span style="text-decoration: underline;">1</span>048.   781.3KB     10.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> checkmate     646µs 998.33µs     <span style="text-decoration: underline;">1</span>055.   781.3KB     21.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> stopifnot_    769µs   1.29ms      836.    1.15MB     25.9</span></span></code></pre></div>
 <p>The results are quite different. Now, both {svAssert} and {checkmate}
 are clearly better, both in term of speed and in memory use (still
 negligible). <code>if (...) stop(...)</code> and
