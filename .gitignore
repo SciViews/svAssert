@@ -55,11 +55,14 @@ rsconnect/
 # More files
 inst/doc
 docs
+/doc/
+/Meta/
 Meta
 
 # C compilation files
-*.o
-*.so
-/doc/
-/Meta/
-
+src/*.so
+src/*.o
+src/*.dll
+src/*.dylib
+src/*.dynlib
+.positai

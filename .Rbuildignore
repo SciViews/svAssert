@@ -21,4 +21,5 @@
 data-raw
 ^doc$
 ^Meta$
-^get_checkmate_messages\.R$
+^src/.+\.o$
+^src/.+\.so$
